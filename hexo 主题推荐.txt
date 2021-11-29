@@ -1,0 +1,11 @@
+https://github.com/blleng/hexo-theme-lx (评论，搜索)
+
+https://github.com/DeepSpaceHarbor/Gradient
+
+https://github.com/probberechts/hexo-theme-cactus 
+
+https://github.com/klugjo/hexo-theme-clean-blog
+
+https://github.com/molavec/hexo-theme-aircv
+
+https://github.com/Molunerfinn/hexo-theme-melody

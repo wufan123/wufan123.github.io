@@ -1,5 +1,9 @@
 https://github.com/blleng/hexo-theme-lx (评论，搜索)
 
+https://github.com/Haojen/hexo-theme-Claudia
+
+https://github.com/LouisBarranqueiro/hexo-theme-tranquilpeak
+
 https://github.com/DeepSpaceHarbor/Gradient
 
 https://github.com/probberechts/hexo-theme-cactus 
@@ -9,3 +13,9 @@ https://github.com/klugjo/hexo-theme-clean-blog
 https://github.com/molavec/hexo-theme-aircv
 
 https://github.com/Molunerfinn/hexo-theme-melody
+
+https://github.com/zhwangart/hexo-theme-ocean
+
+https://github.com/79E/hexo-theme-quiet
+
+

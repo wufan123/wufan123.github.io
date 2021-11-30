@@ -1,0 +1,60 @@
+# main menu navigation
+menu:
+  Home: /
+  About: /about
+  Archive: /archives 
+
+widgets:
+  - tag
+  - archive
+  - recent_posts
+  - category
+  - profile
+
+# social config
+social:
+  zhihu:
+  github: wufan123
+
+user:
+  name: wufan
+  avatar: /images/avatar.jpg
+  location: 厦门
+  description: 前端程序员，目前就职于四三九九
+  footnotes: # footnotes
+
+# documents: https://github.com/utterance/utterances
+# API config: https://utteranc.es/
+comment_utteranc: 
+  enable: true 
+  repo: wufan123/wufan123.github.io # your blog repo
+
+
+# documents: https://valine.js.org/quickstart.html
+comment_valine:
+  enable: false
+  appId: Of4AtHfSr0vpxE4qStFh04fi-gzGzoHsz 
+  appKey: OfpB0sGvNQDck70QvTTf9X4O
+
+comment_disqus:
+    enable: false
+    url:  # the url of your website main domain like this https://xxx.xxx/
+    name: # the short name in disqus
+
+# dark
+# light
+# user-can-set
+appearance: auto # Default value is auto
+
+# Miscellaneous
+favicon: /images/favicon.png
+
+# Google Analytics
+ga_track_id:
+ga_domain:
+
+# Baidu Analytics
+ba_track_id:
+
+# picture of about page
+about_pic: /images/about2.webp

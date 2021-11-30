@@ -44,21 +44,24 @@ script.
     var searchButtonEl = document.getElementById('searchButton')
     var searchResultEl = document.getElementById('searchContent')
 
-    searchInputEl.oninput = function (evt) {
+    searchInputEl.oninput = _.debounce(function (evt) {
         var searchValue = evt.srcElement.value
+        console.log("oninput",searchValue)
         var haveSearchValue = Boolean(searchValue.trim())
         if (!haveSearchValue) {
             searchResultEl.style.height = 0
             searchResultEl.innerHTML = null
             return
         }
-
         var searchResults = searching(searchValue)
 
         if (searchResults.length > 0) {
             renderSearchResults(searchResults)
+        }else{
+            searchResultEl.style.height = 0
+            searchResultEl.innerHTML = null
         }
-    }
+    },200) 
 
     function renderSearchResults(results) {
         searchResultEl.innerHTML = null
@@ -95,18 +98,18 @@ script.
             var key = searchKey.toLowerCase()
 
             for (var entry of searchDatabase) {  
-                console.log(entry)
                 var title = entry.getElementsByTagName('title')[0].textContent
                 //- var link = entry.getElementsByTagName('link')[0].getAttribute('href')
                 var link = entry.getElementsByTagName('url')[0].textContent
                 var contentWithTags = entry.getElementsByTagName('content')[0].textContent
+                var rawTitle =title.trim().replace(/<[^>]+>/g, '').toLowerCase()
                 var rawContent = contentWithTags.trim().replace(/<[^>]+>/g, '').toLowerCase()
 
                 var LENGTH = 80
                 var finalContent = ''
-                var contentLength = rawContent.length
-                var searchResultIdx = rawContent.indexOf(key)
-
+                var contentLength = rawContent.length 
+                console.log(key);
+                searchResultIdx=rawContent.indexOf(key);
                 var startIdx = searchResultIdx - 20,
                     endIdx = startIdx + LENGTH
 
@@ -118,8 +121,10 @@ script.
                 endIdx > contentLength && (endIdx = contentLength)
 
                 finalContent = rawContent.substring(startIdx, endIdx)
-
-                if (title.indexOf(key) > -1 || searchResultIdx > -1) {
+                var titleArr = searchResults.map(item=>{
+                    return item.title
+                })
+                if (titleArr.indexOf(title)<0&&(rawTitle.indexOf(key) > -1 || searchResultIdx > -1)) {
                     searchResults.push({
                         link: link,
                         title: title,

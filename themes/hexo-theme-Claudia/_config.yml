@@ -32,9 +32,9 @@ comment_utteranc:
 
 # documents: https://valine.js.org/quickstart.html
 comment_valine:
-  enable: false
-  appId: Of4AtHfSr0vpxE4qStFh04fi-gzGzoHsz 
-  appKey: OfpB0sGvNQDck70QvTTf9X4O
+  enable: true
+  appId: 4lVndPEgYCJcGVK0eyws4kyz-gzGzoHsz
+  appKey: pG0IL7uEfmLFB0miT5zUcCko
 
 comment_disqus:
     enable: false

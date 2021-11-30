@@ -15,3 +15,8 @@
         //     return matchImg[1]
         // }
     }
+
+-
+    function rmContentImg(content) {
+        return content.replace(/<img[^>]+src="?([^"\s]+)".*?>/,'');
+    }

@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 4399waslong
-subtitle: ""
-description: ""
-keywords:
-author: waslong
+title: wufan
+subtitle: "wufan's blog"
+description: "个人博客" 
+keywords: "博客、前端、编程、开发、分享"
+author: wufan
 language: zh-CN
 timezone: ""
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://wufan123.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -44,16 +44,16 @@ post_asset_folder: true
 relative_link: false
 future: true
 highlight:
-  enable: true
-  line_number: true
+  enable: false
+  line_number: false
   auto_detect: false
   tab_replace: ""
-  wrap: true
-  hljs: false
+  wrap: false
+  hljs: true
 prismjs:
   enable: false
-  preprocess: true
-  line_number: true
+  preprocess: false
+  line_number: false
   tab_replace: ""
 
 # Home page setting
@@ -97,7 +97,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: lx
+theme: hexo-theme-Claudia
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment

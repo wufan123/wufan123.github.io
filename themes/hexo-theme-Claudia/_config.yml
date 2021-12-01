@@ -13,14 +13,15 @@ widgets:
 
 # social config
 social:
-  zhihu:
+  zhihu: people/wu-hua-rong-18
   github: wufan123
 
 user:
   name: wufan
   avatar: /images/avatar.jpg
-  location: 厦门
-  description: 前端程序员，目前就职于四三九九
+  location: 福建厦门
+  # email: 357114638@qq.com
+  description: 357114638@qq.com
   footnotes: # footnotes
 
 # documents: https://github.com/utterance/utterances

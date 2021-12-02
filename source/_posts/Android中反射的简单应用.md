@@ -96,7 +96,7 @@ Class<Integer> type = Integer.TYPE;
 
 ## Android中的简单应用
 查看Android SDK的源码时候。你会发现很多类或方法中经常加上了“@hide”注释标记，这些API是不允许在程序中调用的。Hidden API之所以被隐藏，是想阻止开发者使用SDK中那些未完成或不稳定的部分（接口或架构）。如图所示
-![](http://upload-images.jianshu.io/upload_images/2099385-bd4c9f5f72fac178.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+{% asset_img 1.webp %}
 所以在开发中，我们不仅可以通过反射获取私有属性和方法，也可以利用反射获取一些SDK对外部隐藏的API，比如说前阵子在做蓝牙开发的时候，自动配对的一些方法在API 19以后才对外开放的，这边我们就可以使用反射来实现配对功能了
 ``` java
 try

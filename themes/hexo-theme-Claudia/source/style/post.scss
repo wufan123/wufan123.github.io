@@ -49,7 +49,9 @@ $lineColor: var(--border-line-color);
 
 .post-page {
   .post-content {
-
+    &>p{
+      text-indent: 2em;
+    }
     code {
       border-radius: 4px;
       background: var(--third-bg-color);
@@ -86,7 +88,7 @@ $lineColor: var(--border-line-color);
       color: $activeColor;
     }
     p{
-      text-indent: 2em;
+   
       line-height: 1.8em;
     }
   }

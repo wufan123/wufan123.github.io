@@ -23,6 +23,9 @@
     transition: none;
     transform: translateY(0); }
 
+.post-page .post-content > p {
+  text-indent: 2em; }
+
 .post-page .post-content code {
   border-radius: 4px;
   background: var(--third-bg-color); }
@@ -51,7 +54,6 @@
   color: #3273dc; }
 
 .post-page .post-content p {
-  text-indent: 2em;
   line-height: 1.8em; }
 
 .post-page .jump-container .button {

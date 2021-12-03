@@ -1,123 +1,417 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>10分钟搭建个人静态博客网站</title>
-    <url>/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/</url>
-    <content><![CDATA[<p>  只看步骤的话，跳到快速开始</p>
-<img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/banner.jpg" class="">
-
-
-<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>静态网站非常适合专注于内容的网站，比如像博客网站，这边记录一下我搭建这个静态博客的步骤，首先选择服务器，虽然现在云服务器很方便，但如果只是做个静态网站的话，有个更方便的方法是用<a href="https://pages.github.com/">Github Pages</a>，将资源部署在github上，并且还会有自己的域名，省时省力。<span id="more"></span>然后网站资源也可以用一些静态博客生成框架去做，一些流行的框架有：</p>
-<ul>
-<li><a href="http://jekyllrb.com/">Jekyll</a>，Github Pages官方推荐的构建框架，在Windows上使用的话需要先安装Ruby的运行环境，如果你熟悉Ruby的话试试看，具体参见官方文档</li>
-<li><a href="https://hexo.io/zh-cn/">Hexo</a>，这个博客站就是用Hexo生成的，Hexo运行需要Node.js环境，前端开发人员可以选择这个，个人觉得比Jekyll更容易些。</li>
-<li><a href="https://www.gohugo.org/">Hugo</a>，官方自我介绍：Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。</li>
-<li><a href="http://octopress.org/">Octopress</a>,基于Jekyll框架，官方介绍：A blogging framework for hackers.</li>
-<li><a href="https://docs.getpelican.com/en/latest/index.html">Pelican</a>,Python编写的框架。</li>
-<li><a href="https://middlemanapp.com/">MiddleMan</a>，Ruby编写的框架，官方介绍：Middleman is a static site generator using all the shortcuts and tools in modern web development.</li>
-<li><a href="https://www.metalsmith.io/">Metalsmith</a>，官方介绍：An extremely simple, pluggable static site generator.</li>
-</ul>
-<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p>本教程基于GitHub Pages和Hexo,在windows上操作，</p>
-<h3 id="一、github账号"><a href="#一、github账号" class="headerlink" title="一、github账号"></a>一、github账号</h3><p>你要先有个<a href="https://github.com/%E8%B4%A6%E5%8F%B7">GitHub</a>账号，注册登录后，新建一个repository，不了解github的话在左上角加号图标</p>
-<img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/1.png" class="">
-<br> 
-
-<p>这边的Repository name要按照一定格式</p>
-<pre class="language-js" data-language="js"><code class="language-js">&#x2F;&#x2F;usernam为你的用户名称
-username.github.io </code></pre>
-
-<p>比如我的用户名是wufan123，那么就是</p>
-<pre class="language-JavaScript" data-language="JavaScript"><code class="language-JavaScript">wufan123.github.io</code></pre>
-
-<p>创建完成后先把当前页面放着，它大概长这样子</p>
-<img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/2.png" class="">
-<br>
-
-<p>我这边新建了一个static做示范，你的应该是</p>
-<pre class="language-js" data-language="js"><code class="language-js">username&#x2F;username.github.io</code></pre>
-
-<h3 id="二、安装git"><a href="#二、安装git" class="headerlink" title="二、安装git"></a>二、安装git</h3><p>接着我们需要安装下<a href="https://git-scm.com/downloads">git</a>,选择windows，然后根据你的电脑选择32位或者64位，下载然后一路下一步安装完成。安装好之后，右键鼠标菜单应该可以看到<br>“Git Bash Here”菜单。安装git就完成了</p>
-<h3 id="三、安装Node-js"><a href="#三、安装Node-js" class="headerlink" title="三、安装Node.js"></a>三、安装Node.js</h3><p>接着安装<a href="https://nodejs.org/en/">Node.js</a>环境,选择LTS版本，下一步，安装完成之后通过鼠标右键菜单选择Git Bash Here，输入</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">node -v </code></pre>
-<p>显示Node.js版本，安装成功</p>
-<h3 id="四、安装Hexo"><a href="#四、安装Hexo" class="headerlink" title="四、安装Hexo"></a>四、安装Hexo</h3><p>可以先设置下npm的淘宝镜像，这样安装比较快</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org</code></pre>
-<p>然后在Git Bash中输入</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">npm install -g hexo-cli </code></pre>
-<p>输入</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo -v</code></pre>
-<p>显示版本信息安装成功</p>
-<h3 id="五、建站"><a href="#五、建站" class="headerlink" title="五、建站"></a>五、建站</h3><p>安装 Hexo 完成后，请执行下列命令，Hexo 将会在指定文件夹中新建所需要的文件。</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo init my-blog
-cd my-blog
-npm install</code></pre>
-<p>我新建了一个my-blog的hexo站点项目，它的目录是这样子的</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">.
-├── _config.yml
-├── package.json
-├── scaffolds
-├── source
-|   ├── _drafts
-|   └── _posts
-└── themes</code></pre>
-<p>我们找到_config.yml文件，修改配置</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">deploy:
-  type: git
-  repo: &lt;repository url&gt; #git@github.com:wufan123&#x2F;wufan123.github.io.git
-  branch: gh-pages</code></pre>
-<p>将repo改成刚才在Github新建的repo地址。</p>
-<h3 id="六、添加git-ssh"><a href="#六、添加git-ssh" class="headerlink" title="六、添加git ssh"></a>六、添加git ssh</h3><p>为了能顺利将刚才生成的资源部署到github上（公钥认证），我们先创建一对公钥密匙</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">$ ssh-keygen -o</code></pre>
-<p>然后输入</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">$ cat ~&#x2F;.ssh&#x2F;id_rsa.pub</code></pre>
-<p>会出现类似这样的字符串</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom&#x2F;BWDSU
-GPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3
-Pbv7kOdJ&#x2F;MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK&#x2F;7XA
-t3FaoJoAsncM1Q9x5+3V0Ww68&#x2F;eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw&#x2F;Pb0rwert&#x2F;En
-mZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z&#x2F;il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbx
-NrRFi9wrf+M7Q&#x3D;&#x3D; schacon@mylaptop.local</code></pre>
-<p>上面的是示例，请拷贝自己的，然后添加到<a href="https://github.com/settings/keys">Github SSH keys</a>中，点击界面中的New SSH key，title是自己给它的名字，key中黏贴刚才拷贝的那一串公匙内容。</p>
-<h3 id="七、部署"><a href="#七、部署" class="headerlink" title="七、部署"></a>七、部署</h3><p>现在你可以运行</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo deploy</code></pre>
-<p>进行部署了，顺利的话，你可以看到你Github上username.github.io中会多出一个<code>gh-pages</code>分支，过一小会，你就可以在浏览器中输入username.github.io访问自己的博客网站了比如我的地址就是<a href="https://wufan123.github.io/">wufan123.github.io</a>,如果你完全按照我的步骤来的话，它差不多长这样子的：</p>
-<img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/3.png" class="">
-<br>
-恭喜你建站成功了！
-
-<h3 id="八、写作"><a href="#八、写作" class="headerlink" title="八、写作"></a>八、写作</h3><p>可以通过下列命令来创建一篇新文章或者新的页面</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">$ hexo new [layout] &lt;title&gt;</code></pre>
-<p>layout不是必须参数，默认为post，比如创建一篇搭建个人博客网站</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo new 搭建个人博客网站</code></pre>
-<p>你在source中可以看到生成了一个<code>搭建个人博客网站.md</code>文件，然后就是用你熟悉的md语法写作了，写完之后，可以用运行下列命令启动一个本地服务器预览一下</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo server</code></pre>
-<p>觉得没问题的话，就可以重新部署到gitub.io了，部署命令</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo clean 
-hexo deploy</code></pre>
-<p>稍等一下就可以看到博客站更新了,其他关于写作，网站配置可以移步<a href="https://hexo.io/zh-cn/docs">官方文档说明</a></p>
-<h3 id="八、主题"><a href="#八、主题" class="headerlink" title="八、主题"></a>八、主题</h3><p>如果你觉得官方的默认主题不好看，可以换主题，官方的<a href="https://hexo.io/themes/">主题列表</a>有300+不同的主题，应该会有一款符合你的审美</p>
-<img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/4.png" class="">
-<br>
-
-<p>当然你有前端开发或其他编程经验的话也可以在别人的主题上做一些改动或者自定义一款自己的主题，后面还能贡献到官方的主题列表。这边我推荐几个我觉得挺好看的主题：</p>
-<ul>
-<li><a href="https://github.com/Haojen/hexo-theme-Claudia">hexo-theme-Claudia</a></li>
-<li><a href="https://github.com/blleng/hexo-theme-lx">hexo-theme-lx</a></li>
-<li><a href="https://github.com/blleng/hexo-theme-lx">hexo-theme-tranquilpeak</a></li>
-<li><a href="https://github.com/probberechts/hexo-theme-cactus">hexo-theme-cactus</a></li>
-<li><a href="https://github.com/probberechts/hexo-theme-cactus">hexo-theme-cactus</a></li>
-<li><a href="https://github.com/79E/hexo-theme-quiet">hexo-theme-quiet</a></li>
-</ul>
-<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>最后稍微说明一下，如果你遇到困难可以有点思路，<code>Github Pages</code>是给你用来放静态资源的一个地方，你不弄博客网站，也可以直接放一个<code>.md</code>文件、图片、视频或者<code>.html</code>都可以通过<code>username.github.io</code>访问到。git是一个分布式的版本管理工具，不了解的话，可以简单理解成是将你本地的文件更新到你github。hexo是用来构建静态博客的框架，你不用框架可不可以弄静态博客，可以，但相对费力费时，用hexo会更方便，它有很多现成的东西，你只要专注于写作就可以了，如果文章中有什么问题或者什么问题可以留言也可以给我发邮件。瑞思拜~</p>
-]]></content>
+<search> 
+  
+  
+    
+    <entry>
+      <title>10分钟搭建个人静态博客网站</title>
+      <link href="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/"/>
+      <url>/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/</url>
+      
+        <content type="html"><![CDATA[<p>  只看步骤的话，跳到快速开始</p><img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/banner.jpg" class=""> <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>静态网站非常适合专注于内容的网站，比如像博客网站，这边记录一下我搭建这个静态博客的步骤，首先选择服务器，虽然现在云服务器很方便，但如果只是做个静态网站的话，有个更方便的方法是用<a href="https://pages.github.com/">Github Pages</a>，将资源部署在github上，并且还会有自己的域名，省时省力。<span id="more"></span>然后网站资源也可以用一些静态博客生成框架去做，一些流行的框架有：</p><ul><li><a href="http://jekyllrb.com/">Jekyll</a>，Github Pages官方推荐的构建框架，在Windows上使用的话需要先安装Ruby的运行环境，如果你熟悉Ruby的话试试看，具体参见官方文档</li><li><a href="https://hexo.io/zh-cn/">Hexo</a>，这个博客站就是用Hexo生成的，Hexo运行需要Node.js环境，前端开发人员可以选择这个，个人觉得比Jekyll更容易些。</li><li><a href="https://www.gohugo.org/">Hugo</a>，官方自我介绍：Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。</li><li><a href="http://octopress.org/">Octopress</a>,基于Jekyll框架，官方介绍：A blogging framework for hackers.</li><li><a href="https://docs.getpelican.com/en/latest/index.html">Pelican</a>,Python编写的框架。</li><li><a href="https://middlemanapp.com/">MiddleMan</a>，Ruby编写的框架，官方介绍：Middleman is a static site generator using all the shortcuts and tools in modern web development.</li><li><a href="https://www.metalsmith.io/">Metalsmith</a>，官方介绍：An extremely simple, pluggable static site generator.</li></ul><h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p>本教程基于GitHub Pages和Hexo,在windows上操作，</p><h3 id="一、github账号"><a href="#一、github账号" class="headerlink" title="一、github账号"></a>一、github账号</h3><p>你要先有个<a href="https://github.com/%E8%B4%A6%E5%8F%B7">GitHub</a>账号，注册登录后，新建一个repository，不了解github的话在左上角加号图标</p><img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/1.png" class=""><br> <p>这边的Repository name要按照一定格式</p><pre class="language-js" data-language="js"><code class="language-js">&#x2F;&#x2F;usernam为你的用户名称username.github.io </code></pre><p>比如我的用户名是wufan123，那么就是</p><pre class="language-JavaScript" data-language="JavaScript"><code class="language-JavaScript">wufan123.github.io</code></pre><p>创建完成后先把当前页面放着，它大概长这样子</p><img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/2.png" class=""><br><p>我这边新建了一个static做示范，你的应该是</p><pre class="language-js" data-language="js"><code class="language-js">username&#x2F;username.github.io</code></pre><h3 id="二、安装git"><a href="#二、安装git" class="headerlink" title="二、安装git"></a>二、安装git</h3><p>接着我们需要安装下<a href="https://git-scm.com/downloads">git</a>,选择windows，然后根据你的电脑选择32位或者64位，下载然后一路下一步安装完成。安装好之后，右键鼠标菜单应该可以看到<br>“Git Bash Here”菜单。安装git就完成了</p><h3 id="三、安装Node-js"><a href="#三、安装Node-js" class="headerlink" title="三、安装Node.js"></a>三、安装Node.js</h3><p>接着安装<a href="https://nodejs.org/en/">Node.js</a>环境,选择LTS版本，下一步，安装完成之后通过鼠标右键菜单选择Git Bash Here，输入</p><pre class="language-bash" data-language="bash"><code class="language-bash">node -v </code></pre><p>显示Node.js版本，安装成功</p><h3 id="四、安装Hexo"><a href="#四、安装Hexo" class="headerlink" title="四、安装Hexo"></a>四、安装Hexo</h3><p>可以先设置下npm的淘宝镜像，这样安装比较快</p><pre class="language-bash" data-language="bash"><code class="language-bash">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org</code></pre><p>然后在Git Bash中输入</p><pre class="language-bash" data-language="bash"><code class="language-bash">npm install -g hexo-cli </code></pre><p>输入</p><pre class="language-bash" data-language="bash"><code class="language-bash">hexo -v</code></pre><p>显示版本信息安装成功</p><h3 id="五、建站"><a href="#五、建站" class="headerlink" title="五、建站"></a>五、建站</h3><p>安装 Hexo 完成后，请执行下列命令，Hexo 将会在指定文件夹中新建所需要的文件。</p><pre class="language-bash" data-language="bash"><code class="language-bash">hexo init my-blogcd my-blognpm install</code></pre><p>我新建了一个my-blog的hexo站点项目，它的目录是这样子的</p><pre class="language-bash" data-language="bash"><code class="language-bash">.├── _config.yml├── package.json├── scaffolds├── source|   ├── _drafts|   └── _posts└── themes</code></pre><p>我们找到_config.yml文件，修改配置</p><pre class="language-bash" data-language="bash"><code class="language-bash">deploy:  type: git  repo: &lt;repository url&gt; #git@github.com:wufan123&#x2F;wufan123.github.io.git  branch: gh-pages</code></pre><p>将repo改成刚才在Github新建的repo地址。</p><h3 id="六、添加git-ssh"><a href="#六、添加git-ssh" class="headerlink" title="六、添加git ssh"></a>六、添加git ssh</h3><p>为了能顺利将刚才生成的资源部署到github上（公钥认证），我们先创建一对公钥密匙</p><pre class="language-bash" data-language="bash"><code class="language-bash">$ ssh-keygen -o</code></pre><p>然后输入</p><pre class="language-bash" data-language="bash"><code class="language-bash">$ cat ~&#x2F;.ssh&#x2F;id_rsa.pub</code></pre><p>会出现类似这样的字符串</p><pre class="language-bash" data-language="bash"><code class="language-bash">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom&#x2F;BWDSUGPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3Pbv7kOdJ&#x2F;MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK&#x2F;7XAt3FaoJoAsncM1Q9x5+3V0Ww68&#x2F;eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw&#x2F;Pb0rwert&#x2F;EnmZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z&#x2F;il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbxNrRFi9wrf+M7Q&#x3D;&#x3D; schacon@mylaptop.local</code></pre><p>上面的是示例，请拷贝自己的，然后添加到<a href="https://github.com/settings/keys">Github SSH keys</a>中，点击界面中的New SSH key，title是自己给它的名字，key中黏贴刚才拷贝的那一串公匙内容。</p><h3 id="七、部署"><a href="#七、部署" class="headerlink" title="七、部署"></a>七、部署</h3><p>现在你可以运行</p><pre class="language-bash" data-language="bash"><code class="language-bash">hexo deploy</code></pre><p>进行部署了，顺利的话，你可以看到你Github上username.github.io中会多出一个<code>gh-pages</code>分支，过一小会，你就可以在浏览器中输入username.github.io访问自己的博客网站了比如我的地址就是<a href="https://wufan123.github.io/">wufan123.github.io</a>,如果你完全按照我的步骤来的话，它差不多长这样子的：</p><img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/3.png" class=""><br>恭喜你建站成功了！<h3 id="八、写作"><a href="#八、写作" class="headerlink" title="八、写作"></a>八、写作</h3><p>可以通过下列命令来创建一篇新文章或者新的页面</p><pre class="language-bash" data-language="bash"><code class="language-bash">$ hexo new [layout] &lt;title&gt;</code></pre><p>layout不是必须参数，默认为post，比如创建一篇搭建个人博客网站</p><pre class="language-bash" data-language="bash"><code class="language-bash">hexo new 搭建个人博客网站</code></pre><p>你在source中可以看到生成了一个<code>搭建个人博客网站.md</code>文件，然后就是用你熟悉的md语法写作了，写完之后，可以用运行下列命令启动一个本地服务器预览一下</p><pre class="language-bash" data-language="bash"><code class="language-bash">hexo server</code></pre><p>觉得没问题的话，就可以重新部署到gitub.io了，部署命令</p><pre class="language-bash" data-language="bash"><code class="language-bash">hexo clean hexo deploy</code></pre><p>稍等一下就可以看到博客站更新了,其他关于写作，网站配置可以移步<a href="https://hexo.io/zh-cn/docs">官方文档说明</a></p><h3 id="八、主题"><a href="#八、主题" class="headerlink" title="八、主题"></a>八、主题</h3><p>如果你觉得官方的默认主题不好看，可以换主题，官方的<a href="https://hexo.io/themes/">主题列表</a>有300+不同的主题，应该会有一款符合你的审美</p><img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/4.png" class=""><br><p>当然你有前端开发或其他编程经验的话也可以在别人的主题上做一些改动或者自定义一款自己的主题，后面还能贡献到官方的主题列表。这边我推荐几个我觉得挺好看的主题：</p><ul><li><a href="https://github.com/Haojen/hexo-theme-Claudia">hexo-theme-Claudia</a></li><li><a href="https://github.com/blleng/hexo-theme-lx">hexo-theme-lx</a></li><li><a href="https://github.com/blleng/hexo-theme-lx">hexo-theme-tranquilpeak</a></li><li><a href="https://github.com/probberechts/hexo-theme-cactus">hexo-theme-cactus</a></li><li><a href="https://github.com/probberechts/hexo-theme-cactus">hexo-theme-cactus</a></li><li><a href="https://github.com/79E/hexo-theme-quiet">hexo-theme-quiet</a></li></ul><h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>最后稍微说明一下，如果你遇到困难可以有点思路，<code>Github Pages</code>是给你用来放静态资源的一个地方，你不弄博客网站，也可以直接放一个<code>.md</code>文件、图片、视频或者<code>.html</code>都可以通过<code>username.github.io</code>访问到。git是一个分布式的版本管理工具，不了解的话，可以简单理解成是将你本地的文件更新到你github。hexo是用来构建静态博客的框架，你不用框架可不可以弄静态博客，可以，但相对费力费时，用hexo会更方便，它有很多现成的东西，你只要专注于写作就可以了，如果文章中有什么问题或者什么问题可以留言也可以给我发邮件。瑞思拜~</p>]]></content>
+      
+      
       <categories>
-        <category>前端</category>
-        <category>后端</category>
+          
+          <category> 前端 </category>
+          
+          <category> 后端 </category>
+          
       </categories>
-      <tags>
-        <tag>博客</tag>
-        <tag>Hexo</tag>
-        <tag>GitHub-Pages</tag>
-      </tags>
-  </entry>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+            <tag> Hexo </tag>
+            
+            <tag> GitHub-Pages </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>kotlin-学习笔记（一）</title>
+      <link href="/2017/06/08/kotlin-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+      <url>/2017/06/08/kotlin-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h2 id="什么是kotlin"><a href="#什么是kotlin" class="headerlink" title="什么是kotlin"></a>什么是kotlin</h2><p>一门现代多平台应用的静态编程语言</p><h2 id="相对于java的优点"><a href="#相对于java的优点" class="headerlink" title="相对于java的优点"></a>相对于java的优点</h2><p>总的来说就是语法上比较简洁，更易书写和阅读，对空指针这类的错误异常更易把握，并很好兼容java</p><h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><p>列出几个较java不同的地方</p><ul><li><strong>包定义</strong>，不要求包名符合文件路径，每个kotlin源文件都会默认引入kotlin一些相关包，然后根据平台的不同，引入一些平台包</li><li><strong>字符串模板</strong>，字符串中可以包含模板表达式，列如：<pre class="language-kotlin" data-language="kotlin"><code class="language-kotlin">val s &#x3D; &quot;abc&quot;val str &#x3D; &quot;$s.length is $&#123;s.length&#125;&quot; &#x2F;&#x2F; evaluates to &quot;abc.length is 3&quot;</code></pre></li><li><strong>空值检查</strong>，可以通过？.来安全使用可能为空的对象。列如：<pre class="language-kotlin" data-language="kotlin"><code class="language-kotlin">val l &#x3D; b?.length ?: -1</code></pre></li></ul><span id="more"></span><ul><li><strong>类型转换检查</strong><pre class="language-kotlin" data-language="kotlin"><code class="language-kotlin">val aInt: Int? &#x3D; a as? Int&#x2F;&#x2F;if a  is not Int，a is null</code></pre></li><li><strong>类型的自动转换</strong><pre class="language-kotlin" data-language="kotlin"><code class="language-kotlin">if (obj is String) &#123;        &#x2F;&#x2F; &#96;obj&#96; is automatically cast to &#96;String&#96; in this branch        return obj.length    &#125;</code></pre></li><li><strong>for循环和while循环</strong><pre class="language-kotlin" data-language="kotlin"><code class="language-kotlin">for (item in items) &#123;    println(item)&#125;for (index in items.indices) &#123;    println(&quot;item at $index is $&#123;items[index]&#125;&quot;)&#125;while (index &lt; items.size) &#123;    println(&quot;item at $index is $&#123;items[index]&#125;&quot;)    index++&#125;</code></pre></li><li><strong>when</strong>表达式，类似java中switch<pre class="language-kotlin" data-language="kotlin"><code class="language-kotlin">when (obj) &#123;    1          -&gt; &quot;One&quot;    &quot;Hello&quot;    -&gt; &quot;Greeting&quot;    is Long    -&gt; &quot;Long&quot;    !is String -&gt; &quot;Not a string&quot;    else       -&gt; &quot;Unknown&quot;&#125;</code></pre></li><li><strong>ranges</strong>表达式，检查某值是否在某个范围内<pre class="language-kotlin" data-language="kotlin"><code class="language-kotlin">val x &#x3D; 10val y &#x3D; 9if (x in 1..y+1) &#123;    println(&quot;fits in range&quot;)&#125;</code></pre></li><li><strong>collections</strong>的使用<pre class="language-kotlin" data-language="kotlin"><code class="language-kotlin">when &#123;&#x2F;&#x2F;hecking if a collection contains an object using in operator    &quot;orange&quot; in items -&gt; println(&quot;juicy&quot;)    &quot;apple&quot; in items -&gt; println(&quot;apple is fine too&quot;)&#125;fruits&#x2F;&#x2F;Using lambda.filter &#123; it.startsWith(&quot;a&quot;) &#125;.sortedBy &#123; it &#125;.map &#123; it.toUpperCase() &#125;.forEach &#123; println(it) &#125;</code></pre></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> kotlin </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>android-studio-实用技巧</title>
+      <link href="/2016/10/10/android-studio-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/"/>
+      <url>/2016/10/10/android-studio-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</url>
+      
+        <content type="html"><![CDATA[<ul><li><strong>打jar包</strong><br>android studio 默认提供的是aar包，如果要打成jar包的话，就要自己写gradle task，在库工程的build.gradle文件中添加一下代码：<pre class="language-java" data-language="java"><code class="language-java">task makeJar(type: Copy) &#123;   delete &#39;build&#x2F;libs&#x2F;mysdk.jar&#39;   from(&#39;build&#x2F;intermediates&#x2F;bundles&#x2F;release&#x2F;&#39;)   into(&#39;build&#x2F;libs&#x2F;&#39;)   include(&#39;classes.jar&#39;)   rename (&#39;classes.jar&#39;, &#39;mysdk.jar&#39;)&#125;makeJar.dependsOn(build);</code></pre>然后在终端执行命令打出jar包<pre class="language-bash" data-language="bash"><code class="language-bash">gradlew makeJar</code></pre></li><li><strong>引用aar包</strong><br>将aar拷贝至lib目录，在module中的build.gradle文件中添加以下代码<pre class="language-java" data-language="java"><code class="language-java">repositories &#123; flatDir &#123; dirs &#39;libs&#39; &#125; &#125;dependencies &#123;compile(name: &#39;aar_name&#39;, ext: &#39;aar&#39;)&#125;</code></pre></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> Android Studio </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>AngularJS简单介绍</title>
+      <link href="/2016/10/08/AngularJS%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/"/>
+      <url>/2016/10/08/AngularJS%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</url>
+      
+        <content type="html"><![CDATA[<p>AngularJS是一款优秀的前端框架，主要解决hmtl在构建web应用上不足的问题。AngularJS核心的特点是模块化，数据的双向绑定，依赖注入。</p><h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><p>在html标签中使用ng-app指示符定义一个模块</p><pre class="language-html" data-language="html"><code class="language-html">&lt;html ng-app&#x3D;&quot;mall-app&quot; style&#x3D;&quot;height: 100%;&quot;&gt;                   </code></pre><span id="more"></span><p>然后在js代码中即可通过下angular.module()方法创建指定的模块。</p><pre class="language-js" data-language="js"><code class="language-js">var mallApp &#x3D; angular.module(&#39;mall-app&#39;, []);</code></pre><p>在angular的设计中，一个module是多个服务，指示符，过滤器和配置信息的集合，一般来说就是一个app或者lib了。上面的方法还有一点要说明的就是一个参数的时候是获取已经存在的module</p><pre class="language-js" data-language="js"><code class="language-js">var mallApp &#x3D; angular.module(&#39;mall-app&#39;);&#x2F;&#x2F;获取之前创建的module对象&#x2F;&#x2F;多次调用两个参数的方法，将创建多个对象。</code></pre><p>当然有时候你的module需要依赖其他module，在创建的时候需要在第二个参数中传入依赖module的名称</p><pre class="language-js" data-language="js"><code class="language-js">var mallApp &#x3D; angular.module(&#39;mall-app&#39;, [&#39;ngRoute&#39;]);&#x2F;&#x2F;依赖官方的路由模块</code></pre><p>这里额外说明一点,如果你未创建指定的module，却使用一个参数的方法去获取已经存在的module，angularjs会报错的。</p><pre class="language-js" data-language="js"><code class="language-js">var mallApp &#x3D; angular.module(&#39;mall-app&#39;, []);&#x2F;&#x2F;要先创建var mallApp &#x3D; angular.module(&#39;mall-app&#39;);&#x2F;&#x2F;这里才能获取</code></pre><h2 id="数据的双向绑定"><a href="#数据的双向绑定" class="headerlink" title="数据的双向绑定"></a>数据的双向绑定</h2><p>使用angularjs我们可以很方便的将数据绑定到html页面上，首先我们要先认识几个指示符</p><pre class="language-js" data-language="js"><code class="language-js">ng-app &#x2F;&#x2F;之前说过的，定义一各moduleng-controler &#x2F;&#x2F;定义一各控制器，我们可通过该控制器，控制html中的变量ng-model &#x2F;&#x2F;将元素值（比如输入框）绑定到变量中</code></pre><p>然后呢，再介绍一下angularjs的表达式</p><pre class="language-html" data-language="html"><code class="language-html">&#123;&#123; expression &#125;&#125;&#x2F;&#x2F;也就是ng-bind</code></pre><p>介绍完之后，我们就可以开始了</p><pre class="language-html" data-language="html"><code class="language-html">&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset&#x3D;&quot;utf-8&quot;&gt;&lt;script src&#x3D;&quot;http:&#x2F;&#x2F;apps.bdimg.com&#x2F;libs&#x2F;angular.js&#x2F;1.4.6&#x2F;angular.min.js&quot;&gt;&lt;&#x2F;script&gt;&lt;&#x2F;head&gt;&lt;body&gt;&lt;div ng-app&#x3D;&quot;myApp&quot; ng-controller&#x3D;&quot;myCtrl&quot;&gt; &#x2F;&#x2F;定义module和控制器&lt;input ng-model&#x3D;&quot;name&quot;&gt;&#x2F;&#x2F;使用ng-model指示符，直接将元素的值帮到变量上&lt;h1&gt;我的名字是 &#123;&#123;name&#125;&#125;&lt;&#x2F;h1&gt;&#x2F;&#x2F;表达式的变量&lt;&#x2F;div&gt;&lt;script&gt;var app &#x3D; angular.module(&#39;myApp&#39;, []);app.controller(&#39;myCtrl&#39;, function($scope) &#123;&#x2F;&#x2F;获得控制器    $scope.name &#x3D; &quot;John Dow&quot;;&#x2F;&#x2F;在js中通过$scope获取html中的变量，并赋初值&#125;);&lt;&#x2F;script&gt;&lt;p&gt;当你修改输入框中的值时，会影响到模型(model),当然也会影响到控制器对应的属性值。&lt;&#x2F;p&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;</code></pre><p>有兴趣的同学可以运行看一下，在输入框输入的值，会直接绑定到变量上，在hmtl上显示出来，当然name的值也会绑定到输入框中，这就是数据的双向绑定啦。</p><h2 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h2><p>依赖注入是软体中的一个设计模式，这种模式通过分离了客户端依赖创建的行为，使程序变得松耦合。angularjs提供了很好的依赖注入机制，通过以下5个核心组件作为依赖注入。</p><ul><li>constants<br>constant(常量)用来在配置阶段传递数值，注意这个常量在配置阶段是不可用的。</li><li>value<br>Value 是一个简单的 javascript 对象，用于向控制器传递值（配置阶段）</li><li>factory<br>factory 是一个函数用于返回值。在 service 和 controller 需要时创建。<br>通常我们使用 factory 函数来计算或返回值。</li><li>service<br>同factory，与factory的区别是返回时使用new关键字</li><li>provider<br>  AngularJS 中通过 provider 创建一个 service、factory等(配置阶段)。<br>Provider 中提供了一个 factory 方法 get()，它用于返回 value/service/factory。</li></ul><p>下面是一些代码示例</p><pre class="language-html" data-language="html"><code class="language-html">&lt;html&gt;      &lt;head&gt;      &lt;meta charset&#x3D;&quot;utf-8&quot;&gt;      &lt;title&gt;AngularJS  依赖注入&lt;&#x2F;title&gt;   &lt;&#x2F;head&gt;      &lt;body&gt;      &lt;h2&gt;AngularJS 简单应用&lt;&#x2F;h2&gt;            &lt;div ng-app &#x3D; &quot;mainApp&quot; ng-controller &#x3D; &quot;CalcController&quot;&gt;         &lt;p&gt;输入一个数字: &lt;input type &#x3D; &quot;number&quot; ng-model &#x3D; &quot;number&quot; &#x2F;&gt;&lt;&#x2F;p&gt;         &lt;button ng-click &#x3D; &quot;square()&quot;&gt;X&lt;sup&gt;2&lt;&#x2F;sup&gt;&lt;&#x2F;button&gt;         &lt;p&gt;结果: &#123;&#123;result&#125;&#125;&lt;&#x2F;p&gt;      &lt;&#x2F;div&gt;            &lt;script src&#x3D;&quot;http:&#x2F;&#x2F;apps.bdimg.com&#x2F;libs&#x2F;angular.js&#x2F;1.4.6&#x2F;angular.min.js&quot;&gt;&lt;&#x2F;script&gt;            &lt;script&gt;         var mainApp &#x3D; angular.module(&quot;mainApp&quot;, []);                  mainApp.config(function($provide) &#123;            $provide.provider(&#39;MathService&#39;, function() &#123;               this.$get &#x3D; function() &#123;                  var factory &#x3D; &#123;&#125;;                                    factory.multiply &#x3D; function(a, b) &#123;                     return a * b;                  &#125;                  return factory;               &#125;;            &#125;);         &#125;);         mainApp.value(&quot;defaultInput&quot;, 5);                  mainApp.factory(&#39;MathService&#39;, function() &#123;            var factory &#x3D; &#123;&#125;;                        factory.multiply &#x3D; function(a, b) &#123;               return a * b;            &#125;            return factory;         &#125;);                  mainApp.service(&#39;CalcService&#39;, function(MathService)&#123;            this.square &#x3D; function(a) &#123;               return MathService.multiply(a,a);            &#125;         &#125;);                  mainApp.controller(&#39;CalcController&#39;, function($scope, CalcService, defaultInput) &#123;            $scope.number &#x3D; defaultInput;            $scope.result &#x3D; CalcService.square($scope.number);            $scope.square &#x3D; function() &#123;               $scope.result &#x3D; CalcService.square($scope.number);            &#125;         &#125;);      &lt;&#x2F;script&gt;         &lt;&#x2F;body&gt;&lt;&#x2F;html&gt;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> AngularJS，前端 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android中AIDL的工作原理</title>
+      <link href="/2016/06/14/Android%E4%B8%ADAIDL%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
+      <url>/2016/06/14/Android%E4%B8%ADAIDL%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<p>在上一篇文章中<a href="http://www.jianshu.com/p/d1fac6ccee98">Android中AIDL的使用详解</a>介绍了AIDL的使用流程，这篇文章我们说说AIDL的工作原理。</p><h2 id="IPC"><a href="#IPC" class="headerlink" title="IPC"></a>IPC</h2><p>在这之前我们先简单说一下IPC，IPC是<strong>Inter-Process Communication</strong>的缩写，是进程间通信或者跨进程通信的意思，既然说到进程，大家要区分一下进程和线程，<strong>进程一般指的是一个执行单元，它拥有独立的地址空间，也就是一个应用或者一个程序。线程是CPU调度的最小单元，是进程中的一个执行部分或者说是执行体，两者之间是包含与被包含的关系</strong>。因为进程间的资源不能共享的，所以每个系统都有自己的IPC机制，Android是基于Linux内核的移动操作系统，但它并没有继承Linux的IPC机制，而是有着自己的一套IPC机制。</p><span id="more"></span><h2 id="Binder"><a href="#Binder" class="headerlink" title="Binder"></a>Binder</h2><p>Binder就是Android中最具特色的IPC方式，AIDL其实就是通过Binder实现的，因为在我们定义好aidl文件后，studio就帮我们生成了相关的Binder类。事实上我们在使用AIDL时候继承的Stub类，就是studio帮我们生成的Binder类，所以我们可以通过查看studio生成的代码来了解Binder的工作原理。首先我们定义一个AIDL文件</p><pre class="language-java" data-language="java"><code class="language-java">&#x2F;&#x2F; UserManager.aidlpackage cc.abto.demo;interface UserManager &#123;    String getName();    String getOtherName();&#125;</code></pre><p><strong>sycn project</strong>工程后，查看生成的UserManager.java文件</p><pre class="language-java" data-language="java"><code class="language-java">package cc.abto.demo;&#x2F;&#x2F; Declare any non-default types here with import statementspublic interface UserManager extends android.os.IInterface&#123;    &#x2F;**     * Local-side IPC implementation stub class.     *&#x2F;    public static abstract class Stub extends android.os.Binder implements cc.abto.demo.UserManager    &#123;       &#x2F;&#x2F;...    &#125;    public java.lang.String getName() throws android.os.RemoteException;    public java.lang.String getOtherName() throws android.os.RemoteException;&#125;                </code></pre><p>生成的代码还是比较多的，我就不一次性全部贴上来了，先按类结构来看。</p><img src="/2016/06/14/Android%E4%B8%ADAIDL%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/1.webp" class=""><p>sutido帮我们生成了一个继承android.os.IInterface接口的UserManager接口，所有在Binder中传输的接口都必须实现IInterface接口。接口定义了我们在AIDL文件中定义的方法，然后还有个内部静态类Stub，我们接着看这个Stub。</p><pre class="language-java" data-language="java"><code class="language-java">public static abstract class Stub extends android.os.Binder implements cc.abto.demo.UserManager    &#123;        private static final java.lang.String DESCRIPTOR &#x3D; &quot;cc.abto.demo.UserManager&quot;;        &#x2F;**         * Construct the stub at attach it to the interface.         *&#x2F;        public Stub()        &#123;            this.attachInterface(this, DESCRIPTOR);        &#125;        &#x2F;**         * Cast an IBinder object into an cc.abto.demo.UserManager interface,         * generating a proxy if needed.         *&#x2F;        public static cc.abto.demo.UserManager asInterface(android.os.IBinder obj)        &#123;            if ((obj &#x3D;&#x3D; null))            &#123;                return null;            &#125;            android.os.IInterface iin &#x3D; obj.queryLocalInterface(DESCRIPTOR);            if (((iin !&#x3D; null) &amp;&amp; (iin instanceof cc.abto.demo.UserManager)))            &#123;                return ((cc.abto.demo.UserManager) iin);            &#125;            return new cc.abto.demo.UserManager.Stub.Proxy(obj);        &#125;        @Override        public android.os.IBinder asBinder()        &#123;            return this;        &#125;        @Override        public boolean onTransact(int code, android.os.Parcel data, android.os.Parcel reply, int flags) throws android.os.RemoteException        &#123;            switch (code)            &#123;                case INTERFACE_TRANSACTION:                &#123;                    reply.writeString(DESCRIPTOR);                    return true;                &#125;                case TRANSACTION_getName:                &#123;                    data.enforceInterface(DESCRIPTOR);                    java.lang.String _result &#x3D; this.getName();                    reply.writeNoException();                    reply.writeString(_result);                    return true;                &#125;                case TRANSACTION_getOtherName:                &#123;                    data.enforceInterface(DESCRIPTOR);                    java.lang.String _result &#x3D; this.getOtherName();                    reply.writeNoException();                    reply.writeString(_result);                    return true;                &#125;            &#125;            return super.onTransact(code, data, reply, flags);        &#125;        private static class Proxy implements cc.abto.demo.UserManager        &#123;           &#x2F;&#x2F;...        &#125;        static final int TRANSACTION_getName &#x3D; (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);        static final int TRANSACTION_getOtherName &#x3D; (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);    &#125;</code></pre><p>Stub继承了android.os.Binder并实现UserManager接口，下图是Stub的类结构。</p><img src="/2016/06/14/Android%E4%B8%ADAIDL%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/2.webp" class=""><p>我们可以看到Stub中的常量，其中两个int常量是用来标识我们在接口中定义的方法的，DESCRIPTOR常量是 Binder的唯一标识。<br><strong>asInterface</strong> 方法用于将服务端的Binder对象转换为客户端所需要的接口对象，该过程区分进程，如果进程一样，就返回服务端Stub对象本身，否则呢就返回封装后的Stub.Proxy对象。<br><strong>onTransact</strong> 方法是运行在服务端的Binder线程中的，当客户端发起远程请求后，在底层封装后会交由此方法来处理。通过code来区分客户端请求的方法，注意一点的是，如果该方法返回false的换，客户端的请求就会失败。一般可以用来做权限控制。<br>最后我们来看一下Proxy代理类。</p><pre class="language-java" data-language="java"><code class="language-java">private static class Proxy implements cc.abto.demo.UserManager&#123;    private android.os.IBinder mRemote;    Proxy(android.os.IBinder remote)    &#123;        mRemote &#x3D; remote;    &#125;    @Override    public android.os.IBinder asBinder()    &#123;        return mRemote;    &#125;    public java.lang.String getInterfaceDescriptor()    &#123;        return DESCRIPTOR;    &#125;    @Override    public java.lang.String getName() throws android.os.RemoteException    &#123;        android.os.Parcel _data &#x3D; android.os.Parcel.obtain();        android.os.Parcel _reply &#x3D; android.os.Parcel.obtain();        java.lang.String _result;        try        &#123;            _data.writeInterfaceToken(DESCRIPTOR);            mRemote.transact(Stub.TRANSACTION_getName, _data, _reply, 0);            _reply.readException();            _result &#x3D; _reply.readString();        &#125;        finally        &#123;            _reply.recycle();            _data.recycle();        &#125;        return _result;    &#125;    @Override    public java.lang.String getOtherName() throws android.os.RemoteException    &#123;        android.os.Parcel _data &#x3D; android.os.Parcel.obtain();        android.os.Parcel _reply &#x3D; android.os.Parcel.obtain();        java.lang.String _result;        try        &#123;            _data.writeInterfaceToken(DESCRIPTOR);            mRemote.transact(Stub.TRANSACTION_getOtherName, _data, _reply, 0);            _reply.readException();            _result &#x3D; _reply.readString();        &#125;        finally        &#123;            _reply.recycle();            _data.recycle();        &#125;        return _result;    &#125;&#125;</code></pre><p>代理类中我们主要看一下getName和getOtherName方法就可以了，这两个方法都是运行在客户端，当客户端发起远程请求时，_data会写入参数，当然这边的例子并没有（啦啦啦…），然后调用transact方法发起RPC(远程过程调用)请求，同时挂起当前线程，然后服务端的onTransact方法就会被 调起，直到RPC过程返回后，当前线程继续执行，并从_reply取出返回值（如果有的话），并返回结果。</p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>分析完sutido生成的Binder之后，我们就大概知道AIDL的工作原理，定义好AIDL文件只是方便sutido帮我生成所需的Binder类，AIDL并不是必须的文件，因为这个Binder类我们也可以手写出来（当然，你闲的没事的话），所以这边最重要的还是Binder的知识点，其他一些IPC方式其实都是通过Binder来实现的，比如说Messager，Bundle，ContentProvider，只是它们的封装方式不一样而已。总的来说，从应用层来说，Binder是客户端和服务端之间通信的媒介。从FrameWork层来说，Binder是ServiceManager连接各种Manager和ManagerService的桥梁。Android系统中充斥着大量的CS模型，而Binder作为独有的IPC方式，如果我们能更好的理解它，对我们的开发工作就会带来更多的帮助。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android中AIDL的使用详解</title>
+      <link href="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/"/>
+      <url>/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/</url>
+      
+        <content type="html"><![CDATA[<p>为了说的深入浅出一点，我们先从AIDL的作用和使用说起，然后再开始介绍一些概念和工作原理。</p><h2 id="AIDL用来做什么"><a href="#AIDL用来做什么" class="headerlink" title="AIDL用来做什么"></a>AIDL用来做什么</h2><p>AIDL是Android中<strong>IPC（Inter-Process Communication）</strong>方式中的一种，AIDL是<strong>Android Interface definition language</strong>的缩写，对于小白来说，AIDL的作用是让你可以在自己的APP里绑定一个其他APP的service，这样你的APP可以和其他APP交互。<br> <span id="more"></span></p><h2 id="AIDL的使用"><a href="#AIDL的使用" class="headerlink" title="AIDL的使用"></a>AIDL的使用</h2><p>在android studio 2.0里面使用AIDL，因为是两个APP交互么，所以当然要两个APP啦，我们在第一个工程目录右键</p><img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/1.webp" class=""><p>输入名称后，sutido就帮我们创建了一个AIDL文件。</p><pre class="language-java" data-language="java"><code class="language-java">&#x2F;&#x2F; IMyAidlInterface.aidlpackage cc.abto.demo;&#x2F;&#x2F; Declare any non-default types here with import statementsinterface IMyAidlInterface &#123;    &#x2F;**     * Demonstrates some basic types that you can use as parameters     * and return values in AIDL.     *&#x2F;    void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,            double aDouble, String aString);&#125;</code></pre><p>上面就是studio帮我生成的aidl文件。basicTypes这个方法可以无视，看注解知道这个方法只是告诉你在AIDL中你可以使用的基本类型（int, long, boolean, float, double, String），因为这里是要跨进程通讯的，所以不是随便你自己定义的一个类型就可以在AIDL使用的，这些后面会说。我们在AIDL文件中定义一个我们要提供给第二个APP使用的接口。</p><pre class="language-java" data-language="java"><code class="language-java">interface IMyAidlInterface &#123;   String getName();&#125;</code></pre><p>定义好之后，就可以<strong>sync project</strong>一下，然后新建一个service。在service里面创建一个内部类，继承你刚才创建的AIDL的名称里的Stub类,并实现接口方法,在onBind返回内部类的实例。</p><pre class="language-java" data-language="java"><code class="language-java">public class MyService extends Service&#123;    public MyService()    &#123;    &#125;    @Override    public IBinder onBind(Intent intent)    &#123;        return new MyBinder();    &#125;    class MyBinder extends IMyAidlInterface.Stub    &#123;        @Override        public String getName() throws RemoteException        &#123;            return &quot;test&quot;;        &#125;    &#125;&#125;</code></pre><p>接下来，将我们的AIDL文件拷贝到第二个项目，然后<strong>sync project</strong>一下工程。</p><img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/2.webp" class=""><p>这边的包名要跟第一个项目的一样哦，这之后在Activity中绑定服务。</p><pre class="language-java" data-language="java"><code class="language-java">public class MainActivity extends AppCompatActivity&#123;    private IMyAidlInterface iMyAidlInterface;    @Override    protected void onCreate(Bundle savedInstanceState)    &#123;        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_main);        bindService(new Intent(&quot;cc.abto.server&quot;), new ServiceConnection()        &#123;            @Override            public void onServiceConnected(ComponentName name, IBinder service)            &#123;                iMyAidlInterface &#x3D; IMyAidlInterface.Stub.asInterface(service);            &#125;            @Override            public void onServiceDisconnected(ComponentName name)            &#123;            &#125;        &#125;, BIND_AUTO_CREATE);    &#125;    public void onClick(View view)    &#123;        try        &#123;            Toast.makeText(MainActivity.this, iMyAidlInterface.getName(), Toast.LENGTH_SHORT).show();        &#125;        catch (RemoteException e)        &#123;            e.printStackTrace();        &#125;    &#125;&#125;</code></pre><p>这边我们通过隐式意图来绑定service，在onServiceConnected方法中通过**IMyAidlInterface.Stub.asInterface(service)**获取iMyAidlInterface对象，然后在onClick中调用iMyAidlInterface.getName()。</p><img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/3.webp" class=""><h2 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h2><p>如果我要在AIDL中使用自定义的类型，要怎么做呢。首先我们的自定义类型要实现<strong>Parcelable</strong>接口，下面的代码中创建了一个User类并实现Parcelable接口。这边就不对Parcelable进行介绍了，不熟悉的童鞋自行查找资料，总之我们这边可以借助studio的Show Intention Action（也就是Eclipse中的Quick Fix，默认是alt+enter键）帮我们快速实现Parcelable接口。</p><img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/4.webp" class=""><p>接下新建一个aidl文件，名称为我们自定义类型的名称，这边是User.aidl。在User.aidl申明我们的自定义类型和它的完整包名，注意这边parcelable是小写的，不是Parcelable接口，一个自定类型需要一个这样同名的AIDL文件。</p><pre class="language-java" data-language="java"><code class="language-java">package cc.abto.demo;parcelable User;</code></pre><p>然后再在我们的AIDL接口中导入我们的AIDL类型。</p><img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/5.webp" class=""><p>然后定义接口方法，<strong>sync project</strong>后就可以在service中做具体实现了。</p><pre class="language-java" data-language="java"><code class="language-java">public class MyService extends Service&#123;    &#x2F;&#x2F;...    @Override    public IBinder onBind(Intent intent)    &#123;        return new MyBinder();    &#125;    class MyBinder extends IMyAidlInterface.Stub    &#123;        &#x2F;&#x2F;...        @Override        public User getUserName() throws RemoteException        &#123;            return new User(&quot;wswf&quot;);        &#125;    &#125;&#125;</code></pre><p>最后将我们的AIDL文件和自定义类型的java一并拷贝到第二个项目，注意包名都要一样哦</p><img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/6.webp" class=""><p>然后就可以在Activity中使用该自定义类型的AIDL接口了</p><pre class="language-java" data-language="java"><code class="language-java">public class MainActivity extends AppCompatActivity&#123;    &#x2F;&#x2F;...    public void onClick(View view)    &#123;        try        &#123;            Toast.makeText(MainActivity.this, iMyAidlInterface.getUserName().getName(), Toast.LENGTH_SHORT).show();        &#125;        catch (RemoteException e)        &#123;            e.printStackTrace();        &#125;    &#125;&#125;</code></pre><p>效果图就不贴了哈，通过这种方式我们就可以让两个APP之间进行交互了。</p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>为什么APP间的进程交互这么麻烦，是因为它们属于不同的进程，之间的交互涉及到进程间的通讯。而AIDL只是Android中众多进程间通讯方式中的一种方式，那么AIDL到底是什么鬼，它是如何工作的，Android的IPC机制又是怎样的呢。我将在下一篇文章<a href="http://www.jianshu.com/writer#/notebooks/4326108/notes/4350318">Android中AIDL的工作原理</a>中介绍。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android中全局异常的捕获</title>
+      <link href="/2016/06/03/Android%E4%B8%AD%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E7%9A%84%E6%8D%95%E8%8E%B7/"/>
+      <url>/2016/06/03/Android%E4%B8%AD%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E7%9A%84%E6%8D%95%E8%8E%B7/</url>
+      
+        <content type="html"><![CDATA[<p>应用的crash是让人很蛋疼的问题，在开发测试的时候还能根据日志输出什么的进行排查修复，但是应用发布以后，用户的随意性访问出现测试时未知的Bug导致我们的程序crash，此时我们是无法直接获取的错误log的，也就无法修复Bug。所以这时候我们就需要一个能全局捕获异常，并且将这个异常信息上传到服务器的功能，以便根据收集到的异常信息，在后期的版本中进行修复，改善用户体验。</p><span id="more"></span><h2 id="UncaughtExceptionHandler"><a href="#UncaughtExceptionHandler" class="headerlink" title="UncaughtExceptionHandler"></a>UncaughtExceptionHandler</h2><p>实现这个功能我们只要自定义一个实现了Thread.UncaughtExceptionHandler接口的异常处理类，并在应用初始化的时候注册这个类就可以了。</p><pre class="language-java" data-language="java"><code class="language-java">public class CrashHandler implements Thread.UncaughtExceptionHandler&#123;    private static CrashHandler ourInstance &#x3D; new CrashHandler();    public static CrashHandler getInstance()    &#123;        return ourInstance;    &#125;    private CrashHandler()    &#123;    &#125;    @Override    public void uncaughtException(Thread thread, Throwable ex)    &#123;     &#x2F;&#x2F;TODO    &#125;&#125;</code></pre><p>这边呢，我们一般将CrashHandler写成单例模式，重写上面的uncaughtException方法自定义对异常的处理，然后呢，Application或者Activity的onCreate方法里注册这个异常处理类就可以了</p><pre class="language-java" data-language="java"><code class="language-java">Thread.setDefaultUncaughtExceptionHandler(CrashHandler.getInstance());</code></pre><p>这边呢再贴一点uncaughtException中处理异常的代码，给大家参考一下</p><pre class="language-java" data-language="java"><code class="language-java">public void uncaughtException(Thread thread, Throwable ex)&#123;        dumpEx2SdCard(ex);&#x2F;&#x2F;将错误日志导入到SD卡中    upEx2server();&#x2F;&#x2F;将日志上传到服务器    if (mDefaultHandler !&#x3D; null)    &#123;        mDefaultHandler.uncaughtException(thread, ex);    &#125;    else    &#123;        Process.killProcess(Process.myPid());&#x2F;&#x2F;做一些退出或者提醒处理    &#125;&#125;private void dumpEx2SdCard(Throwable ex)&#123;         &#x2F;&#x2F;...        PrintWriter printWriter &#x3D; new PrintWriter(new BufferedWriter(new FileWriter(file)));        PackageInfo packageInfo &#x3D; context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);        ex.printStackTrace(printWriter);        printWriter.print(ex.getCause());        printWriter.print(time);        printWriter.print(ex.getMessage());        printWriter.print(&quot;APP版本：&quot;+ packageInfo.versionName+&quot;_&quot;+packageInfo.versionCode);        printWriter.print(&quot;android 版本：&quot;+ Build.VERSION.RELEASE+&quot;_&quot;+Build.VERSION.SDK_INT);        printWriter.print(&quot;制造商：&quot;+Build.MANUFACTURER);        &#x2F;&#x2F;...&#125;</code></pre><p>一般这边的代码都是将错误日志和设备信息写到SD卡中然后再上传到服务器中，具体实现就不贴那么多的代码啦，注重流程就是啦。<br>##开发者服务<br>集成一些第三方服务可以大大的加快我们的开发速度，诸如此类的统计功能我们只要集成一些像百度云推送，极光推送，友盟+等等的第三方SDK，然后做一些初始化，几行代码就搞定了。而且这些平台提供的各种强大方便的服务，确实是我们开发者的福音。像下图展示的友盟应用管理中心，各种统计功能基本上都能满足我们的需求了。</p><img src="/2016/06/03/Android%E4%B8%AD%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E7%9A%84%E6%8D%95%E8%8E%B7/1.webp" class=""><p>再推荐一个网站。<a href="http://www.devstore.cn/">DevStore <a href="http://www.baidu.com/link?url=upIpM9HcrAOsbxadr2T4f4BMfV6mi2FG54BHlfkzdTmq3BtE6gLYr5PB0rCTTQJ_&wd=&eqid=b3a05c1a00012bae00000005575122a2">移动互联网企业运营解决方案整合平台</a></a>这里面总结了各种强大的第三方服务平台，建议收藏哦。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android中反射的简单应用</title>
+      <link href="/2016/05/31/Android%E4%B8%AD%E5%8F%8D%E5%B0%84%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/"/>
+      <url>/2016/05/31/Android%E4%B8%AD%E5%8F%8D%E5%B0%84%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<p>自己对反射的理解和应用还处于比较浅显的阶段，写这篇文章更多在于整理总结，也就是帮助自己进一步的理解和学习反射机制。</p><h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>反射的概念是由Smith在1982年首次提出的，主要是指<strong>程序可以访问、检测和修改它本身状态或行为的一种能力</strong>。</p><h2 id="java中类反射"><a href="#java中类反射" class="headerlink" title="java中类反射"></a>java中类反射</h2><p>反射是 Java 程序开发语言的特征之一，它允许运行中的 Java 程序对<strong>自身进行检查，或者说“自审”，并能直接操作程序的内部属性和方法</strong>。<br>简单总结这些定义，那就是反射可以让我们获得一个类的所有信息，包括私有属性和私有方法，对于我们这种小白，先知道这点就可以啦，那在java中如何使用发射呢。这里我们随便创建一个类来演示。比如说创建一个Book类：</p><pre class="language-java" data-language="java"><code class="language-java">public class Book implements Parcelable&#123;    private int id&#x3D;1;    private String name&#x3D;&quot;android&quot;;    private String author&#x3D;&quot;wf&quot;;    private String getName()    &#123;        return name;    &#125;&#125;</code></pre><span id="more"></span><p>Book类中属性和方法都是私有的，现在我们通过反射来访问这些属性和方法。</p><pre class="language-java" data-language="java"><code class="language-java">String s &#x3D; null;try&#123;    Class&lt;?&gt; bookClass &#x3D; Class.forName(&quot;cc.abto.demo.Book&quot;);&#x2F;&#x2F;完整类名    Object book &#x3D; bookClass.newInstance();&#x2F;&#x2F;获得实例    Method getAuthor &#x3D; bookClass.getDeclaredMethod(&quot;getName&quot;);&#x2F;&#x2F;获得私有方法    getAuthor.setAccessible(true);&#x2F;&#x2F;调用方法前，设置访问标志    s &#x3D; (String) getAuthor.invoke(book);&#x2F;&#x2F;使用方法&#125;catch (Exception e)&#123;    e.printStackTrace();&#125;</code></pre><p>可以看到上面代码中我们用Class和Method这两个类完成了反射，这两个类分别对应了类和方法，也就是包装了类和方法的信息，下面对反射的部分API做一下简单介绍：</p><ul><li> Class类：代表一个类，位于java.lang包下</li><li> Field类：代表类的成员变量（成员变量也称为类的属性）</li><li> Method类：代表类的方法</li><li> Constructor类：代表类的构造方法</li><li> Array类：提供了动态创建数组，以及访问数组的元素的静态方法</li></ul><p>在Java中，每个class都有一个相应的Class对象。也就是说，当我们编写一个类，编译完成后，在生成的.class文件中，就会产生一个Class对象，用于表示这个类的类型信息。 java中的Class三种获取方式：</p><pre class="language-java" data-language="java"><code class="language-java">&#x2F;&#x2F;使用Class类的静态方法forName()，用类的名字获取一个Class实例Class&lt;?&gt; bookClass &#x3D; Class.forName(&quot;cc.abto.demo.Book&quot;);&#x2F;&#x2F;利用对象调用getClass()方法获取该对象的Class实例Book book &#x3D; new Book();Class&lt;? extends Book&gt; bookClass &#x3D; book.getClass();&#x2F;&#x2F;运用.class的方式来获取Class实例，对于基本数据类型的封装类，还可以采用.TYPE来获取相对应的基本数据类型的Class实例Class&lt;Book&gt; bookClass &#x3D; Book.class;Class&lt;Integer&gt; type &#x3D; Integer.TYPE;</code></pre><p>然后再贴一些常用的方法</p><pre class="language-java" data-language="java"><code class="language-java">public Annotation[] getAnnotations () &#x2F;&#x2F;获取这个类中所有注解getClassLoader() &#x2F;&#x2F;获取加载这个类的类加载器getDeclaredMethods() &#x2F;&#x2F;获取这个类中的所有方法getReturnType() &#x2F;&#x2F;获取方法的返回类型getParameterTypes() &#x2F;&#x2F;获取方法的传入参数类型isAnnotation() &#x2F;&#x2F;测试这类是否是一个注解类getDeclaredConstructors() &#x2F;&#x2F;获取所有的构造方法getDeclaredMethod(String name, Class… parameterTypes)&#x2F;&#x2F; 获取指定的构造方法（参数：参数类型.class）getSuperclass() &#x2F;&#x2F;获取这个类的父类getInterfaces()&#x2F;&#x2F; 获取这个类实现的所有接口getFields() &#x2F;&#x2F;获取这个类中所有被public修饰的成员变量getField(String name) &#x2F;&#x2F;获取指定名字的被public修饰的成员变量newInstance() &#x2F;&#x2F;返回此Class所表示的类，通过调用默认的（即无参数）构造函数创建的一个新实例</code></pre><p>更多的方法和方法的注解大家可以查看文档。</p><h2 id="Android中的简单应用"><a href="#Android中的简单应用" class="headerlink" title="Android中的简单应用"></a>Android中的简单应用</h2><p>查看Android SDK的源码时候。你会发现很多类或方法中经常加上了“@hide”注释标记，这些API是不允许在程序中调用的。Hidden API之所以被隐藏，是想阻止开发者使用SDK中那些未完成或不稳定的部分（接口或架构）。如图所示</p><img src="/2016/05/31/Android%E4%B8%AD%E5%8F%8D%E5%B0%84%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/1.webp" class=""><p>所以在开发中，我们不仅可以通过反射获取私有属性和方法，也可以利用反射获取一些SDK对外部隐藏的API，比如说前阵子在做蓝牙开发的时候，自动配对的一些方法在API 19以后才对外开放的，这边我们就可以使用反射来实现配对功能了</p><pre class="language-java" data-language="java"><code class="language-java">try&#123;    Class&lt;BluetoothDevice&gt; bluetoothDeviceClass &#x3D; BluetoothDevice.class;    bluetoothDeviceClass.getMethod(&quot;setPin&quot;, byte[].class).invoke(device, &quot;1234&quot;.getBytes());    bluetoothDeviceClass.getMethod(&quot;createBond&quot;).invoke(device);    bluetoothDeviceClass.getMethod(&quot;setPairingConfirmation&quot;, boolean.class).invoke(device, true);    bluetoothDeviceClass.getMethod(&quot;cancelPairingUserInput&quot;).invoke(device);&#125;catch (Exception e)&#123;    e.printStackTrace();&#125;</code></pre><h2 id="反射的好处"><a href="#反射的好处" class="headerlink" title="反射的好处"></a>反射的好处</h2><p>反射不仅可以让我们获得隐藏的方法和属性，还可以让<strong>对象的实例化从编译时转化为运行时</strong>，因为我们可以通过Class.forName(“cc.abto.demo.Book”).newInstance()的方法来生成新的实例，而这边的”cc.abto.demo.Book”是一个字符串，完全可以用变量来代替，再结合抽象工厂模式什么的，我们就可以很大程度上对程序应用中的功能模块进行解耦合。可能这边简单几句没能解释清楚，大家可以看看《大话设计模式》之类的书，里面就介绍的比较清楚明白了。<br>##反射的弊端<br>反射带来的两大弊端可能就是安全和性能问题了吧，这方面我知之甚少，有待进一步的了解和学习。</p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>因为自己水平有限，如果有些错误的地方还请大家见谅。下面贴出几篇写得比较好和详细的博客。</p><ul><li><a href="http://blog.qiji.tech/archives/4374">【Android】 认识反射机制（Reflection）</a></li><li><a href="http://www.cnblogs.com/crazypebble/archive/2011/04/13/2014582.html">Java反射机制的原理及在Android下的简单应用</a></li><li><a href="http://zlb1986.iteye.com/blog/937781">java中的反射机制</a></li><li><a href="http://efany.github.io/2016/04/02/Android%E6%B3%A8%E8%A7%A3%E4%B8%8E%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/">Android注解与反射机制</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android中退出应用的实现</title>
+      <link href="/2016/05/30/Android%E4%B8%AD%E9%80%80%E5%87%BA%E5%BA%94%E7%94%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
+      <url>/2016/05/30/Android%E4%B8%AD%E9%80%80%E5%87%BA%E5%BA%94%E7%94%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
+      
+        <content type="html"><![CDATA[<p>退出应用是项目开发中很基本的一个需求，这个功能很简单，也有很多实现的方式，这里把自己知道的退出方法做一个整理，跟大家交流分享一下。</p><span id="more"></span><h2 id="容器式"><a href="#容器式" class="headerlink" title="容器式"></a>容器式</h2><p>就是用一个全局容器把所有的Activity存起来，退出时遍历调用容器里Activity的finish方法就可以啦，这个效果很好，也很好操作的。创建一个单例来管理Acitivity，一般是在Application中实现的。</p><pre class="language-java" data-language="java"><code class="language-java">public class MyApplication extends Application&#123;    private List&lt;Activity&gt; activityList &#x3D; new LinkedList&lt;Activity&gt;();&#x2F;&#x2F;LinkedList便于删除和增加    &#x2F;&#x2F; 省略了单例代码...    public void removeActivity(Activity activity)    &#123;        activityList.remove(activity);    &#125;    public void addActivity(Activity activity)    &#123;        activityList.add(activity);    &#125;    public void exit()    &#123;        for (Activity activity : activityList)        &#123;            activity.finish();        &#125;        System.exit(0);    &#125;&#125;</code></pre><p>当当当，这样就OK了。开发中在BaseActivity这样的超类统一实现后，再在需要退出的地方调用exit方法就可以退出应用了。</p><pre class="language-java" data-language="java"><code class="language-java">public abstract class BaseActivity extends AppCompatActivity&#123;    @Override    protected void onCreate(@Nullable Bundle savedInstanceState)    &#123;        super.onCreate(savedInstanceState);        MyApplication.getInstance().addActivity(this);    &#125;  &#x2F;&#x2F;...    @Override    protected void onDestroy()    &#123;        super.onDestroy();        MyApplication.getInstance().removeActivity(this);    &#125; &#x2F;&#x2F;...&#125;</code></pre><h2 id="广播式"><a href="#广播式" class="headerlink" title="广播式"></a>广播式</h2><p>在BaseActivity这样超类中注册一个广播，要退出时发送一个广播，就可以结束所有页面了。</p><pre class="language-java" data-language="java"><code class="language-java">public abstract class BaseActivity extends AppCompatActivity&#123;    private static final String EXITACTION &#x3D; &quot;action.exit&quot;;    private ExitReceiver exitReceiver &#x3D; new ExitReceiver();    @Override    protected void onCreate(Bundle savedInstanceState) &#123;        super.onCreate(savedInstanceState);        IntentFilter filter &#x3D; new IntentFilter();        filter.addAction(EXITACTION);        LocalBroadcastManager.getInstance(this).registerReceiver(exitReceiver, new IntentFilter(EXITACTION));    &#125;    @Override    protected void onDestroy() &#123;        super.onDestroy();        LocalBroadcastManager.getInstance(this).unregisterReceiver(exitReceiver);    &#125;    class ExitReceiver extends BroadcastReceiver    &#123;        @Override        public void onReceive(Context context, Intent intent) &#123;            BaseActivity.this.finish();        &#125;    &#125;&#125;</code></pre><p>发送广播的代码就不贴啦，上面的代码用的是本地广播，效率和安全性高一点。</p><h2 id="标志式"><a href="#标志式" class="headerlink" title="标志式"></a>标志式</h2><p>就是在工具类或者配置类里定义一个静态的成员属性</p><pre class="language-java" data-language="java"><code class="language-java">public class Config&#123;    public static final Boolean isExit &#x3D;false;&#x2F;&#x2F;...&#125;</code></pre><p>然后在BaseActivity的onResume方法中做判断就可以了。</p><pre class="language-java" data-language="java"><code class="language-java">public abstract class BaseActivity extends AppCompatActivity&#123;  @Override  onResume() &#123;     super.onResume();     if(Config.isExit) finish();  &#125;&#x2F;&#x2F;...&#125;</code></pre><h2 id="Intent-FLAG式"><a href="#Intent-FLAG式" class="headerlink" title="Intent.FLAG式"></a>Intent.FLAG式</h2><p>在startActivity的时候，可以在intent附加一些flag信息来控制Acitivity的启动模式，里面呢有一个FLAG_ACTIVITY_CLEAR_TASK的flag，根据文档的说明，它在启动目标Acitivity的时候会清空之前所有任务关联的Acitivity，嘿嘿，这不就我们想要的效果么，所以我们完全可以利用这个启动模式来做退出功能。我们只要建立一个ExitAcitivity。</p><pre class="language-java" data-language="java"><code class="language-java">public class ExitAcitivity extends AppCompatActivity&#123;    @Override    protected void onCreate(Bundle savedInstanceState)    &#123;        super.onCreate(savedInstanceState);        finish();    &#125;&#125;</code></pre><p>然后呢，要退出的时候，通过前面提到的FLAG_ACTIVITY_CLEAR_TASK来启动这个Activity就可以啦。</p><pre class="language-java" data-language="java"><code class="language-java">public void onClick(View v)&#123;    Intent intent &#x3D; new Intent(this, ExitAcitivity .class);    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    startActivity(intent);&#125;</code></pre><p>文档中说明FLAG_ACTIVITY_CLEAR_TASK要与FLAG_ACTIVITY_NEW_TASK一起使用，应该是底层实现的时候就直接把之前的Task给杀掉了。通过这种方式我们也可以简单的实现退出应用的功能，当然利用Activity的singleTask启动模式也是可以的哦。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实我一直觉得思维才是一个人的能力体现（啦啦啦，不装逼我们还是好朋友），虽然这只是一个简单的例子，但是很多时候，有些问题，你只要换一个角度去思考就迎刃而解了。所以写这些东西也是为了跟大家交流然后扩展自己的见解，那么，大家还有其他方法么，欢迎指导交流哦。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android-Studio：使用Gradle构建不同版本的APP(构建变体)</title>
+      <link href="/2016/05/25/Android-Studio%EF%BC%9A%E4%BD%BF%E7%94%A8Gradle%E6%9E%84%E5%BB%BA%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84APP(%E6%9E%84%E5%BB%BA%E5%8F%98%E4%BD%93)/"/>
+      <url>/2016/05/25/Android-Studio%EF%BC%9A%E4%BD%BF%E7%94%A8Gradle%E6%9E%84%E5%BB%BA%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84APP(%E6%9E%84%E5%BB%BA%E5%8F%98%E4%BD%93)/</url>
+      
+        <content type="html"><![CDATA[<p>Android Studio（我使用的Studio版本是2.0）中有一个构建变体的功能，默认位于左下角</p><img src="/2016/05/25/Android-Studio%EF%BC%9A%E4%BD%BF%E7%94%A8Gradle%E6%9E%84%E5%BB%BA%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84APP(%E6%9E%84%E5%BB%BA%E5%8F%98%E4%BD%93)/1.webp" class=""><p>那这个功能是做什么用的呢，一般来说我们在做项目的时候，可能有这样的需求，一个项目中需要有不同版本，比如说免费版，收费版，周年庆版啦等等，这些版本大部分功能和模块是一样的只是部分不同，以前可能是通过svn或者git上建立分支来进行版本控制，但维护起来很麻烦。所以构建变体这个功能用官方的说法就是你<strong>可以在一个项目里面构建不同的版本</strong>，对，而且打包的时候可以一次性打包所有版本，是不是超级爽。英语好的同学可以看官方的教程<a href="https://developer.android.com/studio/build/build-variants.html">Configure Build Variants</a>。</p><span id="more"></span><h2 id="配置Product-Flavors"><a href="#配置Product-Flavors" class="headerlink" title="配置Product Flavors"></a>配置Product Flavors</h2><p>第一步，在moudle中的build文件中配置Product Flavors</p><pre class="language-java" data-language="java"><code class="language-java">android &#123;    defaultConfig &#123; ... &#125; &#x2F;&#x2F;...     productFlavors &#123;        free &#123;            applicationId &quot;cc.abto.free&quot;            versionCode 125            versionName &quot;2.3.5&quot; + &quot;&quot;        &#125;        charge &#123;            applicationId &quot;cc.abto.charge&quot;            versionCode 7            versionName &quot;1.0.7&quot; + &quot;&quot;        &#125;    &#125;&#x2F;&#x2F;...&#125;</code></pre><p>上面的代码中，我们创建了两个版本，一个free版和一个charge版，其中defaultConfig 为默认值，productFlavors {}会复写所有可以复写的值。配置好之后我们就可以<strong>Sync Project</strong>一下啦，然后就可以在左下角的Build Variants工具栏上选择版本啦。</p><img src="/2016/05/25/Android-Studio%EF%BC%9A%E4%BD%BF%E7%94%A8Gradle%E6%9E%84%E5%BB%BA%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84APP(%E6%9E%84%E5%BB%BA%E5%8F%98%E4%BD%93)/2.webp" class=""><p>第二步，我们还需要给每个版本创建对应的文件夹，点击src文件夹右键</p><img src="/2016/05/25/Android-Studio%EF%BC%9A%E4%BD%BF%E7%94%A8Gradle%E6%9E%84%E5%BB%BA%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84APP(%E6%9E%84%E5%BB%BA%E5%8F%98%E4%BD%93)/3.webp" class=""><p>文件夹的名称和productFlavors {}中的名称对应。然后再在各个文件下常见相应的java和res以及AndroidManifest等文件夹或文件。当然手动创建这些文件夹很麻烦（我就是这么懒），我们可以通过新建一个Activity来创建相关的文件夹。然后在Acitvity的创建界面，我们选择放置在哪一个版本。</p><img src="/2016/05/25/Android-Studio%EF%BC%9A%E4%BD%BF%E7%94%A8Gradle%E6%9E%84%E5%BB%BA%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84APP(%E6%9E%84%E5%BB%BA%E5%8F%98%E4%BD%93)/4.webp" class=""><p>如上图所示，当当当，需要的文件夹就都创建完成了，Build Variants选择版本和创建相应文件夹之后，在android目录结构下就只能看到这个版本的文件</p><img src="/2016/05/25/Android-Studio%EF%BC%9A%E4%BD%BF%E7%94%A8Gradle%E6%9E%84%E5%BB%BA%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84APP(%E6%9E%84%E5%BB%BA%E5%8F%98%E4%BD%93)/5.webp" class=""><p>然后你就可以针对这个版本做开发啦，当你要开发另一个版本时，再在Build Variants选择相应的版本，怎么样，是不是很赞，给了这么图是因为这东西跟理论不同，希望能尽量的直观点。</p><h3 id="不同的Manifest需求"><a href="#不同的Manifest需求" class="headerlink" title="不同的Manifest需求"></a>不同的Manifest需求</h3><p>每个版本都可以有自己的清单文件，Manifest可以通过Merge的方式合并多个Manifest源。也就是说，manifest的merge会将每个元素及其子元素的节点和属性进行合并。但是每个版本的manifest之间是不会合并的。</p><h3 id="不同的依赖"><a href="#不同的依赖" class="headerlink" title="不同的依赖"></a>不同的依赖</h3><p>你也可以给不同的版本使用不同的依赖，在build.gradle中，使用Flavor名+Compile来规定特定Flavor所需依赖。</p><pre class="language-java" data-language="java"><code class="language-java">dependencies &#123;    &#x2F;&#x2F;...    freeCompile &#39;com.android.support:appcompat-v7:23.3.0&#39;    chargeCompile  &#39;com.android.support:design:23.3.0&#39;&#125;</code></pre><h3 id="不同ProGuard需求"><a href="#不同ProGuard需求" class="headerlink" title="不同ProGuard需求"></a>不同ProGuard需求</h3><p>当然也可以针对版本做不同的混淆要求</p><pre class="language-java" data-language="java"><code class="language-java">android &#123;    buildTypes &#123;        release &#123;            minifyEnabled true            proguardFile getDefaultProguardFile(&#39;proguard-android.txt&#39;)        &#125;    &#125;    productFlavors &#123;        flavor1 &#123;        &#125;        flavor2 &#123;            proguardFile &#39;some-other-rules.txt&#39;        &#125;    &#125;&#125;</code></pre><h3 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h3><p>最后，我们在打包发布的时候可以在列表中选择所有版本，gradle就会一次性打包好所有版本。</p><img src="/2016/05/25/Android-Studio%EF%BC%9A%E4%BD%BF%E7%94%A8Gradle%E6%9E%84%E5%BB%BA%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84APP(%E6%9E%84%E5%BB%BA%E5%8F%98%E4%BD%93)/6.webp" class="">]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> Android Studio </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>WebView加载速度优化</title>
+      <link href="/2016/05/25/WebView%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/"/>
+      <url>/2016/05/25/WebView%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/</url>
+      
+        <content type="html"><![CDATA[<p>在做混合应用的时候，有几个痛点，一个是无网络无法使用，还有一个是受网络环境影响的网页加载速度。今天就这两个问题，和大家交流一下自己的经验。</p><h2 id="离线缓存"><a href="#离线缓存" class="headerlink" title="离线缓存"></a>离线缓存</h2><p>这个比较容易，开启webView的缓存功能就可以了。</p><pre class="language-java" data-language="java"><code class="language-java">WebSettings settings &#x3D; webView.getSettings();settings.setAppCacheEnabled(true);settings.setDatabaseEnabled(true);settings.setDomStorageEnabled(true);&#x2F;&#x2F;开启DOM缓存，关闭的话H5自身的一些操作是无效的settings.setCacheMode(WebSettings.LOAD_DEFAULT);</code></pre><span id="more"></span><p>这边我们通过setCacheMode方法来设置WebView的缓存策略，WebSettings.LOAD_DEFAULT是默认的缓存策略，它在缓存可获取并且没有过期的情况下加载缓存，否则通过网络获取资源。这样的话可以减少页面的网络请求次数，那我们如何在离线的情况下也能打开页面呢，这里我们在加载页面的时候可以通过判断网络状态，在无网络的情况下更改webview的缓存策略。</p><pre class="language-java" data-language="java"><code class="language-java">ConnectivityManager cm &#x3D; (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);NetworkInfo info &#x3D; cm.getActiveNetworkInfo();if(info.isAvailable())&#123;    settings.setCacheMode(WebSettings.LOAD_DEFAULT);&#125;else &#123;    settings.setCacheMode(WebSettings.LOAD_CACHE_ONLY);&#x2F;&#x2F;不使用网络，只加载缓存&#125;</code></pre><p>这样我们就可以使我们的混合应用在没有网络的情况下也能使用一部分的功能，不至于什么都显示不了了，当然如果我们将缓存做的更好一些，<strong>在网络好的时候，比如说在WIFI状态下，去后台加载一些网页缓存起来，这样处理的话，即使在无网络情况下第一次打开某些页面的时候，也能将该页面显示出来。</strong><br>当然缓存资源后随之会带来一个问题，那就是资源无法及时更新，WebSettings.LOAD_DEFAULT中的页面中的缓存版本好像不是很起作用，所以我们这边可能需要自己做一个缓存版本控制。这个缓存版本控制可以放在APP版本更新中。</p><pre class="language-java" data-language="java"><code class="language-java">if (upgrade.cacheControl &gt; cacheControl)&#123;    webView.clearCache(true);&#x2F;&#x2F;删除DOM缓存    VersionUtils.clearCache(mContext.getCacheDir());&#x2F;&#x2F;删除APP缓存    try    &#123;        mContext.deleteDatabase(&quot;webview.db&quot;);&#x2F;&#x2F;删除数据库缓存        mContext.deleteDatabase(&quot;webviewCache.db&quot;);    &#125;    catch (Exception e)    &#123;    &#125;&#125;</code></pre><h2 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h2><p>有时候一个页面资源比较多，图片，CSS，js比较多，还引用了JQuery这种庞然巨兽，从加载到页面渲染完成需要比较长的时间，有一个解决方案是将这些资源打包进APK里面，然后当页面加载这些资源的时候让它从本地获取，这样可以提升加载速度也能减少服务器压力。重写WebClient类中的shouldInterceptRequest方法，再将这个类设置给WebView。</p><pre class="language-java" data-language="java"><code class="language-java">webView.setWebViewClient(new WebViewClient()&#123;    @Override    public WebResourceResponse shouldInterceptRequest(WebView view, String url)    &#123;        if (url.contains(&quot;[tag]&quot;))        &#123;            String localPath &#x3D; url.replaceFirst(&quot;^http.*[tag]\\]&quot;, &quot;&quot;);            try            &#123;                InputStream is &#x3D; getApplicationContext().getAssets().open(localPath);                Log.d(TAG, &quot;shouldInterceptRequest: localPath &quot; + localPath);                String mimeType &#x3D; &quot;text&#x2F;javascript&quot;;                if (localPath.endsWith(&quot;css&quot;))                &#123;                    mimeType &#x3D; &quot;text&#x2F;css&quot;;                &#125;                return new WebResourceResponse(mimeType, &quot;UTF-8&quot;, is);            &#125;            catch (Exception e)            &#123;                e.printStackTrace();                return null;            &#125;        &#125;        else        &#123;            return null;        &#125;    &#125;&#125;);</code></pre><p>这里我们队页面中带有特殊标记的请求进行过滤替换，也就是上面代码中的[tag]，这个可以跟做后台开发的同事约定好来就行了。对图片资源或者其他资源进行替换也是可以的。补充一个小点可以通过settings.setLoadsImagesAutomatically(true);来设置在页面装载完成之后再去加载图片。</p><h2 id="H5优化"><a href="#H5优化" class="headerlink" title="H5优化"></a>H5优化</h2><p>Android的OnPageFinished事件会在Javascript脚本执行完成之后才会触发。如果在页面中使 用JQuery，会在处理完DOM对象，执行完**$(document).ready(function() {});**事件自会后才会渲染并显示页面。而同样的页面在iPhone上却是载入相当的快，因为iPhone是显示完页面才会触发脚本的执行。所以我们这边的解决方案延迟JS脚本的载入，这个方面的问题是需要Web前端工程师帮忙优化的，网上应该有比较多LazyLoad插件，这里放一个比较老的链接<a href="http://wonko.com/post/painless_javascript_lazy_loading_with_lazyload">Painless JavaScript lazy loading with LazyLoad</a>,同样也放上一小段前端代码，仅供参考。</p><pre class="language-HTML" data-language="HTML"><code class="language-HTML">&lt;script src&#x3D;&quot;&#x2F;css&#x2F;j&#x2F;lazyload-min.js&quot; type&#x3D;&quot;text&#x2F;javascript&quot;&gt;&lt;&#x2F;script&gt;&lt;script type&#x3D;&quot;text&#x2F;javascript&quot; charset&#x3D;&quot;utf-8&quot;&gt;  loadComplete() &#123;    &#x2F;&#x2F;instead of document.read();  &#125;   function loadscript() &#123;    LazyLoad.loadOnce([      &#39;&#x2F;css&#x2F;j&#x2F;jquery-1.6.2.min.js&#39;,      &#39;&#x2F;css&#x2F;j&#x2F;flow&#x2F;jquery.flow.1.1.min.js&#39;,      &#39;&#x2F;css&#x2F;j&#x2F;min.js?v&#x3D;2011100852&#39;      ], loadComplete);  &#125;  setTimeout(loadscript,10);&lt;&#x2F;script&gt;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android中的图片裁剪（三）之自定义裁剪工具</title>
+      <link href="/2016/05/24/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7/"/>
+      <url>/2016/05/24/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7/</url>
+      
+        <content type="html"><![CDATA[<p>在上一篇文章中<a href="http://www.jianshu.com/writer#/notebooks/4326108/notes/4031467">Android中的图片裁剪（二）之开源项目</a>介绍了一些优秀的图片裁剪开源项目，在我们实现自己的裁剪功能的时候，也可以看下这些开源项目的源码，看看大牛们都是怎么实现的。</p><span id="more"></span><h2 id="createBitmap方法"><a href="#createBitmap方法" class="headerlink" title="createBitmap方法"></a>createBitmap方法</h2><p>首先要做图片裁剪的功能，要先认识Bitmap，在这个类里面，有几个方法可以帮助我们实现功能。就比如下面这一个方法</p><pre class="language-java" data-language="java"><code class="language-java">&#x2F;** * Returns an immutable bitmap from the specified subset of the source * bitmap. The new bitmap may be the same object as source, or a copy may * have been made. It is initialized with the same density as the original * bitmap. *... *&#x2F;public static Bitmap createBitmap(Bitmap source, int x, int y, int width, int height)</code></pre><p>好吧，方法注解太长，被我省略掉一些了，但是用起来其实挺简单的，只要传入指定的范围，它就能生成一个新的位图给你。（这里先说一句，图片的裁剪功能其实做起来不难，要做好就挺麻烦的，在实际的工具开发中免不了要自定义View这样的工作），而这边的范围一般是一个可拖动的方框，点击裁剪按钮的时候生成我们需要的图片。当然createBitmap方法还有很多其他重载实现，这里就不一一贴出来了。在具体实现的时候我们可以自定义两个View</p><pre class="language-java" data-language="java"><code class="language-java">public class CropImageView extends ImageView &#123;    HighlightView hv;    &#x2F;&#x2F;... &#125;class HighlightView &#123;    &#x2F;&#x2F;...&#125;</code></pre><p>这里只是简单的提供一下思路，HighlightView用来表示裁剪框对象，封装裁剪框的一些信息啊，比如宽高和触摸状态什么的。CropImageView继承ImageView用来显示图片和处理触摸事件，在触摸事件中改变HighlightView的状态：</p><pre class="language-java" data-language="java"><code class="language-java">public boolean onTouchEvent(@NonNull MotionEvent event) &#123;    switch (event.getAction()) &#123;    case MotionEvent.ACTION_DOWN:            &#x2F;&#x2F;对触摸点进行一些逻辑判断，比如摸到裁剪框的边还是其他什么的            int edge &#x3D; hv.getHit(event.getX(), event.getY());            &#x2F;&#x2F;...            &#x2F;&#x2F;然后根据逻辑判断结果设置裁剪框的状态            hv.setMode((edge &#x3D;&#x3D; HighlightView.MOVE)                        ? HighlightView.ModifyMode.Move                        : HighlightView.ModifyMode.Grow);            &#x2F;&#x2F;...        break;            &#x2F;&#x2F;...</code></pre><p>啦啦啦，是不是说了跟没说一样，主要是具体实现起来真的挺麻烦的，贴那么多代码出来也没啥用，我自己都要看晕了，总归自己造轮子还是挺辛苦的，而且刚造出来也肯定有一些问题的，所以才有那句名言么，不要重复造轮子，我觉得只要看懂源代码的思路，然后根据需求，在别人的轮子上进行改造，这样就快的多啦。</p><h2 id="Matrix的基本使用"><a href="#Matrix的基本使用" class="headerlink" title="Matrix的基本使用"></a>Matrix的基本使用</h2><p>一般呢，在裁剪的工具中，在对图片裁剪前，多可以对图片进行一些缩放，平移，旋转之类的操作，这些效果都是可以通过Matrix来实现的，那这个类怎么用呢。我们先看一下<a href="file:///D:/Android/sdk/docs/reference/android/graphics/Matrix.html">官方文档中Matrix</a>的介绍（自带梯子） ，首先看一下它的官方定义：</p><p>**The Matrix class holds a 3x3 matrix for transforming coordinates. **</p><p>直译过来呢，就是<strong>一个转换坐标的3x3矩阵</strong>，你妹啊，什么是3x3矩阵…我也不知道啊 ，高等数学这东西我早就扔了好么，不过不知道没关系，面向对象么，我先知道怎么用就可以了，有时间有闲情再去深究。我们先主要看一下Matrix类里面，我们要用到的一些方法(补充说一下，这Matrix类是在graphics包下的，不要导成opengl包下的)：</p><pre class="language-java" data-language="java"><code class="language-java">&#x2F;** * Postconcats the matrix with the specified translation. * M&#39; &#x3D; T(dx, dy) * M *&#x2F;public boolean postTranslate(float dx, float dy)&#x2F;** * Postconcats the matrix with the specified rotation. * M&#39; &#x3D; R(degrees) * M *&#x2F;public boolean postRotate(float degrees)</code></pre><p>好啦，毕竟是文档找的到东西，我这里就只贴两个方法出来，看注解应该很容易理解方法的使用，<strong>第一个方法就是对矩阵进行左乘T(dx, dy)，第二个方法就是对矩阵左乘R(degrees)<strong>，通过源码我们可以看到，方法里面通过jni调用lib层用c，c++实现运算转换的。反正直白点讲，在对它进行图片变换的时候，</strong>第一个方法就是平移图片，第二个方法就是旋转图片</strong>，啦啦啦，其他方法大家可以自行查找文档，问题都不大。</p><h2 id="图片的平移，缩放，旋转"><a href="#图片的平移，缩放，旋转" class="headerlink" title="图片的平移，缩放，旋转"></a>图片的平移，缩放，旋转</h2><p>通过重写View或者Activity的onTouch事件来进行图片的平移，缩放和旋转会比较方便，这里我们要先做一些初始化工作，比如获取图片之类的，一般我们将图片的大小控制在手机内存的1/8，防止OOM和卡顿，然后就是在onTouch事件里做具体实现：</p><pre class="language-java" data-language="java"><code class="language-java">public boolean onTouch(View v, MotionEvent event)&#123;    switch (event.getAction() &amp; MotionEvent.ACTION_MASK)    &#123;        &#x2F;&#x2F; 主点按下        case MotionEvent.ACTION_DOWN:            cachMatrix.set(matrix);&#x2F;&#x2F;用来变化的矩阵            prev.set(event.getX(), event.getY());            mode &#x3D; DRAG;            break;        &#x2F;&#x2F;...        case MotionEvent.ACTION_MOVE:            if (mode &#x3D;&#x3D; DRAG)&#x2F;&#x2F;拖动            &#123;                matrix.set(cachMatrix);                matrix.postTranslate(event.getX() - prev.x, event.getY() - prev.y);            &#125;            else if (mode &#x3D;&#x3D; ZOOM)&#x2F;&#x2F;缩放            &#123;                float newDist &#x3D; spacing(event);                if (newDist &gt; 10f)                &#123;                    matrix.set(cachMatrix);                    float tScale &#x3D; newDist &#x2F; dist;                    matrix.postScale(tScale, tScale, mid.x, mid.y);                &#125;            &#125;            break;    &#125;    imgView.setImageMatrix(matrix);    &#x2F;&#x2F;...    return true;&#125;</code></pre><p>代码就放了部分上去，主要说明一下思路，当然在将这些功能和裁剪进行合并的时候，是要对裁剪框的位置再进行计算的,比如因为对图片缩放了，所以再返回剪裁框大小的时候是要乘上缩放值的。</p><pre class="language-java" data-language="java"><code class="language-java">public Rect getScaledCropRect(float scale) &#123;    return new Rect((int) (cropRect.left * scale), (int) (cropRect.top * scale),            (int) (cropRect.right * scale), (int) (cropRect.bottom * scale));&#125;</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>图片的裁剪就先写到这里，主要介绍了一些关键方法和整体的实现思路，后面有时间的话，我会把代码整理后发布到github上去的，到时候再来补链接。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android中的图片裁剪（二）之开源项目</title>
+      <link href="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
+      <url>/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
+      
+        <content type="html"><![CDATA[<p>在上一篇博客<a href="http://www.jianshu.com/writer#/notebooks/4326108/notes/4015713">Android中的图片裁剪（一）</a>中，简单介绍了一下使用系统自带的裁剪软件实现图片裁剪功能。可是有时候系统自带的裁剪软件不能满足项目需求的时候,只能用三方的或者自己写一个了。</p><span id="more"></span><h2 id="第三方开源项目"><a href="#第三方开源项目" class="headerlink" title="第三方开源项目"></a>第三方开源项目</h2><p>都说不要重复造轮子么，github上有很多优秀的开源项目：</p><ul><li><p><a href="https://github.com/jdamcd/android-crop">android-crop</a><br>在github搜crop这个项目是star最多的，我之前做的一个应用就是集成的这个开源项目，感觉还是不错的哈，直接拿来用还是挺方便的，在上面做二次开发也是挺快的。下面是效果图：</p><img src="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/1.webp" class=""></li><li><p><a href="https://github.com/edmodo/cropper">Cropper</a><br>这个不仅能裁剪还能旋转哦，这个我也用过感觉也挺好的，集成也挺快的，能快速定制包括裁剪框在内的几个基础属性。下面是效果图：</p><img src="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/2.webp" class=""></li><li><p><a href="https://github.com/beartung/tclip-android">itmap Smart Clipping using OpenCV</a><br>能自动识别图片中的重要区域，并且在图片裁剪时保留重要区域，比如说人脸识别啥的，还能自动识别其它重要区域。如果图片中未识别出人脸，则会根据特征分布计算出重区域 。下面是效果图：</p></li></ul><img src="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/3.webp" class=""><ul><li>其他还有很多像<a href="https://github.com/biokys/cropimage">cropimage</a>，<a href="https://github.com/IsseiAoki/SimpleCropView">SimpleCropView</a>，大家可以上github上自行查找。</li></ul><br><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>大部分情况下集成这些优秀的开源项目就可完成需求了。但在需要高度定制裁剪功能的时候，要怎么实现呢，下一篇文章中，就和大家探讨一下裁剪图片实现的原理。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android中的图片裁剪（一）之系统裁剪工具</title>
+      <link href="/2016/05/18/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7/"/>
+      <url>/2016/05/18/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7/</url>
+      
+        <content type="html"><![CDATA[<p>应用中图片裁剪的需求是很常见的，在android中裁剪的图片最简单的方法就是调用系统中的裁剪图片应用</p><pre class="language-java" data-language="java"><code class="language-java">Intent intent &#x3D; new Intent();intent.setAction(&quot;com.android.camera.action.CROP&quot;);intent.setDataAndType(uri, &quot;image&#x2F;*&quot;);startActivityForResult(intent, Constants.REQUEST_CODE_RESIZE_IMAGE);</code></pre><p>当然在调用系统的裁剪功能时，我们还可以附加一些其他的信息：</p><pre><code class="java">intent.putExtra(&quot;outputX&quot;, 300);  //裁剪图片的宽intent.putExtra(&quot;outputY&quot;, 300);  intent.putExtra(&quot;aspectX&quot;, 1);  //裁剪方框宽的比例intent.putExtra(&quot;aspectY&quot;, 1);  intent.putExtra(&quot;scale&quot;, true);  //是否保持比例intent.putExtra(&quot;return-data&quot;, false);  //是否返回bitmapintent.putExtra(MediaStore.EXTRA_OUTPUT, uri);  //保存图片到指定uriintent.putExtra(&quot;outputFormat&quot;, Bitmap.CompressFormat.JPEG.toString());  //输出格式</code></pre><p>上面的是一些常用的附加信息，如果你的outputX和outputY设置的比较大的话，返回的图片可能会导致OOM。最后在onActivityResult中接收图片就可以了</p><pre><code class="java">protected void onActivityResult(int requestCode, int resultCode, Intent data)&#123;    super.onActivityResult(requestCode, resultCode, data);    switch (requestCode)    &#123;        case CROP_IMAGE_SYS:            Bitmap bitmap = (Bitmap) data.getParcelableExtra(&quot;data&quot;);//拿到返回图片            /*try            &#123;             //取的裁剪后保存到本地的图片              bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));            &#125;            catch (FileNotFoundException e)            &#123;              e.printStackTrace();            &#125;*/            //TODO            break;//...</code></pre><p>当然因为android碎片化严重，不同厂商的系统也有所差异，所以系统的裁剪图片功能也可能有所不同，这也是坑，就像在我的项目中，发现有些手机基于内存考虑对图片缩略了很多，这样裁剪出来的图片分辨率就达不到项目要求，这时候就只能求助于第三方的开源项目或者自定义了，在第二篇文章中<a href="http://www.jianshu.com/p/941bfe005e02">Android中的图片裁剪（二）</a>，我会说说如何自己实现裁剪图片的功能。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android中webview与js交互（二）</title>
+      <link href="/2016/05/18/Android%E4%B8%ADwebview%E4%B8%8Ejs%E4%BA%A4%E4%BA%92%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+      <url>/2016/05/18/Android%E4%B8%ADwebview%E4%B8%8Ejs%E4%BA%A4%E4%BA%92%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<p>在<a href="http://www.jianshu.com/writer#/notebooks/4326108/notes/3998655">Android中webview与js的交互（一）</a>中简单介绍了webview与js交互的基本使用方法，接下来，为了方便后期的维护扩展，在这里分享一下我自己的一些经验。</p><span id="more"></span><h2 id="JS接口对象"><a href="#JS接口对象" class="headerlink" title="JS接口对象"></a>JS接口对象</h2><p>依据依赖倒转原则，这里我们定义一个js接口类，来统一管理webview与js之间交互的接口，例子如下：</p><pre class="language-java" data-language="java"><code class="language-java">public interface JavaScript&#123;@JavascriptInterface    public String getManufacturer(); @JavascriptInterface    public String getVersionName();    &#x2F;&#x2F;...&#125;</code></pre><p>然后再创建一个抽象基类，实现一些基础共用方法：</p><pre class="language-java" data-language="java"><code class="language-java">public abstract  class BaseJavaScript &#123;    private WebView webView;    @Override    public  final JavaScript setWebView(WebView webView, String name)    &#123;        this.webView &#x3D; webView;        webView.addJavascriptInterface(this,name);        return this;    &#125;    @Override    public final  void callFunction(String fn, String... arguments)&#x2F;&#x2F;封装了webview调用js的方法    &#123;        if (webView &#x3D;&#x3D; null)        &#123;            return;        &#125;        String functionStr &#x3D; getFunctionStr(fn, arguments);        webView.loadUrl(functionStr);    &#125;    private String getFunctionStr(String fn, String... arguments)    &#123;        StringBuilder stringBuilder &#x3D; new StringBuilder(&quot;javascript:&quot;+fn+&quot;(&quot;);        for (String argument : arguments)        &#123;            stringBuilder.append(argument+&quot;,&quot;);        &#125;        String s &#x3D; stringBuilder.toString();        String substring &#x3D; s.substring(0, s.lastIndexOf(&quot;,&quot;));        return substring+&quot;)&quot;;    &#125;&#125;</code></pre><p>通过定义接口和进一步封装也方便你写一些单元测试来着，接下来就可以根据业务创建一些子类实现了</p><pre class="language-java" data-language="java"><code class="language-java">public class MainJavaScript extends BaseJavaScript implements JavaScript&#123;    @Override    public String getManufacturer()    &#123;       &#x2F;&#x2F;TODO        return null;    &#125;    @Override    public String getVersionName()    &#123;        &#x2F;&#x2F;TODO        return null;    &#125;&#125;</code></pre><h2 id="在MVP中的实践"><a href="#在MVP中的实践" class="headerlink" title="在MVP中的实践"></a>在MVP中的实践</h2><p>我自己的项目中是只实现一个子类来统一管理所有的js接口，因为做的是混合应用，原生端主要提供一些本地服务给h5页面调用，这些服务接口都是一样的。最开始还没做MVP的时候是每个页面都给一个JS实现子类，改起来真的是很蛋疼，下面是现在项目中公共presenter中的一些类和接口，这边我是把Activity作为presentter的。</p><img src="/2016/05/18/Android%E4%B8%ADwebview%E4%B8%8Ejs%E4%BA%A4%E4%BA%92%EF%BC%88%E4%BA%8C%EF%BC%89/1.webp" class=""><p>这边的BaseJS和上面的MainJavaScript是一样的</p><pre class="language-java" data-language="java"><code class="language-java">public class BaseJS extends JavascriptInteraction&#123;    private final IActivity activity;    public BaseJS(IActivity activity)    &#123;        this.activity &#x3D; activity;    &#125;    @JavascriptInterface    public String getManufacturer()    &#123;        return Build.MANUFACTURER.toLowerCase().replaceAll(&quot;&quot;, &quot;&quot;);    &#125;    @JavascriptInterface    public void scanQR()    &#123;        activity.scanQR();    &#125;&#125;</code></pre><p>IActivity接口中定义的方法大部分跟BaseJS是一样的，但这些方法是无法或者不好在BaseJS中实现的，这样就可以把实现延迟到具体的Acitivity中，而且又能统一管理这些js接口。</p><pre class="language-java" data-language="java"><code class="language-java">public interface IActivity&#123;    void loginOK(String userInfo);    void showWelcome(boolean isShow);&#x2F;&#x2F;...&#125;</code></pre><p>然后在BaseJSActivity中对方法进行具体的实现了。</p><pre class="language-java" data-language="java"><code class="language-java">public abstract class BaseJSActivity extends BaseActivity implements IActivity&#123;    protected static final String TAG &#x3D; &quot;BaseJSActivity&quot;;    protected BaseJS js;    protected User user;         @Override    public void loginOK(String userInfo)    &#123;        User.isLogin &#x3D; true;        user &#x3D; UserModel.getInstance(this).writeUser2SP(userInfo);        checkLoginBeforeLoad(url);    &#125;&#125;</code></pre><p>其他的Activity只要继承该基类就可以了，不同的业务逻辑只要重写部分代码就行了。如果后期js接口部分需要改动，维护扩展起来就挺方便的了。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇文章主要是介绍一下自己管理webview与js的交互接口的一些经验，因为自己水平有限，仅供交流参考，如果文中有不妥和错误，欢迎指正。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android中webview与js的交互（一）</title>
+      <link href="/2016/05/17/Android%E4%B8%ADwebview%E4%B8%8Ejs%E7%9A%84%E4%BA%A4%E4%BA%92%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+      <url>/2016/05/17/Android%E4%B8%ADwebview%E4%B8%8Ejs%E7%9A%84%E4%BA%A4%E4%BA%92%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h2 id="webview中调用js"><a href="#webview中调用js" class="headerlink" title="webview中调用js"></a>webview中调用js</h2><pre class="language-java" data-language="java"><code class="language-java">webView.getSettings().setJavaScriptEnabled(true);&#x2F;&#x2F;设置js脚本可用webView.loadUrl(&quot;url&quot;);&#x2F;&#x2F;加载页面webView.loadUrl(&quot;javascript:test(a,b,c)&quot;);&#x2F;&#x2F;调用js方法</code></pre><span id="more"></span><h2 id="html中调用java"><a href="#html中调用java" class="headerlink" title="html中调用java"></a>html中调用java</h2><p>###android中配置</p><pre class="language-java" data-language="java"><code class="language-java">webView.addJavascriptInterface(new MyJSInterface(),&quot;app&quot;);&#x2F;&#x2F;添加js脚本接口class  MyJSInterface&#123;    @JavascriptInterfacepublic void androidMethod() &#x2F;&#x2F;提供给js调用的方法  &#123;  &#x2F;&#x2F;todo      &#125;&#125;</code></pre><h3 id="html中使用"><a href="#html中使用" class="headerlink" title="html中使用"></a>html中使用</h3><pre class="language-HTML" data-language="HTML"><code class="language-HTML">&lt;div id&#x3D;&#39;b&#39;&gt;&lt;a onclick&#x3D;&quot;window.app.androidMethod()&quot;&gt;b.c&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>  webview与js的交互的基本使用方法如上，补充几点：</p><ul><li><p>在这篇<a href="http://jiajixin.cn/2014/09/16/webview-js-safety/">博客</a>中抄出这段话<br>Android Webview有两个非常知名的漏洞:<br>1、最近爆出来的UXSS漏洞，可以越过同源策略，获得任意网页的Cookie等信息，Android 4.4以下都有此问题，基本无解，只能重新编译浏览器内核解决，详情可以参考<a href="http://zhuanlan.zhihu.com/fooying/19840752">最近移动安全三两事</a>，感兴趣的可以去看一下<a href="http://weibo.com/rayh4c">@RAyH4c</a>劫持微博、QQ空间的视频。<br>2、成名已久的任意命令执行漏洞，通过addJavascriptInterface方法，Js可以调用Java对象方法，通过反射机制，Js可以直接获取Runtime，从而执行任意命令。Android 4.2以上，可以通过声明**@JavascriptInterface**保证安全性，4.2以下不能再调用addJavascriptInterface，需要另谋他法。</p></li><li><p>在实际的混合应用开发中需要对js交互做一些封装设计以便于后期的维护扩展，我会在<a href="http://www.jianshu.com/p/cafd518e3aae">Android中webview与js的交互（二）</a>中分享一下我的经验</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
 </search>

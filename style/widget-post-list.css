@@ -37,6 +37,9 @@
     word-break: break-word; }
     .post-container .post-item-card .post-card-content time {
       font-size: 14px; }
+    .post-container .post-item-card .post-card-content img {
+      display: block;
+      margin: 0 auto; }
 
 .post-container .aside-card-container {
   padding: 10px;

@@ -55,7 +55,7 @@ ga_track_id:
 ga_domain:
 
 # Baidu Analytics
-ba_track_id:
+ba_track_id: 1440a68a4b8e8906f338cb023aeef906
 
 # picture of about page
 about_pic: /images/about2.webp

@@ -30,6 +30,9 @@ style.
     .search-widget .search-content a:hover h5 {
         color: #3273dc!important;
     }
+    .post-container .search-content.content span{
+        color:darkorange;
+    }
 
 main.aside-card-container.search-widget.is-relative
     label(for="searchInput")
@@ -46,7 +49,6 @@ script.
 
     searchInputEl.oninput = _.debounce(function (evt) {
         var searchValue = evt.srcElement.value
-        console.log("oninput",searchValue)
         var haveSearchValue = Boolean(searchValue.trim())
         if (!haveSearchValue) {
             searchResultEl.style.height = 0
@@ -73,8 +75,8 @@ script.
             var content = document.createElement('p')
 
             title.className = 'mb-1'
-            title.innerText = item.title
-            content.innerText = item.content
+            title.innerHTML = item.title
+            content.innerHTML = item.content
 
             link.href = item.link
             link.appendChild(title)
@@ -97,7 +99,7 @@ script.
 
             var key = searchKey.toLowerCase()
 
-            for (var entry of searchDatabase) {  
+            for (var entry of searchDatabase) { 
                 var title = entry.getElementsByTagName('title')[0].textContent
                 //- var link = entry.getElementsByTagName('link')[0].getAttribute('href')
                 var link = entry.getElementsByTagName('url')[0].textContent
@@ -108,14 +110,13 @@ script.
                 var LENGTH = 80
                 var finalContent = ''
                 var contentLength = rawContent.length 
-                console.log(key);
                 searchResultIdx=rawContent.indexOf(key);
                 var startIdx = searchResultIdx - 20,
                     endIdx = startIdx + LENGTH
 
                 if (startIdx < 0) {
                     startIdx = 0
-                    endIdx = 50
+                    endIdx = 80
                 }
 
                 endIdx > contentLength && (endIdx = contentLength)
@@ -125,7 +126,9 @@ script.
                     return item.title
                 })
                 if (titleArr.indexOf(title)<0&&(rawTitle.indexOf(key) > -1 || searchResultIdx > -1)) {
-                    searchResults.push({
+                    title= title.replace(new RegExp(`${key}`,"gim"),`<span>${key}</span>`)
+                    finalContent= finalContent.replace(new RegExp(`${key}`,"gim"),`<span>${key}</span>`)
+                    searchResults.unshift({
                         link: link,
                         title: title,
                         content: finalContent

@@ -7,7 +7,7 @@ tags: [Android]
 cover: /images/android_banner.webp
 ---
 
-在上一篇文章中[Android中AIDL的使用详解](http://www.jianshu.com/p/d1fac6ccee98)介绍了AIDL的使用流程，这篇文章我们说说AIDL的工作原理。
+在上一篇文章中[Android中AIDL的使用详解](/2016/06/09/Android中AIDL的使用详解)介绍了AIDL的使用流程，这篇文章我们说说AIDL的工作原理。
 
 ## IPC
 在这之前我们先简单说一下IPC，IPC是**Inter-Process Communication**的缩写，是进程间通信或者跨进程通信的意思，既然说到进程，大家要区分一下进程和线程，**进程一般指的是一个执行单元，它拥有独立的地址空间，也就是一个应用或者一个程序。线程是CPU调度的最小单元，是进程中的一个执行部分或者说是执行体，两者之间是包含与被包含的关系**。因为进程间的资源不能共享的，所以每个系统都有自己的IPC机制，Android是基于Linux内核的移动操作系统，但它并没有继承Linux的IPC机制，而是有着自己的一套IPC机制。

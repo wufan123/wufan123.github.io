@@ -3,7 +3,7 @@ title: AngularJS简单介绍
 date: 2016-10-08 03:25
 categories: 
     - [前端]
-tags: [AngularJS，前端]
+tags: [AngularJS,前端]
 ---
 
 AngularJS是一款优秀的前端框架，主要解决hmtl在构建web应用上不足的问题。AngularJS核心的特点是模块化，数据的双向绑定，依赖注入。

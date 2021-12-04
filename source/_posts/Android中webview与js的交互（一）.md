@@ -14,7 +14,7 @@ webView.loadUrl("javascript:test(a,b,c)");//调用js方法
 ```
 <!-- more -->
 ## html中调用java
-###android中配置
+### android中配置
 ``` java
 webView.addJavascriptInterface(new MyJSInterface(),"app");//添加js脚本接口
 

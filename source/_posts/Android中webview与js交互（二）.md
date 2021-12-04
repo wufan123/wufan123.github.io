@@ -7,7 +7,7 @@ tags: [Android]
 cover: /images/android_banner.webp
 ---
 
-在[Android中webview与js的交互（一）](http://www.jianshu.com/writer#/notebooks/4326108/notes/3998655)中简单介绍了webview与js交互的基本使用方法，接下来，为了方便后期的维护扩展，在这里分享一下我自己的一些经验。
+在[Android中webview与js的交互（一）](/2016/05/17/Android中webview与js的交互（一）)中简单介绍了webview与js交互的基本使用方法，接下来，为了方便后期的维护扩展，在这里分享一下我自己的一些经验。
 <!-- more -->
 ## JS接口对象
 依据依赖倒转原则，这里我们定义一个js接口类，来统一管理webview与js之间交互的接口，例子如下：

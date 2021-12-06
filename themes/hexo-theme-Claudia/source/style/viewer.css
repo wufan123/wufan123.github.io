@@ -357,7 +357,7 @@
 }
 
 .viewer-open {
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .viewer-show {

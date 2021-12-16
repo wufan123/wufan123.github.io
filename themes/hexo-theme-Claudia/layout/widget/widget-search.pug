@@ -126,8 +126,8 @@ script.
                     return item.title
                 })
                 if (titleArr.indexOf(title)<0&&(rawTitle.indexOf(key) > -1 || searchResultIdx > -1)) {
-                    title= title.replace(new RegExp(`${key}`,"gim"),`<span>${key}</span>`)
-                    finalContent= finalContent.replace(new RegExp(`${key}`,"gim"),`<span>${key}</span>`)
+                    title= title.replace(new RegExp(key,"gim"),`<span>${key}</span>`)
+                    finalContent= finalContent.replace(new RegExp(key,"gim"),`<span>${key}</span>`)
                     searchResults.unshift({
                         link: link,
                         title: title,

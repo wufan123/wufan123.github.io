@@ -2062,6 +2062,7 @@ fieldset[disabled] .button {
   border-width: 0 0 1px;
   padding: 0.1em 0.2em;
   vertical-align: top;
+  text-align: center;
 }
 
 .content table th {

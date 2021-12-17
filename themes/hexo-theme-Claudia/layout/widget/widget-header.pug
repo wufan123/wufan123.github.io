@@ -1,3 +1,24 @@
+style.
+    .header-widget .icon--search1{
+        position: fixed;
+        top: 10px;
+        right: 15px;
+    }
+    .hidden{
+        display:none;
+    }
+    .mobile-search{
+        display:block; 
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 110;
+        width: 100vw;
+        height: 42px;
+        padding: 10px;
+        background: white;
+        box-shadow: 0 6px 30px -10px rgb(0 0 0 / 30%);
+    }
 header.header-widget.is-flex-shrink-0.is-hidden-mobile
     .container.is-fullhd.is-flex.is-justify-content-space-between.is-align-items-center.is-full-height
         section.is-hidden-mobile.is-flex-shrink-0
@@ -15,4 +36,18 @@ header.is-flex.header-widget.is-flex-shrink-0.is-align-items-center.is-justify-c
             each url, label in theme.menu
                 h3.is-inline-block
                     a(href= url_for(url))= label && _p(label.toLowerCase())
-        //- include widget-search
+        i#mobileSearchIcon.iconfont.icon--search1
+
+
+        
+script.
+    var icon = document.getElementById("mobileSearchIcon");
+    icon.onclick = function (){
+        var box = document.getElementById("searchBox"); 
+        if(box){
+            box.classList.remove("is-hidden-mobile");
+            box.classList.remove("is-relative"); 
+            box.classList.remove("aside-card-container"); 
+            box.classList.add("mobile-search");
+        }
+    }

@@ -31,53 +31,44 @@ style.
     .search-widget .search-content a:hover h5 {
         color: #3273dc!important;
     }
-    .search-content.content span{
-        color:darkorange !important; 
+    .post-container .search-content.content span{
+        color:darkorange;
     }
-    .aside-card-container #mobileCancel{
-        display:none;
-    }
-    .mobile-search #mobileCancel{
-        position: fixed;
-        top: 10px;
-        right: 15px;
-        font-size:0.8em; 
-    }
-main#searchBox.aside-card-container.search-widget.is-relative.is-hidden-mobile
-    label(for="searchInput")
-        div#searchButton.is-flex.px-4
+
+
+
+main.aside-card-container.search-widget.is-relative
+    label(for="searchInputM")
+        div#searchButtonM.is-flex.px-4
                 i.iconfont.icon--search1.mr-1
-                input#searchInput.search-input.is-flex-grow-1(placeholder= _p('search_input_placeholder'))
-    section#searchContent.search-content.content
-    span#mobileCancel 取消
+                input#searchInputM.search-input.is-flex-grow-1(placeholder= _p('search_input_placeholder'))
+    section#searchContentM.search-content.content
 
 script.
-    var searchDatabase = []
-    var searchInputEl = document.getElementById('searchInput')
-    var searchButtonEl = document.getElementById('searchButton')
-    var searchResultEl = document.getElementById('searchContent')
-    var cancel = document.getElementById('mobileCancel')
-
-    searchInputEl.oninput = _.debounce(function (evt) {
+    var searchDatabase = [] 
+    var searchInputElM = document.getElementById('searchInputM')
+    var searchButtonElM = document.getElementById('searchButtonM')
+    var searchResultElM = document.getElementById('searchContentM')
+    searchInputElM.oninput = _.debounce(function (evt) { 
         var searchValue = evt.srcElement.value
         var haveSearchValue = Boolean(searchValue.trim())
         if (!haveSearchValue) {
-            searchResultEl.style.height = 0
-            searchResultEl.innerHTML = null
+            searchResultElM.style.height = 0
+            searchResultElM.innerHTML = null
             return
         }
         var searchResults = searching(searchValue)
-
+        console.log(searchResults);
         if (searchResults.length > 0) {
-            renderSearchResults(searchResults)
+            renderMobileSearchResults(searchResults)
         }else{
-            searchResultEl.style.height = 0
-            searchResultEl.innerHTML = null
+            searchResultElM.style.height = 0
+            searchResultElM.innerHTML = null
         }
     },200) 
 
-    function renderSearchResults(results) {
-        searchResultEl.innerHTML = null
+    function renderMobileSearchResults(results) {
+        searchResultElM.innerHTML = null
         var fragment = document.createDocumentFragment()
 
         results.forEach(function (item) {
@@ -97,11 +88,11 @@ script.
             fragment.appendChild(link)
         })
 
-        searchResultEl.appendChild(fragment)
-        searchResultEl.style.height = 'auto'
+        searchResultElM.appendChild(fragment)
+        searchResultElM.style.height = 'auto'
     }
 
-     function searching(inputText) {
+    function searching(inputText) {
         var inputTexts = inputText.split(' ')
         var searchResults = []
         inputTexts.forEach(function (searchKey) {
@@ -150,26 +141,13 @@ script.
         return searchResults
     }
 
-    searchButtonEl.onclick = function () {
-        if (searchDatabase.length > 0) return; 
+    searchButtonElM.onclick =  function () {
+        if (searchDatabase.length > 0) return;
 
-        fetch('/search.xml').then(res => res.text()).then(res => {
+        fetch(window.location.hostname + '/search.xml').then(res => res.text()).then(res => {
             var domparser = new DOMParser
             var doc = domparser.parseFromString(res, 'application/xml')
             searchDatabase = doc.getElementsByTagName('search')[0].children
         })
-    }
-
-    cancel.onclick = function(){
-        var box = document.getElementById("searchBox");
-        if(box){
-            box.classList.remove("mobile-search");
-            box.classList.add("is-hidden-mobile"); 
-            box.classList.add("is-relative"); 
-            box.classList.add("aside-card-container"); 
-        }
-        if(searchInputEl){
-            searchInputEl.value = "";
-        }
     }
 

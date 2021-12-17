@@ -5,6 +5,7 @@ block append head
   link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))
   script(src= url_for("/js/highlight.pack.js"))
   script(src= url_for("https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"))
+  script(type="text/javascript",src= url_for("https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"))
   script(src= url_for("/js/viewer.js"))
   meta(name="description", content=truncate( strip_html(page.content), {length: 360, omission: '..'} ))
   if theme.comment_valine && theme.comment_valine.enable
@@ -15,7 +16,8 @@ block topic
         p.is-full-height.is-flex-shrink-0.is-flex.is-align-items-center.is-justify-content-center= title
         p.is-full-height.is-flex-shrink-0.is-flex.is-align-items-center.is-justify-content-center= __('click_back_to_the_top')
 
-block content
+block content 
+    include widget/widget-search
     - var tocContent = toc(page.content, {list_number: false})
     main.container.is-max-widescreen.content.section.post-page.pt-4.px-4
         .columns.is-flex-desktop.is-justify-content-center.is-flex-direction-row-reverse

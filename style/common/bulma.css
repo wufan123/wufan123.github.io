@@ -1934,7 +1934,7 @@ fieldset[disabled] .button {
 }
 
 .content h2 {
-  font-size: 1.35em;
+  font-size: 1.4em;
   margin-bottom: 0.5714em;
 }
 
@@ -2060,8 +2060,9 @@ fieldset[disabled] .button {
 .content table th {
   border: 1px solid #dbdbdb;
   border-width: 0 0 1px;
-  padding: 0.5em 0.75em;
+  padding: 0.1em 0.2em;
   vertical-align: top;
+  /* text-align: center; */
 }
 
 .content table th {

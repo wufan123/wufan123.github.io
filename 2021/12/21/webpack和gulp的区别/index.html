@@ -1,0 +1,228 @@
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>webpack和gulp的区别</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '1440a68a4b8e8906f338cb023aeef906';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="Gulp 的定位 Task Runner, 就是用来跑一个一个任务的。
+
+放在以前比如我想用sass写css, coffee写js, 我必须手动的用相应的compiler去编译各自的文件，然后各自minify。这时候designer给你了两张新图片，好嘞，接着用自己的小工具手动去压缩图片。后来前端人不能忍了，搞出个自动化这个流程的 Grunt/Gulp, 比如你写完代码后要想发布production版本，用一句gulp build就可以
+
+rm 掉 dist文件夹中以前的旧文件
+自动把sass编译成css, coffee编译成js
+压缩各自的文件，压缩图片，生成图片sprite
+拷贝minified/uglified 文件到 dist 文件夹
+
+但是它没发解决的是 js module 的问题，是你写代码时候.."><meta name="generator" content="Hexo 5.4.0"></head><body class="is-flex is-flex-direction-column"><style>.header-widget .icon--search1{
+    position: fixed;
+    top: 10px;
+    right: 15px;
+}
+.hidden{
+    display:none;
+}
+.mobile-search{
+    display:block; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 110;
+    width: 100vw;
+    height: 42px;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 6px 30px -10px rgb(0 0 0 / 30%);
+}</style><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">wufan's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">webpack和gulp的区别</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><i class="iconfont icon--search1" id="mobileSearchIcon"></i></header><script>var icon = document.getElementById("mobileSearchIcon");
+icon.onclick = function (){
+    var box = document.getElementById("searchBox"); 
+    if(box){
+        box.classList.remove("is-hidden-mobile");
+        box.classList.remove("is-relative"); 
+        box.classList.remove("aside-card-container"); 
+        box.classList.add("mobile-search");
+    }
+}</script><main><style>.search-widget .search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--second-text-color);
+}
+.search-widget .search-content {
+    position: absolute;
+    left: 0;
+    top: calc(100% - 3px);
+    z-index: 2;
+
+    width: 100%;
+    height: 0;
+    max-height: 550px;
+
+    overflow: auto;
+    box-sizing: border-box;
+
+    background: var(--top-bar-bg-color);
+    backdrop-filter: blur(var(--backdropFilter));
+    -webkit-backdrop-filter: blur(var(--backdropFilter));
+
+    border-bottom-left-radius: var(--borderRadius);
+    border-bottom-right-radius: var(--borderRadius);
+    box-shadow: 0 12px 15px rgba(0, 0, 0, 0.08);
+}
+
+.search-widget .search-content a:hover h5 {
+    color: #3273dc!important;
+}
+.search-content.content span{
+    color:darkorange !important; 
+}
+.aside-card-container #mobileCancel{
+    display:none;
+}
+.mobile-search #mobileCancel{
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    font-size:0.8em; 
+}</style><main class="aside-card-container search-widget is-relative is-hidden-mobile" id="searchBox"><label for="searchInput"><div class="is-flex px-4" id="searchButton"><i class="iconfont icon--search1 mr-1"></i><input class="search-input is-flex-grow-1" id="searchInput" placeholder="搜索内容.."></div></label><section class="search-content content" id="searchContent"></section><span id="mobileCancel">取消</span></main><script>var searchDatabase = []
+var searchInputEl = document.getElementById('searchInput')
+var searchButtonEl = document.getElementById('searchButton')
+var searchResultEl = document.getElementById('searchContent')
+var cancel = document.getElementById('mobileCancel')
+
+searchInputEl.oninput = _.debounce(function (evt) {
+    var searchValue = evt.srcElement.value
+    var haveSearchValue = Boolean(searchValue.trim())
+    if (!haveSearchValue) {
+        searchResultEl.style.height = 0
+        searchResultEl.innerHTML = null
+        return
+    }
+    var searchResults = searching(searchValue)
+
+    if (searchResults.length > 0) {
+        renderSearchResults(searchResults)
+    }else{
+        searchResultEl.style.height = 0
+        searchResultEl.innerHTML = null
+    }
+},200) 
+
+function renderSearchResults(results) {
+    searchResultEl.innerHTML = null
+    var fragment = document.createDocumentFragment()
+
+    results.forEach(function (item) {
+        var link = document.createElement('a')
+        var title = document.createElement('h5')
+        var content = document.createElement('p')
+
+        title.className = 'mb-1'
+        title.innerHTML = item.title
+        content.innerHTML = item.content
+
+        link.href = item.link
+        link.appendChild(title)
+        link.appendChild(content)
+        link.className = 'p-4 is-block'
+
+        fragment.appendChild(link)
+    })
+
+    searchResultEl.appendChild(fragment)
+    searchResultEl.style.height = 'auto'
+}
+
+ function searching(inputText) {
+    var inputTexts = inputText.split(' ')
+    var searchResults = []
+    inputTexts.forEach(function (searchKey) {
+        var haveSearchValue = Boolean(searchKey.trim())
+        if (!haveSearchValue) return
+
+        var key = searchKey.toLowerCase()
+
+        for (var entry of searchDatabase) { 
+            var title = entry.getElementsByTagName('title')[0].textContent
+            //- var link = entry.getElementsByTagName('link')[0].getAttribute('href')
+            var link = entry.getElementsByTagName('url')[0].textContent
+            var contentWithTags = entry.getElementsByTagName('content')[0].textContent
+            var rawTitle =title.trim().replace(/<[^>]+>/g, '').toLowerCase()
+            var rawContent = contentWithTags.trim().replace(/<[^>]+>/g, '').toLowerCase()
+
+            var LENGTH = 80
+            var finalContent = ''
+            var contentLength = rawContent.length 
+            searchResultIdx=rawContent.indexOf(key);
+            var startIdx = searchResultIdx - 20,
+                endIdx = startIdx + LENGTH
+
+            if (startIdx < 0) {
+                startIdx = 0
+                endIdx = 80
+            }
+
+            endIdx > contentLength && (endIdx = contentLength)
+
+            finalContent = rawContent.substring(startIdx, endIdx)
+            var titleArr = searchResults.map(item=>{
+                return item.title
+            })
+            if (titleArr.indexOf(title)<0&&(rawTitle.indexOf(key) > -1 || searchResultIdx > -1)) {
+                title= title.replace(new RegExp(key,"gim"),`<span>${key}</span>`)
+                finalContent= finalContent.replace(new RegExp(key,"gim"),`<span>${key}</span>`)
+                searchResults.unshift({
+                    link: link,
+                    title: title,
+                    content: finalContent
+                })
+            }
+        }
+    })
+    return searchResults
+}
+
+searchButtonEl.onclick = function () {
+    if (searchDatabase.length > 0) return; 
+
+    fetch('/search.xml').then(res => res.text()).then(res => {
+        var domparser = new DOMParser
+        var doc = domparser.parseFromString(res, 'application/xml')
+        searchDatabase = doc.getElementsByTagName('search')[0].children
+    })
+}
+
+cancel.onclick = function(){
+    var box = document.getElementById("searchBox");
+    if(box){
+        box.classList.remove("mobile-search");
+        box.classList.add("is-hidden-mobile"); 
+        box.classList.add("is-relative"); 
+        box.classList.add("aside-card-container"); 
+    }
+    if(searchInputEl){
+        searchInputEl.value = "";
+    }
+}</script><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile is-hidden"></div><div class="column is-9"><header class="my-4"><a href="/tags/webpack"><i class="tag post-item-tag">webpack</i></a><a href="/tags/gulp"><i class="tag post-item-tag">gulp</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">webpack和gulp的区别</h1><time class="has-text-grey" datetime="2021-12-21T03:33:59.000Z">2021-12-21</time><article class="mt-2 post-content"><p>Gulp 的定位 <strong>Task Runner</strong>, 就是用来跑一个一个任务的。</p>
+<span id="more"></span>
+<p>放在以前比如我想用sass写css, coffee写js, 我必须手动的用相应的compiler去编译各自的文件，然后各自minify。这时候designer给你了两张新图片，好嘞，接着用自己的小工具手动去压缩图片。<br>后来前端人不能忍了，搞出个自动化这个流程的 Grunt/Gulp, 比如你写完代码后要想发布production版本，用一句<code>gulp build</code>就可以</p>
+<ul>
+<li>rm 掉 dist文件夹中以前的旧文件</li>
+<li>自动把sass编译成css, coffee编译成js</li>
+<li>压缩各自的文件，压缩图片，生成图片sprite</li>
+<li>拷贝minified/uglified 文件到 dist 文件夹</li>
+</ul>
+<p>但是它没发解决的是 js module 的问题，是你写代码时候如何组织代码结构的问题.</p>
+<p>之前大家可以用 require.js, sea.js 来 require dependency, 后来出了一个 webpack 说 我们能不能把所有的文件(css, image, js) 都用 js 来 生成依赖，最后生成一个bundle呢？ 所以webpack 也叫做 <strong>file bundler</strong> .</p>
+<p>同时 webpack 为了解决可以 require 不同文件的需求引入了loader, 比如面对sass文件有</p>
+<ul>
+<li><p>sass-loader, 把sass 转换成 css</p>
+</li>
+<li><p>css-loader, 让 webpack 能识别处理 css</p>
+</li>
+<li><p>style-loader, 把识别后的 css 插入到 html style中<br>类似的识别es6 有babel-loader</p>
+</li>
+</ul>
+<p>本来这就是 webpack 的初衷，require everything, bundle everything. 一开始 webpack 刚出来的时候大家都是把它结合着 gulp 一起用的， gulp 里面有个 gulp-webpack，就是让 webpack 专门去做module dependency的事情, 生成一个bundle.js文件，然后再用 gulp 去做一些其他杂七杂八minify, uglify的事情。 后来人们发现 webpack 有个plugins的选项， 可以用来进一步处理经过loader 生成的bundle.js，于是有人写了对应的插件， 所以minify/uglify, 生成hash的工作也可以转移到webpack本身了，挤掉了gulp这部分的市场份额。 再后来大家有发现 npm/package.json 里面的scripts 原来好好用啊，调用任务的时候就直接写一个简单的命令，因为 gulp 也不就是各种插件命令的组合呀，大部分情况下越来越不需要 gulp/grunt 之类的了 ref. 所以你现在看到的很多新项目都是package.json里面scripts 写了一堆，外部只需要一个webpack就够了。</p>
+<p>转自<a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000008058766">drbelfast在segmentfault的部分回答</a>，侵删</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2021/12/10/vue-cli3-0-%E4%B8%AD%E4%BD%BF%E7%94%A8CDN%E5%8A%A0%E8%BD%BD%E8%B5%84%E6%BA%90/" title="vue-cli3.0+中使用CDN加载资源"><span class="has-text-weight-semibold">下一页: vue-cli3.0+中使用CDN加载资源</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="wufan123/wufan123.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/wufan123"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/people/wu-hua-rong-18"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> wufan 2021</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script><script>$('.content').viewer({toolbar:false});</script></body></html>

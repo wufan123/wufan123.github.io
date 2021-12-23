@@ -27,19 +27,13 @@
   text-indent: 2em; }
 
 .post-page .post-content code {
-  border-radius: 4px;
-  background: var(--third-bg-color); }
+  border-radius: 4px; }
 
 .post-page .post-content pre {
   padding: 0;
   background: transparent; }
   .post-page .post-content pre code {
-    padding: 15px;
-    border: 1px solid var(--border-line-color);
-    background: var(--pre-code-bg-color); }
-
-.post-page .post-content .hljs {
-  color: var(--second-text-color); }
+    padding: 15px; }
 
 .post-page .post-content img {
   display: block;

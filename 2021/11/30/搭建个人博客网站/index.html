@@ -1,11 +1,11 @@
-<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>10分钟搭建个人静态博客网站</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!DOCTYPE html><html class="appearance-light" lang="zh-CN"><head><meta charset="UTF-8"><title>10分钟搭建个人静态博客网站</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
 <!-- Baidu Analytics --><script>var _hmt = _hmt || [];
 (function() {
 var hm = document.createElement("script");
 hm.src = "//hm.baidu.com/hm.js?" + '1440a68a4b8e8906f338cb023aeef906';
 var s = document.getElementsByTagName("script")[0];
 s.parentNode.insertBefore(hm, s);
-})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="  只看步骤的话，跳到快速开始
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><!--link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))--><!--script(src= url_for("/js/highlight.pack.js")) --><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="  只看步骤的话，跳到快速开始
  
 
 写在前面静态网站非常适合专注于内容的网站，比如像博客网站，这边记录一下我搭建这个静态博客的步骤，首先选择服务器，虽然现在云服务器很方便，但如果只是做个静态网站的话，有个更方便的方法是用Github Pages，将资源部署在github上，并且还会有自己的域名，省时省力。然后网站资源也可以用一些静态博客生成框架去做，一些流行的框架有：
@@ -220,77 +220,92 @@ cancel.onclick = function(){
 <br> 
 
 <p>这边的Repository name要按照一定格式</p>
-<pre class="language-js" data-language="js"><code class="language-js">&#x2F;&#x2F;usernam为你的用户名称
-username.github.io </code></pre>
-
+<pre><code class="js">//usernam为你的用户名称
+username.github.io 
+</code></pre>
 <p>比如我的用户名是wufan123，那么就是</p>
-<pre class="language-JavaScript" data-language="JavaScript"><code class="language-JavaScript">wufan123.github.io</code></pre>
-
+<pre><code class="JavaScript">wufan123.github.io
+</code></pre>
 <p>创建完成后先把当前页面放着，它大概长这样子</p>
 <img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/2.png" class="">
 <br>
 
 <p>我这边新建了一个static做示范，你的应该是</p>
-<pre class="language-js" data-language="js"><code class="language-js">username&#x2F;username.github.io</code></pre>
-
+<pre><code class="js">username/username.github.io
+</code></pre>
 <h3 id="二、安装git"><a href="#二、安装git" class="headerlink" title="二、安装git"></a>二、安装git</h3><p>接着我们需要安装下<a target="_blank" rel="noopener" href="https://git-scm.com/downloads">git</a>,选择windows，然后根据你的电脑选择32位或者64位，下载然后一路下一步安装完成。安装好之后，右键鼠标菜单应该可以看到<br>“Git Bash Here”菜单。安装git就完成了</p>
 <h3 id="三、安装Node-js"><a href="#三、安装Node-js" class="headerlink" title="三、安装Node.js"></a>三、安装Node.js</h3><p>接着安装<a target="_blank" rel="noopener" href="https://nodejs.org/en/">Node.js</a>环境,选择LTS版本，下一步，安装完成之后通过鼠标右键菜单选择Git Bash Here，输入</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">node -v </code></pre>
+<pre><code class="bash">node -v 
+</code></pre>
 <p>显示Node.js版本，安装成功</p>
 <h3 id="四、安装Hexo"><a href="#四、安装Hexo" class="headerlink" title="四、安装Hexo"></a>四、安装Hexo</h3><p>可以先设置下npm的淘宝镜像，这样安装比较快</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org</code></pre>
+<pre><code class="bash">npm config set registry https://registry.npm.taobao.org
+</code></pre>
 <p>然后在Git Bash中输入</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">npm install -g hexo-cli </code></pre>
+<pre><code class="bash">npm install -g hexo-cli 
+</code></pre>
 <p>输入</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo -v</code></pre>
+<pre><code class="bash">hexo -v
+</code></pre>
 <p>显示版本信息安装成功</p>
 <h3 id="五、建站"><a href="#五、建站" class="headerlink" title="五、建站"></a>五、建站</h3><p>安装 Hexo 完成后，请执行下列命令，Hexo 将会在指定文件夹中新建所需要的文件。</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo init my-blog
+<pre><code class="bash">hexo init my-blog
 cd my-blog
-npm install</code></pre>
+npm install
+</code></pre>
 <p>我新建了一个my-blog的hexo站点项目，它的目录是这样子的</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">.
+<pre><code class="bash">.
 ├── _config.yml
 ├── package.json
 ├── scaffolds
 ├── source
 |   ├── _drafts
 |   └── _posts
-└── themes</code></pre>
+└── themes
+</code></pre>
 <p>我们找到_config.yml文件，修改配置</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">deploy:
+<pre><code class="bash">deploy:
   type: git
-  repo: &lt;repository url&gt; #git@github.com:wufan123&#x2F;wufan123.github.io.git
-  branch: gh-pages</code></pre>
+  repo: &lt;repository url&gt; #git@github.com:wufan123/wufan123.github.io.git
+  branch: gh-pages
+</code></pre>
 <p>将repo改成刚才在Github新建的repo地址。</p>
 <h3 id="六、添加git-ssh"><a href="#六、添加git-ssh" class="headerlink" title="六、添加git ssh"></a>六、添加git ssh</h3><p>为了能顺利将刚才生成的资源部署到github上（公钥认证），我们先创建一对公钥密匙</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">$ ssh-keygen -o</code></pre>
+<pre><code class="bash">$ ssh-keygen -o
+</code></pre>
 <p>然后输入</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">$ cat ~&#x2F;.ssh&#x2F;id_rsa.pub</code></pre>
+<pre><code class="bash">$ cat ~/.ssh/id_rsa.pub
+</code></pre>
 <p>会出现类似这样的字符串</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom&#x2F;BWDSU
+<pre><code class="bash">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom/BWDSU
 GPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3
-Pbv7kOdJ&#x2F;MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK&#x2F;7XA
-t3FaoJoAsncM1Q9x5+3V0Ww68&#x2F;eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw&#x2F;Pb0rwert&#x2F;En
-mZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z&#x2F;il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbx
-NrRFi9wrf+M7Q&#x3D;&#x3D; schacon@mylaptop.local</code></pre>
+Pbv7kOdJ/MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK/7XA
+t3FaoJoAsncM1Q9x5+3V0Ww68/eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw/Pb0rwert/En
+mZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z/il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbx
+NrRFi9wrf+M7Q== schacon@mylaptop.local
+</code></pre>
 <p>上面的是示例，请拷贝自己的，然后添加到<a target="_blank" rel="noopener" href="https://github.com/settings/keys">Github SSH keys</a>中，点击界面中的New SSH key，title是自己给它的名字，key中黏贴刚才拷贝的那一串公匙内容。</p>
 <h3 id="七、部署"><a href="#七、部署" class="headerlink" title="七、部署"></a>七、部署</h3><p>现在你可以运行</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo deploy</code></pre>
+<pre><code class="bash">hexo deploy
+</code></pre>
 <p>进行部署了，顺利的话，你可以看到你Github上username.github.io中会多出一个<code>gh-pages</code>分支，过一小会，你就可以在浏览器中输入username.github.io访问自己的博客网站了比如我的地址就是<a href="https://wufan123.github.io/">wufan123.github.io</a>,如果你完全按照我的步骤来的话，它差不多长这样子的：</p>
 <img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/3.png" class="">
 <br>
 恭喜你建站成功了！
 
 <h3 id="八、写作"><a href="#八、写作" class="headerlink" title="八、写作"></a>八、写作</h3><p>可以通过下列命令来创建一篇新文章或者新的页面</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">$ hexo new [layout] &lt;title&gt;</code></pre>
+<pre><code class="bash">$ hexo new [layout] &lt;title&gt;
+</code></pre>
 <p>layout不是必须参数，默认为post，比如创建一篇搭建个人博客网站</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo new 搭建个人博客网站</code></pre>
+<pre><code class="bash">hexo new 搭建个人博客网站
+</code></pre>
 <p>你在source中可以看到生成了一个<code>搭建个人博客网站.md</code>文件，然后就是用你熟悉的md语法写作了，写完之后，可以用运行下列命令启动一个本地服务器预览一下</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo server</code></pre>
+<pre><code class="bash">hexo server
+</code></pre>
 <p>觉得没问题的话，就可以重新部署到gitub.io了，部署命令</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo clean 
-hexo deploy</code></pre>
+<pre><code class="bash">hexo clean 
+hexo deploy
+</code></pre>
 <p>稍等一下就可以看到博客站更新了,其他关于写作，网站配置可以移步<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs">官方文档说明</a></p>
 <h3 id="八、主题"><a href="#八、主题" class="headerlink" title="八、主题"></a>八、主题</h3><p>如果你觉得官方的默认主题不好看，可以换主题，官方的<a target="_blank" rel="noopener" href="https://hexo.io/themes/">主题列表</a>有300+不同的主题，应该会有一款符合你的审美</p>
 <img src="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/4.png" class="">

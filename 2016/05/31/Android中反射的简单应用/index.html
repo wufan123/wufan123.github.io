@@ -1,11 +1,11 @@
-<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>Android中反射的简单应用</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!DOCTYPE html><html class="appearance-light" lang="zh-CN"><head><meta charset="UTF-8"><title>Android中反射的简单应用</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
 <!-- Baidu Analytics --><script>var _hmt = _hmt || [];
 (function() {
 var hm = document.createElement("script");
 hm.src = "//hm.baidu.com/hm.js?" + '1440a68a4b8e8906f338cb023aeef906';
 var s = document.getElementsByTagName("script")[0];
 s.parentNode.insertBefore(hm, s);
-})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="自己对反射的理解和应用还处于比较浅显的阶段，写这篇文章更多在于整理总结，也就是帮助自己进一步的理解和学习反射机制。
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><!--link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))--><!--script(src= url_for("/js/highlight.pack.js")) --><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="自己对反射的理解和应用还处于比较浅显的阶段，写这篇文章更多在于整理总结，也就是帮助自己进一步的理解和学习反射机制。
 反射反射的概念是由Smith在1982年首次提出的，主要是指程序可以访问、检测和修改它本身状态或行为的一种能力。
 java中类反射反射是 Java 程序开发语言的特征之一，它允许运行中的 Java 程序对自身进行检查，或者说“自审”，并能直接操作程序的内部属性和方法。简单总结这些定义，那就是反射可以让我们获得一个类的所有信息，包括私有属性和私有方法，对于我们这种小白，先知道这点就可以啦，那在java中如何使用发射呢。这里我们随便创建一个类来演示。比如说创建一个Book类：
 public class Book implements Parcelable
@@ -202,33 +202,35 @@ cancel.onclick = function(){
 }</script><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84"><span class="toc-text">反射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java%E4%B8%AD%E7%B1%BB%E5%8F%8D%E5%B0%84"><span class="toc-text">java中类反射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android%E4%B8%AD%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8"><span class="toc-text">Android中的简单应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="toc-text">反射的好处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-text">最后</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/Android"><i class="tag post-item-tag">Android</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Android中反射的简单应用</h1><time class="has-text-grey" datetime="2016-05-31T05:06:00.000Z">2016-05-31</time><article class="mt-2 post-content"><p>自己对反射的理解和应用还处于比较浅显的阶段，写这篇文章更多在于整理总结，也就是帮助自己进一步的理解和学习反射机制。</p>
 <h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>反射的概念是由Smith在1982年首次提出的，主要是指<strong>程序可以访问、检测和修改它本身状态或行为的一种能力</strong>。</p>
 <h2 id="java中类反射"><a href="#java中类反射" class="headerlink" title="java中类反射"></a>java中类反射</h2><p>反射是 Java 程序开发语言的特征之一，它允许运行中的 Java 程序对<strong>自身进行检查，或者说“自审”，并能直接操作程序的内部属性和方法</strong>。<br>简单总结这些定义，那就是反射可以让我们获得一个类的所有信息，包括私有属性和私有方法，对于我们这种小白，先知道这点就可以啦，那在java中如何使用发射呢。这里我们随便创建一个类来演示。比如说创建一个Book类：</p>
-<pre class="language-java" data-language="java"><code class="language-java">public class Book implements Parcelable
+<pre><code class="java">public class Book implements Parcelable
 &#123;
-    private int id&#x3D;1;
-    private String name&#x3D;&quot;android&quot;;
+    private int id=1;
+    private String name=&quot;android&quot;;
 
-    private String author&#x3D;&quot;wf&quot;;
+    private String author=&quot;wf&quot;;
 
     private String getName()
     &#123;
         return name;
     &#125;
-&#125;</code></pre>
+&#125;
+</code></pre>
 <span id="more"></span>
 <p>Book类中属性和方法都是私有的，现在我们通过反射来访问这些属性和方法。</p>
-<pre class="language-java" data-language="java"><code class="language-java">String s &#x3D; null;
+<pre><code class="java">String s = null;
 try
 &#123;
-    Class&lt;?&gt; bookClass &#x3D; Class.forName(&quot;cc.abto.demo.Book&quot;);&#x2F;&#x2F;完整类名
-    Object book &#x3D; bookClass.newInstance();&#x2F;&#x2F;获得实例
-    Method getAuthor &#x3D; bookClass.getDeclaredMethod(&quot;getName&quot;);&#x2F;&#x2F;获得私有方法
-    getAuthor.setAccessible(true);&#x2F;&#x2F;调用方法前，设置访问标志
-    s &#x3D; (String) getAuthor.invoke(book);&#x2F;&#x2F;使用方法
+    Class&lt;?&gt; bookClass = Class.forName(&quot;cc.abto.demo.Book&quot;);//完整类名
+    Object book = bookClass.newInstance();//获得实例
+    Method getAuthor = bookClass.getDeclaredMethod(&quot;getName&quot;);//获得私有方法
+    getAuthor.setAccessible(true);//调用方法前，设置访问标志
+    s = (String) getAuthor.invoke(book);//使用方法
 &#125;
 catch (Exception e)
 &#123;
     e.printStackTrace();
-&#125;</code></pre>
+&#125;
+</code></pre>
 <p>可以看到上面代码中我们用Class和Method这两个类完成了反射，这两个类分别对应了类和方法，也就是包装了类和方法的信息，下面对反射的部分API做一下简单介绍：</p>
 <ul>
 <li> Class类：代表一个类，位于java.lang包下</li>
@@ -238,49 +240,51 @@ catch (Exception e)
 <li> Array类：提供了动态创建数组，以及访问数组的元素的静态方法</li>
 </ul>
 <p>在Java中，每个class都有一个相应的Class对象。也就是说，当我们编写一个类，编译完成后，在生成的.class文件中，就会产生一个Class对象，用于表示这个类的类型信息。 java中的Class三种获取方式：</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;&#x2F;使用Class类的静态方法forName()，用类的名字获取一个Class实例
-Class&lt;?&gt; bookClass &#x3D; Class.forName(&quot;cc.abto.demo.Book&quot;);
+<pre><code class="java">//使用Class类的静态方法forName()，用类的名字获取一个Class实例
+Class&lt;?&gt; bookClass = Class.forName(&quot;cc.abto.demo.Book&quot;);
 
-&#x2F;&#x2F;利用对象调用getClass()方法获取该对象的Class实例
-Book book &#x3D; new Book();
-Class&lt;? extends Book&gt; bookClass &#x3D; book.getClass();
+//利用对象调用getClass()方法获取该对象的Class实例
+Book book = new Book();
+Class&lt;? extends Book&gt; bookClass = book.getClass();
 
-&#x2F;&#x2F;运用.class的方式来获取Class实例，对于基本数据类型的封装类，还可以采用.TYPE来获取相对应的基本数据类型的Class实例
-Class&lt;Book&gt; bookClass &#x3D; Book.class;
-Class&lt;Integer&gt; type &#x3D; Integer.TYPE;</code></pre>
+//运用.class的方式来获取Class实例，对于基本数据类型的封装类，还可以采用.TYPE来获取相对应的基本数据类型的Class实例
+Class&lt;Book&gt; bookClass = Book.class;
+Class&lt;Integer&gt; type = Integer.TYPE;
+</code></pre>
 <p>然后再贴一些常用的方法</p>
-<pre class="language-java" data-language="java"><code class="language-java">public Annotation[] getAnnotations () &#x2F;&#x2F;获取这个类中所有注解
+<pre><code class="java">    public Annotation[] getAnnotations () //获取这个类中所有注解
 
-getClassLoader() &#x2F;&#x2F;获取加载这个类的类加载器
+    getClassLoader() //获取加载这个类的类加载器
 
-getDeclaredMethods() &#x2F;&#x2F;获取这个类中的所有方法
+    getDeclaredMethods() //获取这个类中的所有方法
 
-getReturnType() &#x2F;&#x2F;获取方法的返回类型
+    getReturnType() //获取方法的返回类型
 
-getParameterTypes() &#x2F;&#x2F;获取方法的传入参数类型
+    getParameterTypes() //获取方法的传入参数类型
 
-isAnnotation() &#x2F;&#x2F;测试这类是否是一个注解类
+    isAnnotation() //测试这类是否是一个注解类
 
-getDeclaredConstructors() &#x2F;&#x2F;获取所有的构造方法
+    getDeclaredConstructors() //获取所有的构造方法
 
-getDeclaredMethod(String name, Class… parameterTypes)&#x2F;&#x2F; 获取指定的构造方法（参数：参数类型.class）
+    getDeclaredMethod(String name, Class… parameterTypes)// 获取指定的构造方法（参数：参数类型.class）
 
-getSuperclass() &#x2F;&#x2F;获取这个类的父类
+    getSuperclass() //获取这个类的父类
 
-getInterfaces()&#x2F;&#x2F; 获取这个类实现的所有接口
+    getInterfaces()// 获取这个类实现的所有接口
 
-getFields() &#x2F;&#x2F;获取这个类中所有被public修饰的成员变量
+    getFields() //获取这个类中所有被public修饰的成员变量
 
-getField(String name) &#x2F;&#x2F;获取指定名字的被public修饰的成员变量
+    getField(String name) //获取指定名字的被public修饰的成员变量
 
-newInstance() &#x2F;&#x2F;返回此Class所表示的类，通过调用默认的（即无参数）构造函数创建的一个新实例</code></pre>
+    newInstance() //返回此Class所表示的类，通过调用默认的（即无参数）构造函数创建的一个新实例
+</code></pre>
 <p>更多的方法和方法的注解大家可以查看文档。</p>
 <h2 id="Android中的简单应用"><a href="#Android中的简单应用" class="headerlink" title="Android中的简单应用"></a>Android中的简单应用</h2><p>查看Android SDK的源码时候。你会发现很多类或方法中经常加上了“@hide”注释标记，这些API是不允许在程序中调用的。Hidden API之所以被隐藏，是想阻止开发者使用SDK中那些未完成或不稳定的部分（接口或架构）。如图所示</p>
 <img src="/2016/05/31/Android%E4%B8%AD%E5%8F%8D%E5%B0%84%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/1.webp" class="">
 <p>所以在开发中，我们不仅可以通过反射获取私有属性和方法，也可以利用反射获取一些SDK对外部隐藏的API，比如说前阵子在做蓝牙开发的时候，自动配对的一些方法在API 19以后才对外开放的，这边我们就可以使用反射来实现配对功能了</p>
-<pre class="language-java" data-language="java"><code class="language-java">try
+<pre><code class="java">try
 &#123;
-    Class&lt;BluetoothDevice&gt; bluetoothDeviceClass &#x3D; BluetoothDevice.class;
+    Class&lt;BluetoothDevice&gt; bluetoothDeviceClass = BluetoothDevice.class;
     bluetoothDeviceClass.getMethod(&quot;setPin&quot;, byte[].class).invoke(device, &quot;1234&quot;.getBytes());
     bluetoothDeviceClass.getMethod(&quot;createBond&quot;).invoke(device);
     bluetoothDeviceClass.getMethod(&quot;setPairingConfirmation&quot;, boolean.class).invoke(device, true);
@@ -290,7 +294,8 @@ newInstance() &#x2F;&#x2F;返回此Class所表示的类，通过调用默认的�
 catch (Exception e)
 &#123;
     e.printStackTrace();
-&#125;</code></pre>
+&#125;
+</code></pre>
 <h2 id="反射的好处"><a href="#反射的好处" class="headerlink" title="反射的好处"></a>反射的好处</h2><p>反射不仅可以让我们获得隐藏的方法和属性，还可以让<strong>对象的实例化从编译时转化为运行时</strong>，因为我们可以通过Class.forName(“cc.abto.demo.Book”).newInstance()的方法来生成新的实例，而这边的”cc.abto.demo.Book”是一个字符串，完全可以用变量来代替，再结合抽象工厂模式什么的，我们就可以很大程度上对程序应用中的功能模块进行解耦合。可能这边简单几句没能解释清楚，大家可以看看《大话设计模式》之类的书，里面就介绍的比较清楚明白了。<br>##反射的弊端<br>反射带来的两大弊端可能就是安全和性能问题了吧，这方面我知之甚少，有待进一步的了解和学习。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>因为自己水平有限，如果有些错误的地方还请大家见谅。下面贴出几篇写得比较好和详细的博客。</p>
 <ul>

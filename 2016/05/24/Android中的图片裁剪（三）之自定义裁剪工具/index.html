@@ -1,18 +1,18 @@
-<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>Android中的图片裁剪（三）之自定义裁剪工具</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!DOCTYPE html><html class="appearance-light" lang="zh-CN"><head><meta charset="UTF-8"><title>Android中的图片裁剪（三）之自定义裁剪工具</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
 <!-- Baidu Analytics --><script>var _hmt = _hmt || [];
 (function() {
 var hm = document.createElement("script");
 hm.src = "//hm.baidu.com/hm.js?" + '1440a68a4b8e8906f338cb023aeef906';
 var s = document.getElementsByTagName("script")[0];
 s.parentNode.insertBefore(hm, s);
-})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="在上一篇文章中Android中的图片裁剪（二）之开源项目介绍了一些优秀的图片裁剪开源项目，在我们实现自己的裁剪功能的时候，也可以看下这些开源项目的源码，看看大牛们都是怎么实现的。
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><!--link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))--><!--script(src= url_for("/js/highlight.pack.js")) --><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="在上一篇文章中Android中的图片裁剪（二）之开源项目介绍了一些优秀的图片裁剪开源项目，在我们实现自己的裁剪功能的时候，也可以看下这些开源项目的源码，看看大牛们都是怎么实现的。
 
 
 createBitmap方法首先要做图片裁剪的功能，要先认识Bitmap，在这个类里面，有几个方法可以帮助我们实现功能。就比如下面这一个方法
-&amp;#x2F;**
+/**
  * Returns an immutable bitmap from the specified subset of the source
  * bitmap. The new bitmap may be the same object as source, or a copy may
- * have been made. It is initialized with.."><meta name="generator" content="Hexo 5.4.0"></head><body class="is-flex is-flex-direction-column"><style>.header-widget .icon--search1{
+ * have been made. It is initialized with the .."><meta name="generator" content="Hexo 5.4.0"></head><body class="is-flex is-flex-direction-column"><style>.header-widget .icon--search1{
     position: fixed;
     top: 10px;
     right: 15px;
@@ -205,94 +205,100 @@ cancel.onclick = function(){
 <span id="more"></span>
 
 <h2 id="createBitmap方法"><a href="#createBitmap方法" class="headerlink" title="createBitmap方法"></a>createBitmap方法</h2><p>首先要做图片裁剪的功能，要先认识Bitmap，在这个类里面，有几个方法可以帮助我们实现功能。就比如下面这一个方法</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
+<pre><code class="java">/**
  * Returns an immutable bitmap from the specified subset of the source
  * bitmap. The new bitmap may be the same object as source, or a copy may
  * have been made. It is initialized with the same density as the original
  * bitmap.
  *...
- *&#x2F;
-public static Bitmap createBitmap(Bitmap source, int x, int y, int width, int height)</code></pre>
+ */
+public static Bitmap createBitmap(Bitmap source, int x, int y, int width, int height)
+</code></pre>
 <p>好吧，方法注解太长，被我省略掉一些了，但是用起来其实挺简单的，只要传入指定的范围，它就能生成一个新的位图给你。（这里先说一句，图片的裁剪功能其实做起来不难，要做好就挺麻烦的，在实际的工具开发中免不了要自定义View这样的工作），而这边的范围一般是一个可拖动的方框，点击裁剪按钮的时候生成我们需要的图片。当然createBitmap方法还有很多其他重载实现，这里就不一一贴出来了。在具体实现的时候我们可以自定义两个View</p>
-<pre class="language-java" data-language="java"><code class="language-java">public class CropImageView extends ImageView &#123;
+<pre><code class="java">public class CropImageView extends ImageView &#123;
 
     HighlightView hv;
-    &#x2F;&#x2F;...
+    //...
  
 &#125;
 
 class HighlightView &#123;
-    &#x2F;&#x2F;...
-&#125;</code></pre>
+    //...
+&#125;
+</code></pre>
 <p>这里只是简单的提供一下思路，HighlightView用来表示裁剪框对象，封装裁剪框的一些信息啊，比如宽高和触摸状态什么的。CropImageView继承ImageView用来显示图片和处理触摸事件，在触摸事件中改变HighlightView的状态：</p>
-<pre class="language-java" data-language="java"><code class="language-java">public boolean onTouchEvent(@NonNull MotionEvent event) &#123;
+<pre><code class="java">public boolean onTouchEvent(@NonNull MotionEvent event) &#123;
     switch (event.getAction()) &#123;
     case MotionEvent.ACTION_DOWN:
-            &#x2F;&#x2F;对触摸点进行一些逻辑判断，比如摸到裁剪框的边还是其他什么的
-            int edge &#x3D; hv.getHit(event.getX(), event.getY());
-            &#x2F;&#x2F;...
-            &#x2F;&#x2F;然后根据逻辑判断结果设置裁剪框的状态
-            hv.setMode((edge &#x3D;&#x3D; HighlightView.MOVE)
+            //对触摸点进行一些逻辑判断，比如摸到裁剪框的边还是其他什么的
+            int edge = hv.getHit(event.getX(), event.getY());
+            //...
+            //然后根据逻辑判断结果设置裁剪框的状态
+            hv.setMode((edge == HighlightView.MOVE)
                         ? HighlightView.ModifyMode.Move
                         : HighlightView.ModifyMode.Grow);
-            &#x2F;&#x2F;...
+            //...
         break;
-            &#x2F;&#x2F;...</code></pre>
+            //...
+</code></pre>
 <p>啦啦啦，是不是说了跟没说一样，主要是具体实现起来真的挺麻烦的，贴那么多代码出来也没啥用，我自己都要看晕了，总归自己造轮子还是挺辛苦的，而且刚造出来也肯定有一些问题的，所以才有那句名言么，不要重复造轮子，我觉得只要看懂源代码的思路，然后根据需求，在别人的轮子上进行改造，这样就快的多啦。</p>
 <h2 id="Matrix的基本使用"><a href="#Matrix的基本使用" class="headerlink" title="Matrix的基本使用"></a>Matrix的基本使用</h2><p>一般呢，在裁剪的工具中，在对图片裁剪前，多可以对图片进行一些缩放，平移，旋转之类的操作，这些效果都是可以通过Matrix来实现的，那这个类怎么用呢。我们先看一下<a href="file:///D:/Android/sdk/docs/reference/android/graphics/Matrix.html">官方文档中Matrix</a>的介绍（自带梯子） ，首先看一下它的官方定义：</p>
 <p>**The Matrix class holds a 3x3 matrix for transforming coordinates. **</p>
 <p>直译过来呢，就是<strong>一个转换坐标的3x3矩阵</strong>，你妹啊，什么是3x3矩阵…我也不知道啊 ，高等数学这东西我早就扔了好么，不过不知道没关系，面向对象么，我先知道怎么用就可以了，有时间有闲情再去深究。我们先主要看一下Matrix类里面，我们要用到的一些方法(补充说一下，这Matrix类是在graphics包下的，不要导成opengl包下的)：</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
+<pre><code class="java">/**
  * Postconcats the matrix with the specified translation.
- * M&#39; &#x3D; T(dx, dy) * M
- *&#x2F;
+ * M&#39; = T(dx, dy) * M
+ */
 public boolean postTranslate(float dx, float dy)
 
-&#x2F;**
+/**
  * Postconcats the matrix with the specified rotation.
- * M&#39; &#x3D; R(degrees) * M
- *&#x2F;
-public boolean postRotate(float degrees)</code></pre>
+ * M&#39; = R(degrees) * M
+ */
+public boolean postRotate(float degrees)
+</code></pre>
 <p>好啦，毕竟是文档找的到东西，我这里就只贴两个方法出来，看注解应该很容易理解方法的使用，<strong>第一个方法就是对矩阵进行左乘T(dx, dy)，第二个方法就是对矩阵左乘R(degrees)<strong>，通过源码我们可以看到，方法里面通过jni调用lib层用c，c++实现运算转换的。反正直白点讲，在对它进行图片变换的时候，</strong>第一个方法就是平移图片，第二个方法就是旋转图片</strong>，啦啦啦，其他方法大家可以自行查找文档，问题都不大。</p>
 <h2 id="图片的平移，缩放，旋转"><a href="#图片的平移，缩放，旋转" class="headerlink" title="图片的平移，缩放，旋转"></a>图片的平移，缩放，旋转</h2><p>通过重写View或者Activity的onTouch事件来进行图片的平移，缩放和旋转会比较方便，这里我们要先做一些初始化工作，比如获取图片之类的，一般我们将图片的大小控制在手机内存的1/8，防止OOM和卡顿，然后就是在onTouch事件里做具体实现：</p>
-<pre class="language-java" data-language="java"><code class="language-java">public boolean onTouch(View v, MotionEvent event)
+<pre><code class="java">public boolean onTouch(View v, MotionEvent event)
 &#123;
 
     switch (event.getAction() &amp; MotionEvent.ACTION_MASK)
     &#123;
-        &#x2F;&#x2F; 主点按下
+        // 主点按下
         case MotionEvent.ACTION_DOWN:
-            cachMatrix.set(matrix);&#x2F;&#x2F;用来变化的矩阵
+            cachMatrix.set(matrix);//用来变化的矩阵
             prev.set(event.getX(), event.getY());
-            mode &#x3D; DRAG;
+            mode = DRAG;
             break;
-        &#x2F;&#x2F;...
+        //...
         case MotionEvent.ACTION_MOVE:
-            if (mode &#x3D;&#x3D; DRAG)&#x2F;&#x2F;拖动
+            if (mode == DRAG)//拖动
             &#123;
                 matrix.set(cachMatrix);
                 matrix.postTranslate(event.getX() - prev.x, event.getY() - prev.y);
             &#125;
-            else if (mode &#x3D;&#x3D; ZOOM)&#x2F;&#x2F;缩放
+            else if (mode == ZOOM)//缩放
             &#123;
-                float newDist &#x3D; spacing(event);
+                float newDist = spacing(event);
                 if (newDist &gt; 10f)
                 &#123;
                     matrix.set(cachMatrix);
-                    float tScale &#x3D; newDist &#x2F; dist;
+                    float tScale = newDist / dist;
                     matrix.postScale(tScale, tScale, mid.x, mid.y);
                 &#125;
             &#125;
             break;
     &#125;
     imgView.setImageMatrix(matrix);
-    &#x2F;&#x2F;...
+    //...
     return true;
-&#125;</code></pre>
+&#125;
+</code></pre>
 <p>代码就放了部分上去，主要说明一下思路，当然在将这些功能和裁剪进行合并的时候，是要对裁剪框的位置再进行计算的,比如因为对图片缩放了，所以再返回剪裁框大小的时候是要乘上缩放值的。</p>
-<pre class="language-java" data-language="java"><code class="language-java">public Rect getScaledCropRect(float scale) &#123;
+<pre><code class="java">public Rect getScaledCropRect(float scale) &#123;
     return new Rect((int) (cropRect.left * scale), (int) (cropRect.top * scale),
             (int) (cropRect.right * scale), (int) (cropRect.bottom * scale));
-&#125;</code></pre>
+&#125;
+</code></pre>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>图片的裁剪就先写到这里，主要介绍了一些关键方法和整体的实现思路，后面有时间的话，我会把代码整理后发布到github上去的，到时候再来补链接。</p>
 </article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2016/05/25/WebView%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/" title="WebView加载速度优化"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: WebView加载速度优化</span></a><a class="button is-default" href="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" title="Android中的图片裁剪（二）之开源项目"><span class="has-text-weight-semibold">下一页: Android中的图片裁剪（二）之开源项目</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="wufan123/wufan123.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/wufan123"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/people/wu-hua-rong-18"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> wufan 2021</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script><script>$('.content').viewer({toolbar:false});</script></body></html>

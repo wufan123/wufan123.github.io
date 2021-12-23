@@ -1,11 +1,11 @@
-<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>Android中AIDL的工作原理</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!DOCTYPE html><html class="appearance-light" lang="zh-CN"><head><meta charset="UTF-8"><title>Android中AIDL的工作原理</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
 <!-- Baidu Analytics --><script>var _hmt = _hmt || [];
 (function() {
 var hm = document.createElement("script");
 hm.src = "//hm.baidu.com/hm.js?" + '1440a68a4b8e8906f338cb023aeef906';
 var s = document.getElementsByTagName("script")[0];
 s.parentNode.insertBefore(hm, s);
-})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="在上一篇文章中Android中AIDL的使用详解介绍了AIDL的使用流程，这篇文章我们说说AIDL的工作原理。
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><!--link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))--><!--script(src= url_for("/js/highlight.pack.js")) --><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="在上一篇文章中Android中AIDL的使用详解介绍了AIDL的使用流程，这篇文章我们说说AIDL的工作原理。
 IPC在这之前我们先简单说一下IPC，IPC是Inter-Process Communication的缩写，是进程间通信或者跨进程通信的意思，既然说到进程，大家要区分一下进程和线程，进程一般指的是一个执行单元，它拥有独立的地址空间，也就是一个应用或者一个程序。线程是CPU调度的最小单元，是进程中的一个执行部分或者说是执行体，两者之间是包含与被包含的关系。因为进程间的资源不能共享的，所以每个系统都有自己的IPC机制，Android是基于Linux内核的移动操作系统，但它并没有继承Linux的IPC机制，而是有着自己的一套IPC机制。
 
 BinderBinder就是Android中最具特色的IPC方式.."><meta name="generator" content="Hexo 5.4.0"></head><body class="is-flex is-flex-direction-column"><style>.header-widget .icon--search1{
@@ -201,7 +201,7 @@ cancel.onclick = function(){
 <h2 id="IPC"><a href="#IPC" class="headerlink" title="IPC"></a>IPC</h2><p>在这之前我们先简单说一下IPC，IPC是<strong>Inter-Process Communication</strong>的缩写，是进程间通信或者跨进程通信的意思，既然说到进程，大家要区分一下进程和线程，<strong>进程一般指的是一个执行单元，它拥有独立的地址空间，也就是一个应用或者一个程序。线程是CPU调度的最小单元，是进程中的一个执行部分或者说是执行体，两者之间是包含与被包含的关系</strong>。因为进程间的资源不能共享的，所以每个系统都有自己的IPC机制，Android是基于Linux内核的移动操作系统，但它并没有继承Linux的IPC机制，而是有着自己的一套IPC机制。</p>
 <span id="more"></span>
 <h2 id="Binder"><a href="#Binder" class="headerlink" title="Binder"></a>Binder</h2><p>Binder就是Android中最具特色的IPC方式，AIDL其实就是通过Binder实现的，因为在我们定义好aidl文件后，studio就帮我们生成了相关的Binder类。事实上我们在使用AIDL时候继承的Stub类，就是studio帮我们生成的Binder类，所以我们可以通过查看studio生成的代码来了解Binder的工作原理。首先我们定义一个AIDL文件</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;&#x2F; UserManager.aidl
+<pre><code class="java">// UserManager.aidl
 package cc.abto.demo;
 
 interface UserManager &#123;
@@ -209,56 +209,58 @@ interface UserManager &#123;
     String getName();
 
     String getOtherName();
-&#125;</code></pre>
+&#125;
+</code></pre>
 <p><strong>sycn project</strong>工程后，查看生成的UserManager.java文件</p>
-<pre class="language-java" data-language="java"><code class="language-java">package cc.abto.demo;
-&#x2F;&#x2F; Declare any non-default types here with import statements
+<pre><code class="java">package cc.abto.demo;
+// Declare any non-default types here with import statements
 
 public interface UserManager extends android.os.IInterface
 &#123;
 
-    &#x2F;**
+    /**
      * Local-side IPC implementation stub class.
-     *&#x2F;
+     */
     public static abstract class Stub extends android.os.Binder implements cc.abto.demo.UserManager
     &#123;
-       &#x2F;&#x2F;...
+       //...
     &#125;
 
     public java.lang.String getName() throws android.os.RemoteException;
 
     public java.lang.String getOtherName() throws android.os.RemoteException;
-&#125;                </code></pre>
+&#125;                
+</code></pre>
 <p>生成的代码还是比较多的，我就不一次性全部贴上来了，先按类结构来看。</p>
 <img src="/2016/06/14/Android%E4%B8%ADAIDL%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/1.webp" class="">
 
 <p>sutido帮我们生成了一个继承android.os.IInterface接口的UserManager接口，所有在Binder中传输的接口都必须实现IInterface接口。接口定义了我们在AIDL文件中定义的方法，然后还有个内部静态类Stub，我们接着看这个Stub。</p>
-<pre class="language-java" data-language="java"><code class="language-java">public static abstract class Stub extends android.os.Binder implements cc.abto.demo.UserManager
+<pre><code class="java">public static abstract class Stub extends android.os.Binder implements cc.abto.demo.UserManager
     &#123;
 
-        private static final java.lang.String DESCRIPTOR &#x3D; &quot;cc.abto.demo.UserManager&quot;;
+        private static final java.lang.String DESCRIPTOR = &quot;cc.abto.demo.UserManager&quot;;
 
-        &#x2F;**
+        /**
          * Construct the stub at attach it to the interface.
-         *&#x2F;
+         */
         public Stub()
         &#123;
             this.attachInterface(this, DESCRIPTOR);
         &#125;
 
-        &#x2F;**
+        /**
          * Cast an IBinder object into an cc.abto.demo.UserManager interface,
          * generating a proxy if needed.
-         *&#x2F;
+         */
         public static cc.abto.demo.UserManager asInterface(android.os.IBinder obj)
         &#123;
 
-            if ((obj &#x3D;&#x3D; null))
+            if ((obj == null))
             &#123;
                 return null;
             &#125;
-            android.os.IInterface iin &#x3D; obj.queryLocalInterface(DESCRIPTOR);
-            if (((iin !&#x3D; null) &amp;&amp; (iin instanceof cc.abto.demo.UserManager)))
+            android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
+            if (((iin != null) &amp;&amp; (iin instanceof cc.abto.demo.UserManager)))
             &#123;
                 return ((cc.abto.demo.UserManager) iin);
             &#125;
@@ -285,7 +287,7 @@ public interface UserManager extends android.os.IInterface
                 case TRANSACTION_getName:
                 &#123;
                     data.enforceInterface(DESCRIPTOR);
-                    java.lang.String _result &#x3D; this.getName();
+                    java.lang.String _result = this.getName();
                     reply.writeNoException();
                     reply.writeString(_result);
                     return true;
@@ -293,7 +295,7 @@ public interface UserManager extends android.os.IInterface
                 case TRANSACTION_getOtherName:
                 &#123;
                     data.enforceInterface(DESCRIPTOR);
-                    java.lang.String _result &#x3D; this.getOtherName();
+                    java.lang.String _result = this.getOtherName();
                     reply.writeNoException();
                     reply.writeString(_result);
                     return true;
@@ -304,18 +306,18 @@ public interface UserManager extends android.os.IInterface
 
         private static class Proxy implements cc.abto.demo.UserManager
         &#123;
-           &#x2F;&#x2F;...
+           //...
         &#125;
 
-        static final int TRANSACTION_getName &#x3D; (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
+        static final int TRANSACTION_getName = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
 
-        static final int TRANSACTION_getOtherName &#x3D; (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
-    &#125;</code></pre>
-
+        static final int TRANSACTION_getOtherName = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
+    &#125;
+</code></pre>
 <p>Stub继承了android.os.Binder并实现UserManager接口，下图是Stub的类结构。</p>
 <img src="/2016/06/14/Android%E4%B8%ADAIDL%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/2.webp" class="">
 <p>我们可以看到Stub中的常量，其中两个int常量是用来标识我们在接口中定义的方法的，DESCRIPTOR常量是 Binder的唯一标识。<br><strong>asInterface</strong> 方法用于将服务端的Binder对象转换为客户端所需要的接口对象，该过程区分进程，如果进程一样，就返回服务端Stub对象本身，否则呢就返回封装后的Stub.Proxy对象。<br><strong>onTransact</strong> 方法是运行在服务端的Binder线程中的，当客户端发起远程请求后，在底层封装后会交由此方法来处理。通过code来区分客户端请求的方法，注意一点的是，如果该方法返回false的换，客户端的请求就会失败。一般可以用来做权限控制。<br>最后我们来看一下Proxy代理类。</p>
-<pre class="language-java" data-language="java"><code class="language-java">private static class Proxy implements cc.abto.demo.UserManager
+<pre><code class="java">private static class Proxy implements cc.abto.demo.UserManager
 &#123;
 
     private android.os.IBinder mRemote;
@@ -323,7 +325,7 @@ public interface UserManager extends android.os.IInterface
     Proxy(android.os.IBinder remote)
     &#123;
 
-        mRemote &#x3D; remote;
+        mRemote = remote;
     &#125;
 
     @Override
@@ -343,15 +345,15 @@ public interface UserManager extends android.os.IInterface
     public java.lang.String getName() throws android.os.RemoteException
     &#123;
 
-        android.os.Parcel _data &#x3D; android.os.Parcel.obtain();
-        android.os.Parcel _reply &#x3D; android.os.Parcel.obtain();
+        android.os.Parcel _data = android.os.Parcel.obtain();
+        android.os.Parcel _reply = android.os.Parcel.obtain();
         java.lang.String _result;
         try
         &#123;
             _data.writeInterfaceToken(DESCRIPTOR);
             mRemote.transact(Stub.TRANSACTION_getName, _data, _reply, 0);
             _reply.readException();
-            _result &#x3D; _reply.readString();
+            _result = _reply.readString();
         &#125;
         finally
         &#123;
@@ -365,15 +367,15 @@ public interface UserManager extends android.os.IInterface
     public java.lang.String getOtherName() throws android.os.RemoteException
     &#123;
 
-        android.os.Parcel _data &#x3D; android.os.Parcel.obtain();
-        android.os.Parcel _reply &#x3D; android.os.Parcel.obtain();
+        android.os.Parcel _data = android.os.Parcel.obtain();
+        android.os.Parcel _reply = android.os.Parcel.obtain();
         java.lang.String _result;
         try
         &#123;
             _data.writeInterfaceToken(DESCRIPTOR);
             mRemote.transact(Stub.TRANSACTION_getOtherName, _data, _reply, 0);
             _reply.readException();
-            _result &#x3D; _reply.readString();
+            _result = _reply.readString();
         &#125;
         finally
         &#123;
@@ -382,7 +384,8 @@ public interface UserManager extends android.os.IInterface
         &#125;
         return _result;
     &#125;
-&#125;</code></pre>
+&#125;
+</code></pre>
 <p>代理类中我们主要看一下getName和getOtherName方法就可以了，这两个方法都是运行在客户端，当客户端发起远程请求时，_data会写入参数，当然这边的例子并没有（啦啦啦…），然后调用transact方法发起RPC(远程过程调用)请求，同时挂起当前线程，然后服务端的onTransact方法就会被 调起，直到RPC过程返回后，当前线程继续执行，并从_reply取出返回值（如果有的话），并返回结果。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>分析完sutido生成的Binder之后，我们就大概知道AIDL的工作原理，定义好AIDL文件只是方便sutido帮我生成所需的Binder类，AIDL并不是必须的文件，因为这个Binder类我们也可以手写出来（当然，你闲的没事的话），所以这边最重要的还是Binder的知识点，其他一些IPC方式其实都是通过Binder来实现的，比如说Messager，Bundle，ContentProvider，只是它们的封装方式不一样而已。总的来说，从应用层来说，Binder是客户端和服务端之间通信的媒介。从FrameWork层来说，Binder是ServiceManager连接各种Manager和ManagerService的桥梁。Android系统中充斥着大量的CS模型，而Binder作为独有的IPC方式，如果我们能更好的理解它，对我们的开发工作就会带来更多的帮助。</p>
 </article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2016/10/08/AngularJS%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" title="AngularJS简单介绍"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: AngularJS简单介绍</span></a><a class="button is-default" href="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" title="Android中AIDL的使用详解"><span class="has-text-weight-semibold">下一页: Android中AIDL的使用详解</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="wufan123/wufan123.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/wufan123"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/people/wu-hua-rong-18"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> wufan 2021</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script><script>$('.content').viewer({toolbar:false});</script></body></html>

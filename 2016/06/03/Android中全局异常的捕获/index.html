@@ -1,11 +1,11 @@
-<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>Android中全局异常的捕获</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!DOCTYPE html><html class="appearance-light" lang="zh-CN"><head><meta charset="UTF-8"><title>Android中全局异常的捕获</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
 <!-- Baidu Analytics --><script>var _hmt = _hmt || [];
 (function() {
 var hm = document.createElement("script");
 hm.src = "//hm.baidu.com/hm.js?" + '1440a68a4b8e8906f338cb023aeef906';
 var s = document.getElementsByTagName("script")[0];
 s.parentNode.insertBefore(hm, s);
-})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="应用的crash是让人很蛋疼的问题，在开发测试的时候还能根据日志输出什么的进行排查修复，但是应用发布以后，用户的随意性访问出现测试时未知的Bug导致我们的程序crash，此时我们是无法直接获取的错误log的，也就无法修复Bug。所以这时候我们就需要一个能全局捕获异常，并且将这个异常信息上传到服务器的功能，以便根据收集到的异常信息，在后期的版本中进行修复，改善用户体验。
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><!--link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))--><!--script(src= url_for("/js/highlight.pack.js")) --><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="应用的crash是让人很蛋疼的问题，在开发测试的时候还能根据日志输出什么的进行排查修复，但是应用发布以后，用户的随意性访问出现测试时未知的Bug导致我们的程序crash，此时我们是无法直接获取的错误log的，也就无法修复Bug。所以这时候我们就需要一个能全局捕获异常，并且将这个异常信息上传到服务器的功能，以便根据收集到的异常信息，在后期的版本中进行修复，改善用户体验。
 
 
 UncaughtExceptionHandler实现这个功能我们只要自定义一个实现了Thread.UncaughtExceptionHandler接口的异常处理类，并在应用初始化的时候注册这个类就可以了。
@@ -202,10 +202,10 @@ cancel.onclick = function(){
 <span id="more"></span>
 
 <h2 id="UncaughtExceptionHandler"><a href="#UncaughtExceptionHandler" class="headerlink" title="UncaughtExceptionHandler"></a>UncaughtExceptionHandler</h2><p>实现这个功能我们只要自定义一个实现了Thread.UncaughtExceptionHandler接口的异常处理类，并在应用初始化的时候注册这个类就可以了。</p>
-<pre class="language-java" data-language="java"><code class="language-java">public class CrashHandler implements Thread.UncaughtExceptionHandler
+<pre><code class="java">public class CrashHandler implements Thread.UncaughtExceptionHandler
 &#123;
 
-    private static CrashHandler ourInstance &#x3D; new CrashHandler();
+    private static CrashHandler ourInstance = new CrashHandler();
 
     public static CrashHandler getInstance()
     &#123;
@@ -219,33 +219,35 @@ cancel.onclick = function(){
     @Override
     public void uncaughtException(Thread thread, Throwable ex)
     &#123;
-     &#x2F;&#x2F;TODO
+     //TODO
     &#125;
-&#125;</code></pre>
+&#125;
+</code></pre>
 <p>这边呢，我们一般将CrashHandler写成单例模式，重写上面的uncaughtException方法自定义对异常的处理，然后呢，Application或者Activity的onCreate方法里注册这个异常处理类就可以了</p>
-<pre class="language-java" data-language="java"><code class="language-java">Thread.setDefaultUncaughtExceptionHandler(CrashHandler.getInstance());</code></pre>
+<pre><code class="java">Thread.setDefaultUncaughtExceptionHandler(CrashHandler.getInstance());
+</code></pre>
 <p>这边呢再贴一点uncaughtException中处理异常的代码，给大家参考一下</p>
-<pre class="language-java" data-language="java"><code class="language-java">public void uncaughtException(Thread thread, Throwable ex)
+<pre><code class="java">public void uncaughtException(Thread thread, Throwable ex)
 &#123;
 
     
-    dumpEx2SdCard(ex);&#x2F;&#x2F;将错误日志导入到SD卡中
-    upEx2server();&#x2F;&#x2F;将日志上传到服务器
-    if (mDefaultHandler !&#x3D; null)
+    dumpEx2SdCard(ex);//将错误日志导入到SD卡中
+    upEx2server();//将日志上传到服务器
+    if (mDefaultHandler != null)
     &#123;
         mDefaultHandler.uncaughtException(thread, ex);
     &#125;
     else
     &#123;
-        Process.killProcess(Process.myPid());&#x2F;&#x2F;做一些退出或者提醒处理
+        Process.killProcess(Process.myPid());//做一些退出或者提醒处理
     &#125;
 &#125;
 
 private void dumpEx2SdCard(Throwable ex)
 &#123;
-         &#x2F;&#x2F;...
-        PrintWriter printWriter &#x3D; new PrintWriter(new BufferedWriter(new FileWriter(file)));
-        PackageInfo packageInfo &#x3D; context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+         //...
+        PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+        PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
         ex.printStackTrace(printWriter);
         printWriter.print(ex.getCause());
         printWriter.print(time);
@@ -253,8 +255,9 @@ private void dumpEx2SdCard(Throwable ex)
         printWriter.print(&quot;APP版本：&quot;+ packageInfo.versionName+&quot;_&quot;+packageInfo.versionCode);
         printWriter.print(&quot;android 版本：&quot;+ Build.VERSION.RELEASE+&quot;_&quot;+Build.VERSION.SDK_INT);
         printWriter.print(&quot;制造商：&quot;+Build.MANUFACTURER);
-        &#x2F;&#x2F;...
-&#125;</code></pre>
+        //...
+&#125;
+</code></pre>
 <p>一般这边的代码都是将错误日志和设备信息写到SD卡中然后再上传到服务器中，具体实现就不贴那么多的代码啦，注重流程就是啦。<br>##开发者服务<br>集成一些第三方服务可以大大的加快我们的开发速度，诸如此类的统计功能我们只要集成一些像百度云推送，极光推送，友盟+等等的第三方SDK，然后做一些初始化，几行代码就搞定了。而且这些平台提供的各种强大方便的服务，确实是我们开发者的福音。像下图展示的友盟应用管理中心，各种统计功能基本上都能满足我们的需求了。</p>
 <img src="/2016/06/03/Android%E4%B8%AD%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E7%9A%84%E6%8D%95%E8%8E%B7/1.webp" class="">
 

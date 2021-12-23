@@ -1,18 +1,18 @@
-<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>Android中AIDL的使用详解</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!DOCTYPE html><html class="appearance-light" lang="zh-CN"><head><meta charset="UTF-8"><title>Android中AIDL的使用详解</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
 <!-- Baidu Analytics --><script>var _hmt = _hmt || [];
 (function() {
 var hm = document.createElement("script");
 hm.src = "//hm.baidu.com/hm.js?" + '1440a68a4b8e8906f338cb023aeef906';
 var s = document.getElementsByTagName("script")[0];
 s.parentNode.insertBefore(hm, s);
-})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="为了说的深入浅出一点，我们先从AIDL的作用和使用说起，然后再开始介绍一些概念和工作原理。
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><!--link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))--><!--script(src= url_for("/js/highlight.pack.js")) --><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content="为了说的深入浅出一点，我们先从AIDL的作用和使用说起，然后再开始介绍一些概念和工作原理。
 AIDL用来做什么AIDL是Android中IPC（Inter-Process Communication）方式中的一种，AIDL是Android Interface definition language的缩写，对于小白来说，AIDL的作用是让你可以在自己的APP里绑定一个其他APP的service，这样你的APP可以和其他APP交互。 
 AIDL的使用在android studio 2.0里面使用AIDL，因为是两个APP交互么，所以当然要两个APP啦，我们在第一个工程目录右键
 
 
 输入名称后，sutido就帮我们创建了一个AIDL文件。
-&amp;#x2F;&amp;#x2F; IMyAidlInterface.aidl
-pa.."><meta name="generator" content="Hexo 5.4.0"></head><body class="is-flex is-flex-direction-column"><style>.header-widget .icon--search1{
+// IMyAidlInterface.aidl
+package cc.a.."><meta name="generator" content="Hexo 5.4.0"></head><body class="is-flex is-flex-direction-column"><style>.header-widget .icon--search1{
     position: fixed;
     top: 10px;
     right: 15px;
@@ -207,25 +207,27 @@ cancel.onclick = function(){
 <img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/1.webp" class="">
 
 <p>输入名称后，sutido就帮我们创建了一个AIDL文件。</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;&#x2F; IMyAidlInterface.aidl
+<pre><code class="java">// IMyAidlInterface.aidl
 package cc.abto.demo;
 
-&#x2F;&#x2F; Declare any non-default types here with import statements
+// Declare any non-default types here with import statements
 
 interface IMyAidlInterface &#123;
-    &#x2F;**
+    /**
      * Demonstrates some basic types that you can use as parameters
      * and return values in AIDL.
-     *&#x2F;
+     */
     void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
             double aDouble, String aString);
-&#125;</code></pre>
+&#125;
+</code></pre>
 <p>上面就是studio帮我生成的aidl文件。basicTypes这个方法可以无视，看注解知道这个方法只是告诉你在AIDL中你可以使用的基本类型（int, long, boolean, float, double, String），因为这里是要跨进程通讯的，所以不是随便你自己定义的一个类型就可以在AIDL使用的，这些后面会说。我们在AIDL文件中定义一个我们要提供给第二个APP使用的接口。</p>
-<pre class="language-java" data-language="java"><code class="language-java">interface IMyAidlInterface &#123;
+<pre><code class="java">interface IMyAidlInterface &#123;
    String getName();
-&#125;</code></pre>
+&#125;
+</code></pre>
 <p>定义好之后，就可以<strong>sync project</strong>一下，然后新建一个service。在service里面创建一个内部类，继承你刚才创建的AIDL的名称里的Stub类,并实现接口方法,在onBind返回内部类的实例。</p>
-<pre class="language-java" data-language="java"><code class="language-java">public class MyService extends Service
+<pre><code class="java">public class MyService extends Service
 &#123;
 
     public MyService()
@@ -248,12 +250,13 @@ interface IMyAidlInterface &#123;
             return &quot;test&quot;;
         &#125;
     &#125;
-&#125;</code></pre>
+&#125;
+</code></pre>
 <p>接下来，将我们的AIDL文件拷贝到第二个项目，然后<strong>sync project</strong>一下工程。</p>
 <img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/2.webp" class="">
 
 <p>这边的包名要跟第一个项目的一样哦，这之后在Activity中绑定服务。</p>
-<pre class="language-java" data-language="java"><code class="language-java">public class MainActivity extends AppCompatActivity
+<pre><code class="java">public class MainActivity extends AppCompatActivity
 &#123;
 
 
@@ -271,7 +274,7 @@ interface IMyAidlInterface &#123;
             public void onServiceConnected(ComponentName name, IBinder service)
             &#123;
 
-                iMyAidlInterface &#x3D; IMyAidlInterface.Stub.asInterface(service);
+                iMyAidlInterface = IMyAidlInterface.Stub.asInterface(service);
             &#125;
 
             @Override
@@ -293,7 +296,8 @@ interface IMyAidlInterface &#123;
             e.printStackTrace();
         &#125;
     &#125;
-&#125;</code></pre>
+&#125;
+</code></pre>
 <p>这边我们通过隐式意图来绑定service，在onServiceConnected方法中通过**IMyAidlInterface.Stub.asInterface(service)**获取iMyAidlInterface对象，然后在onClick中调用iMyAidlInterface.getName()。</p>
 <img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/3.webp" class="">
 
@@ -301,14 +305,15 @@ interface IMyAidlInterface &#123;
 <img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/4.webp" class="">
 
 <p>接下新建一个aidl文件，名称为我们自定义类型的名称，这边是User.aidl。在User.aidl申明我们的自定义类型和它的完整包名，注意这边parcelable是小写的，不是Parcelable接口，一个自定类型需要一个这样同名的AIDL文件。</p>
-<pre class="language-java" data-language="java"><code class="language-java">package cc.abto.demo;
-parcelable User;</code></pre>
+<pre><code class="java">package cc.abto.demo;
+parcelable User;
+</code></pre>
 <p>然后再在我们的AIDL接口中导入我们的AIDL类型。</p>
 <img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/5.webp" class="">
 <p>然后定义接口方法，<strong>sync project</strong>后就可以在service中做具体实现了。</p>
-<pre class="language-java" data-language="java"><code class="language-java">public class MyService extends Service
+<pre><code class="java">public class MyService extends Service
 &#123;
-    &#x2F;&#x2F;...
+    //...
     @Override
     public IBinder onBind(Intent intent)
     &#123;
@@ -317,20 +322,21 @@ parcelable User;</code></pre>
 
     class MyBinder extends IMyAidlInterface.Stub
     &#123;
-        &#x2F;&#x2F;...
+        //...
         @Override
         public User getUserName() throws RemoteException
         &#123;
             return new User(&quot;wswf&quot;);
         &#125;
     &#125;
-&#125;</code></pre>
+&#125;
+</code></pre>
 <p>最后将我们的AIDL文件和自定义类型的java一并拷贝到第二个项目，注意包名都要一样哦</p>
 <img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/6.webp" class="">
 <p>然后就可以在Activity中使用该自定义类型的AIDL接口了</p>
-<pre class="language-java" data-language="java"><code class="language-java">public class MainActivity extends AppCompatActivity
+<pre><code class="java">public class MainActivity extends AppCompatActivity
 &#123;
-    &#x2F;&#x2F;...
+    //...
     public void onClick(View view)
     &#123;
         try
@@ -342,7 +348,8 @@ parcelable User;</code></pre>
             e.printStackTrace();
         &#125;
     &#125;
-&#125;</code></pre>
+&#125;
+</code></pre>
 <p>效果图就不贴了哈，通过这种方式我们就可以让两个APP之间进行交互了。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>为什么APP间的进程交互这么麻烦，是因为它们属于不同的进程，之间的交互涉及到进程间的通讯。而AIDL只是Android中众多进程间通讯方式中的一种方式，那么AIDL到底是什么鬼，它是如何工作的，Android的IPC机制又是怎样的呢。我将在下一篇文章<a target="_blank" rel="noopener" href="http://www.jianshu.com/writer#/notebooks/4326108/notes/4350318">Android中AIDL的工作原理</a>中介绍。</p>
 </article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2016/06/14/Android%E4%B8%ADAIDL%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" title="Android中AIDL的工作原理"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: Android中AIDL的工作原理</span></a><a class="button is-default" href="/2016/06/03/Android%E4%B8%AD%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E7%9A%84%E6%8D%95%E8%8E%B7/" title="Android中全局异常的捕获"><span class="has-text-weight-semibold">下一页: Android中全局异常的捕获</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="wufan123/wufan123.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/wufan123"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/people/wu-hua-rong-18"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> wufan 2021</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script><script>$('.content').viewer({toolbar:false});</script></body></html>

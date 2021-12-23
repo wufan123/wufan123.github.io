@@ -694,56 +694,6 @@ private void dumpEx2SdCard(Throwable ex)
       </tags>
   </entry>
   <entry>
-    <title>Android中的图片裁剪（一）之系统裁剪工具</title>
-    <url>/2016/05/18/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7/</url>
-    <content><![CDATA[<p>应用中图片裁剪的需求是很常见的，在android中裁剪的图片最简单的方法就是调用系统中的裁剪图片应用</p>
-<pre><code class="java">Intent intent = new Intent();
-intent.setAction(&quot;com.android.camera.action.CROP&quot;);
-intent.setDataAndType(uri, &quot;image/*&quot;);
-startActivityForResult(intent, Constants.REQUEST_CODE_RESIZE_IMAGE);
-</code></pre>
-<p>当然在调用系统的裁剪功能时，我们还可以附加一些其他的信息：</p>
-<pre><code class="java">intent.putExtra(&quot;outputX&quot;, 300);  //裁剪图片的宽
-intent.putExtra(&quot;outputY&quot;, 300);  
-intent.putExtra(&quot;aspectX&quot;, 1);  //裁剪方框宽的比例
-intent.putExtra(&quot;aspectY&quot;, 1);  
-intent.putExtra(&quot;scale&quot;, true);  //是否保持比例
-intent.putExtra(&quot;return-data&quot;, false);  //是否返回bitmap
-
-intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);  //保存图片到指定uri
-intent.putExtra(&quot;outputFormat&quot;, Bitmap.CompressFormat.JPEG.toString());  //输出格式
-</code></pre>
-<p>上面的是一些常用的附加信息，如果你的outputX和outputY设置的比较大的话，返回的图片可能会导致OOM。最后在onActivityResult中接收图片就可以了</p>
-<pre><code class="java">protected void onActivityResult(int requestCode, int resultCode, Intent data)
-&#123;
-    super.onActivityResult(requestCode, resultCode, data);
-    switch (requestCode)
-    &#123;
-        case CROP_IMAGE_SYS:
-            Bitmap bitmap = (Bitmap) data.getParcelableExtra(&quot;data&quot;);//拿到返回图片
-            /*try
-            &#123;
-             //取的裁剪后保存到本地的图片
-              bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
-            &#125;
-            catch (FileNotFoundException e)
-            &#123;
-              e.printStackTrace();
-            &#125;*/
-            //TODO
-            break;
-//...
-</code></pre>
-<p>当然因为android碎片化严重，不同厂商的系统也有所差异，所以系统的裁剪图片功能也可能有所不同，这也是坑，就像在我的项目中，发现有些手机基于内存考虑对图片缩略了很多，这样裁剪出来的图片分辨率就达不到项目要求，这时候就只能求助于第三方的开源项目或者自定义了，在第二篇文章中<a href="http://www.jianshu.com/p/941bfe005e02">Android中的图片裁剪（二）</a>，我会说说如何自己实现裁剪图片的功能。</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android中反射的简单应用</title>
     <url>/2016/05/31/Android%E4%B8%AD%E5%8F%8D%E5%B0%84%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/</url>
     <content><![CDATA[<p>自己对反射的理解和应用还处于比较浅显的阶段，写这篇文章更多在于整理总结，也就是帮助自己进一步的理解和学习反射机制。</p>
@@ -851,6 +801,56 @@ catch (Exception e)
 <li><a href="http://zlb1986.iteye.com/blog/937781">java中的反射机制</a></li>
 <li><a href="http://efany.github.io/2016/04/02/Android%E6%B3%A8%E8%A7%A3%E4%B8%8E%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/">Android注解与反射机制</a></li>
 </ul>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android中的图片裁剪（一）之系统裁剪工具</title>
+    <url>/2016/05/18/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7/</url>
+    <content><![CDATA[<p>应用中图片裁剪的需求是很常见的，在android中裁剪的图片最简单的方法就是调用系统中的裁剪图片应用</p>
+<pre><code class="java">Intent intent = new Intent();
+intent.setAction(&quot;com.android.camera.action.CROP&quot;);
+intent.setDataAndType(uri, &quot;image/*&quot;);
+startActivityForResult(intent, Constants.REQUEST_CODE_RESIZE_IMAGE);
+</code></pre>
+<p>当然在调用系统的裁剪功能时，我们还可以附加一些其他的信息：</p>
+<pre><code class="java">intent.putExtra(&quot;outputX&quot;, 300);  //裁剪图片的宽
+intent.putExtra(&quot;outputY&quot;, 300);  
+intent.putExtra(&quot;aspectX&quot;, 1);  //裁剪方框宽的比例
+intent.putExtra(&quot;aspectY&quot;, 1);  
+intent.putExtra(&quot;scale&quot;, true);  //是否保持比例
+intent.putExtra(&quot;return-data&quot;, false);  //是否返回bitmap
+
+intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);  //保存图片到指定uri
+intent.putExtra(&quot;outputFormat&quot;, Bitmap.CompressFormat.JPEG.toString());  //输出格式
+</code></pre>
+<p>上面的是一些常用的附加信息，如果你的outputX和outputY设置的比较大的话，返回的图片可能会导致OOM。最后在onActivityResult中接收图片就可以了</p>
+<pre><code class="java">protected void onActivityResult(int requestCode, int resultCode, Intent data)
+&#123;
+    super.onActivityResult(requestCode, resultCode, data);
+    switch (requestCode)
+    &#123;
+        case CROP_IMAGE_SYS:
+            Bitmap bitmap = (Bitmap) data.getParcelableExtra(&quot;data&quot;);//拿到返回图片
+            /*try
+            &#123;
+             //取的裁剪后保存到本地的图片
+              bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+            &#125;
+            catch (FileNotFoundException e)
+            &#123;
+              e.printStackTrace();
+            &#125;*/
+            //TODO
+            break;
+//...
+</code></pre>
+<p>当然因为android碎片化严重，不同厂商的系统也有所差异，所以系统的裁剪图片功能也可能有所不同，这也是坑，就像在我的项目中，发现有些手机基于内存考虑对图片缩略了很多，这样裁剪出来的图片分辨率就达不到项目要求，这时候就只能求助于第三方的开源项目或者自定义了，在第二篇文章中<a href="http://www.jianshu.com/p/941bfe005e02">Android中的图片裁剪（二）</a>，我会说说如何自己实现裁剪图片的功能。</p>
 ]]></content>
       <categories>
         <category>Android</category>
@@ -1135,6 +1135,142 @@ public boolean postRotate(float degrees)
       </categories>
       <tags>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AngularJS简单介绍</title>
+    <url>/2016/10/08/AngularJS%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<p>AngularJS是一款优秀的前端框架，主要解决hmtl在构建web应用上不足的问题。AngularJS核心的特点是模块化，数据的双向绑定，依赖注入。</p>
+<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><p>在html标签中使用ng-app指示符定义一个模块</p>
+<pre><code class="html">&lt;html ng-app=&quot;mall-app&quot; style=&quot;height: 100%;&quot;&gt;                   
+</code></pre>
+<span id="more"></span>
+<p>然后在js代码中即可通过下angular.module()方法创建指定的模块。</p>
+<pre><code class="js">var mallApp = angular.module(&#39;mall-app&#39;, []);
+</code></pre>
+<p>在angular的设计中，一个module是多个服务，指示符，过滤器和配置信息的集合，一般来说就是一个app或者lib了。上面的方法还有一点要说明的就是一个参数的时候是获取已经存在的module</p>
+<pre><code class="js">var mallApp = angular.module(&#39;mall-app&#39;);//获取之前创建的module对象
+//多次调用两个参数的方法，将创建多个对象。
+</code></pre>
+<p>当然有时候你的module需要依赖其他module，在创建的时候需要在第二个参数中传入依赖module的名称</p>
+<pre><code class="js">var mallApp = angular.module(&#39;mall-app&#39;, [&#39;ngRoute&#39;]);//依赖官方的路由模块
+</code></pre>
+<p>这里额外说明一点,如果你未创建指定的module，却使用一个参数的方法去获取已经存在的module，angularjs会报错的。</p>
+<pre><code class="js">var mallApp = angular.module(&#39;mall-app&#39;, []);//要先创建
+var mallApp = angular.module(&#39;mall-app&#39;);//这里才能获取
+</code></pre>
+<h2 id="数据的双向绑定"><a href="#数据的双向绑定" class="headerlink" title="数据的双向绑定"></a>数据的双向绑定</h2><p>使用angularjs我们可以很方便的将数据绑定到html页面上，首先我们要先认识几个指示符</p>
+<pre><code class="js">ng-app //之前说过的，定义一各module
+ng-controler //定义一各控制器，我们可通过该控制器，控制html中的变量
+ng-model //将元素值（比如输入框）绑定到变量中
+</code></pre>
+<p>然后呢，再介绍一下angularjs的表达式</p>
+<pre><code class="html">&#123;&#123; expression &#125;&#125;//也就是ng-bind
+</code></pre>
+<p>介绍完之后，我们就可以开始了</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;script src=&quot;http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div ng-app=&quot;myApp&quot; ng-controller=&quot;myCtrl&quot;&gt; //定义module和控制器
+&lt;input ng-model=&quot;name&quot;&gt;//使用ng-model指示符，直接将元素的值帮到变量上
+&lt;h1&gt;我的名字是 &#123;&#123;name&#125;&#125;&lt;/h1&gt;//表达式的变量
+&lt;/div&gt;
+&lt;script&gt;
+var app = angular.module(&#39;myApp&#39;, []);
+app.controller(&#39;myCtrl&#39;, function($scope) &#123;//获得控制器
+    $scope.name = &quot;John Dow&quot;;//在js中通过$scope获取html中的变量，并赋初值
+&#125;);
+&lt;/script&gt;
+&lt;p&gt;当你修改输入框中的值时，会影响到模型(model),当然也会影响到控制器对应的属性值。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>有兴趣的同学可以运行看一下，在输入框输入的值，会直接绑定到变量上，在hmtl上显示出来，当然name的值也会绑定到输入框中，这就是数据的双向绑定啦。</p>
+<h2 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h2><p>依赖注入是软体中的一个设计模式，这种模式通过分离了客户端依赖创建的行为，使程序变得松耦合。angularjs提供了很好的依赖注入机制，通过以下5个核心组件作为依赖注入。</p>
+<ul>
+<li>constants<br>constant(常量)用来在配置阶段传递数值，注意这个常量在配置阶段是不可用的。</li>
+<li>value<br>Value 是一个简单的 javascript 对象，用于向控制器传递值（配置阶段）</li>
+<li>factory<br>factory 是一个函数用于返回值。在 service 和 controller 需要时创建。<br>通常我们使用 factory 函数来计算或返回值。</li>
+<li>service<br>同factory，与factory的区别是返回时使用new关键字</li>
+<li>provider<br>  AngularJS 中通过 provider 创建一个 service、factory等(配置阶段)。<br>Provider 中提供了一个 factory 方法 get()，它用于返回 value/service/factory。</li>
+</ul>
+<p>下面是一些代码示例</p>
+<pre><code class="html">&lt;html&gt;
+   
+   &lt;head&gt;
+      &lt;meta charset=&quot;utf-8&quot;&gt;
+      &lt;title&gt;AngularJS  依赖注入&lt;/title&gt;
+   &lt;/head&gt;
+   
+   &lt;body&gt;
+      &lt;h2&gt;AngularJS 简单应用&lt;/h2&gt;
+      
+      &lt;div ng-app = &quot;mainApp&quot; ng-controller = &quot;CalcController&quot;&gt;
+         &lt;p&gt;输入一个数字: &lt;input type = &quot;number&quot; ng-model = &quot;number&quot; /&gt;&lt;/p&gt;
+         &lt;button ng-click = &quot;square()&quot;&gt;X&lt;sup&gt;2&lt;/sup&gt;&lt;/button&gt;
+         &lt;p&gt;结果: &#123;&#123;result&#125;&#125;&lt;/p&gt;
+      &lt;/div&gt;
+      
+      &lt;script src=&quot;http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js&quot;&gt;&lt;/script&gt;
+      
+      &lt;script&gt;
+         var mainApp = angular.module(&quot;mainApp&quot;, []);
+         
+         mainApp.config(function($provide) &#123;
+            $provide.provider(&#39;MathService&#39;, function() &#123;
+               this.$get = function() &#123;
+                  var factory = &#123;&#125;;
+                  
+                  factory.multiply = function(a, b) &#123;
+                     return a * b;
+                  &#125;
+                  return factory;
+               &#125;;
+            &#125;);
+         &#125;);
+            
+         mainApp.value(&quot;defaultInput&quot;, 5);
+         
+         mainApp.factory(&#39;MathService&#39;, function() &#123;
+            var factory = &#123;&#125;;
+            
+            factory.multiply = function(a, b) &#123;
+               return a * b;
+            &#125;
+            return factory;
+         &#125;);
+         
+         mainApp.service(&#39;CalcService&#39;, function(MathService)&#123;
+            this.square = function(a) &#123;
+               return MathService.multiply(a,a);
+            &#125;
+         &#125;);
+         
+         mainApp.controller(&#39;CalcController&#39;, function($scope, CalcService, defaultInput) &#123;
+            $scope.number = defaultInput;
+            $scope.result = CalcService.square($scope.number);
+
+            $scope.square = function() &#123;
+               $scope.result = CalcService.square($scope.number);
+            &#125;
+         &#125;);
+            
+      &lt;/script&gt;
+      
+   &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>AngularJS</tag>
+        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
@@ -1778,142 +1914,6 @@ public boolean postRotate(float degrees)
       <tags>
         <tag>LOL</tag>
         <tag>英雄联盟</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AngularJS简单介绍</title>
-    <url>/2016/10/08/AngularJS%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</url>
-    <content><![CDATA[<p>AngularJS是一款优秀的前端框架，主要解决hmtl在构建web应用上不足的问题。AngularJS核心的特点是模块化，数据的双向绑定，依赖注入。</p>
-<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><p>在html标签中使用ng-app指示符定义一个模块</p>
-<pre><code class="html">&lt;html ng-app=&quot;mall-app&quot; style=&quot;height: 100%;&quot;&gt;                   
-</code></pre>
-<span id="more"></span>
-<p>然后在js代码中即可通过下angular.module()方法创建指定的模块。</p>
-<pre><code class="js">var mallApp = angular.module(&#39;mall-app&#39;, []);
-</code></pre>
-<p>在angular的设计中，一个module是多个服务，指示符，过滤器和配置信息的集合，一般来说就是一个app或者lib了。上面的方法还有一点要说明的就是一个参数的时候是获取已经存在的module</p>
-<pre><code class="js">var mallApp = angular.module(&#39;mall-app&#39;);//获取之前创建的module对象
-//多次调用两个参数的方法，将创建多个对象。
-</code></pre>
-<p>当然有时候你的module需要依赖其他module，在创建的时候需要在第二个参数中传入依赖module的名称</p>
-<pre><code class="js">var mallApp = angular.module(&#39;mall-app&#39;, [&#39;ngRoute&#39;]);//依赖官方的路由模块
-</code></pre>
-<p>这里额外说明一点,如果你未创建指定的module，却使用一个参数的方法去获取已经存在的module，angularjs会报错的。</p>
-<pre><code class="js">var mallApp = angular.module(&#39;mall-app&#39;, []);//要先创建
-var mallApp = angular.module(&#39;mall-app&#39;);//这里才能获取
-</code></pre>
-<h2 id="数据的双向绑定"><a href="#数据的双向绑定" class="headerlink" title="数据的双向绑定"></a>数据的双向绑定</h2><p>使用angularjs我们可以很方便的将数据绑定到html页面上，首先我们要先认识几个指示符</p>
-<pre><code class="js">ng-app //之前说过的，定义一各module
-ng-controler //定义一各控制器，我们可通过该控制器，控制html中的变量
-ng-model //将元素值（比如输入框）绑定到变量中
-</code></pre>
-<p>然后呢，再介绍一下angularjs的表达式</p>
-<pre><code class="html">&#123;&#123; expression &#125;&#125;//也就是ng-bind
-</code></pre>
-<p>介绍完之后，我们就可以开始了</p>
-<pre><code class="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;script src=&quot;http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div ng-app=&quot;myApp&quot; ng-controller=&quot;myCtrl&quot;&gt; //定义module和控制器
-&lt;input ng-model=&quot;name&quot;&gt;//使用ng-model指示符，直接将元素的值帮到变量上
-&lt;h1&gt;我的名字是 &#123;&#123;name&#125;&#125;&lt;/h1&gt;//表达式的变量
-&lt;/div&gt;
-&lt;script&gt;
-var app = angular.module(&#39;myApp&#39;, []);
-app.controller(&#39;myCtrl&#39;, function($scope) &#123;//获得控制器
-    $scope.name = &quot;John Dow&quot;;//在js中通过$scope获取html中的变量，并赋初值
-&#125;);
-&lt;/script&gt;
-&lt;p&gt;当你修改输入框中的值时，会影响到模型(model),当然也会影响到控制器对应的属性值。&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p>有兴趣的同学可以运行看一下，在输入框输入的值，会直接绑定到变量上，在hmtl上显示出来，当然name的值也会绑定到输入框中，这就是数据的双向绑定啦。</p>
-<h2 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h2><p>依赖注入是软体中的一个设计模式，这种模式通过分离了客户端依赖创建的行为，使程序变得松耦合。angularjs提供了很好的依赖注入机制，通过以下5个核心组件作为依赖注入。</p>
-<ul>
-<li>constants<br>constant(常量)用来在配置阶段传递数值，注意这个常量在配置阶段是不可用的。</li>
-<li>value<br>Value 是一个简单的 javascript 对象，用于向控制器传递值（配置阶段）</li>
-<li>factory<br>factory 是一个函数用于返回值。在 service 和 controller 需要时创建。<br>通常我们使用 factory 函数来计算或返回值。</li>
-<li>service<br>同factory，与factory的区别是返回时使用new关键字</li>
-<li>provider<br>  AngularJS 中通过 provider 创建一个 service、factory等(配置阶段)。<br>Provider 中提供了一个 factory 方法 get()，它用于返回 value/service/factory。</li>
-</ul>
-<p>下面是一些代码示例</p>
-<pre><code class="html">&lt;html&gt;
-   
-   &lt;head&gt;
-      &lt;meta charset=&quot;utf-8&quot;&gt;
-      &lt;title&gt;AngularJS  依赖注入&lt;/title&gt;
-   &lt;/head&gt;
-   
-   &lt;body&gt;
-      &lt;h2&gt;AngularJS 简单应用&lt;/h2&gt;
-      
-      &lt;div ng-app = &quot;mainApp&quot; ng-controller = &quot;CalcController&quot;&gt;
-         &lt;p&gt;输入一个数字: &lt;input type = &quot;number&quot; ng-model = &quot;number&quot; /&gt;&lt;/p&gt;
-         &lt;button ng-click = &quot;square()&quot;&gt;X&lt;sup&gt;2&lt;/sup&gt;&lt;/button&gt;
-         &lt;p&gt;结果: &#123;&#123;result&#125;&#125;&lt;/p&gt;
-      &lt;/div&gt;
-      
-      &lt;script src=&quot;http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js&quot;&gt;&lt;/script&gt;
-      
-      &lt;script&gt;
-         var mainApp = angular.module(&quot;mainApp&quot;, []);
-         
-         mainApp.config(function($provide) &#123;
-            $provide.provider(&#39;MathService&#39;, function() &#123;
-               this.$get = function() &#123;
-                  var factory = &#123;&#125;;
-                  
-                  factory.multiply = function(a, b) &#123;
-                     return a * b;
-                  &#125;
-                  return factory;
-               &#125;;
-            &#125;);
-         &#125;);
-            
-         mainApp.value(&quot;defaultInput&quot;, 5);
-         
-         mainApp.factory(&#39;MathService&#39;, function() &#123;
-            var factory = &#123;&#125;;
-            
-            factory.multiply = function(a, b) &#123;
-               return a * b;
-            &#125;
-            return factory;
-         &#125;);
-         
-         mainApp.service(&#39;CalcService&#39;, function(MathService)&#123;
-            this.square = function(a) &#123;
-               return MathService.multiply(a,a);
-            &#125;
-         &#125;);
-         
-         mainApp.controller(&#39;CalcController&#39;, function($scope, CalcService, defaultInput) &#123;
-            $scope.number = defaultInput;
-            $scope.result = CalcService.square($scope.number);
-
-            $scope.square = function() &#123;
-               $scope.result = CalcService.square($scope.number);
-            &#125;
-         &#125;);
-            
-      &lt;/script&gt;
-      
-   &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>AngularJS</tag>
-        <tag>前端</tag>
       </tags>
   </entry>
   <entry>

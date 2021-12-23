@@ -425,7 +425,7 @@ pre {
   color: #4a4a4a;
   font-size: 0.875em;
   overflow-x: auto;
-  padding: 1.25rem 1.5rem;
+  /* padding: 1.25rem 1.5rem; */
   white-space: pre;
   word-wrap: normal;
 }
@@ -2042,9 +2042,10 @@ fieldset[disabled] .button {
 .content pre {
   -webkit-overflow-scrolling: touch;
   overflow-x: auto;
-  padding: 1.25em 1.5em;
+  /* padding: 1.25em 1.5em; */
   white-space: pre;
   word-wrap: normal;
+  border-radius: 4px;
 }
 
 .content sup,
@@ -6937,12 +6938,24 @@ label.panel-block:hover {
 }
 
 /* Bulma Grid */
+
 .column {
   display: block;
   flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 1;
   padding: 0.75rem;
+  width: 75%; 
+}
+@media screen and (max-width: 768px) { 
+  .column { 
+    display: block;
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: 0.75rem;
+    width: 100%; 
+  }
 }
 
 .columns.is-mobile > .column.is-narrow {

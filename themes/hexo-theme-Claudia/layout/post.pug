@@ -2,9 +2,11 @@ extends widget/base
 block append head
   link(rel='stylesheet', href= url_for('/style/post.css'))
   link(rel='stylesheet', href= url_for('/style/viewer.css'))
-  link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))
-  script(src= url_for("/js/highlight.pack.js"))
+  //link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))
+  //script(src= url_for("/js/highlight.pack.js")) 
   script(src= url_for("https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"))
+  link(rel='stylesheet', href= url_for("//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"))
+  script(type="text/javascript",src= url_for("//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"))
   script(type="text/javascript",src= url_for("https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"))
   script(src= url_for("/js/viewer.js"))
   meta(name="description", content=truncate( strip_html(page.content), {length: 360, omission: '..'} ))

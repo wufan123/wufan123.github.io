@@ -54,7 +54,7 @@ $lineColor: var(--border-line-color);
     }
     code {
       border-radius: 4px;
-      background: var(--third-bg-color);
+      // background: var(--third-bg-color);
     }
 
     pre {
@@ -63,13 +63,13 @@ $lineColor: var(--border-line-color);
 
       code {
         padding: 15px;
-        border: 1px solid $lineColor;
-        background: var(--pre-code-bg-color);
+        // border: 1px solid $lineColor;
+        // background: var(--pre-code-bg-color);
       }
     }
 
     .hljs {
-      color: var(--second-text-color);
+      // color: var(--second-text-color);
     }
 
     img {

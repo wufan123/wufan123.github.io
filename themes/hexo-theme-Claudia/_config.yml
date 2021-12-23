@@ -45,7 +45,7 @@ comment_disqus:
 # dark
 # light
 # user-can-set
-appearance: auto # Default value is auto
+appearance: light # Default value is auto
 
 # Miscellaneous
 favicon: /images/favicon.png

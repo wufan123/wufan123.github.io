@@ -6,7 +6,7 @@ categories:
 tags: [webpack,gulp] 
 ---
 Gulp 的定位 __Task Runner__, 就是用来跑一个一个任务的。
-<!-- more -->
+
 放在以前比如我想用sass写css, coffee写js, 我必须手动的用相应的compiler去编译各自的文件，然后各自minify。这时候designer给你了两张新图片，好嘞，接着用自己的小工具手动去压缩图片。
 后来前端人不能忍了，搞出个自动化这个流程的 Grunt/Gulp, 比如你写完代码后要想发布production版本，用一句`gulp build`就可以
 + rm 掉 dist文件夹中以前的旧文件
@@ -15,7 +15,7 @@ Gulp 的定位 __Task Runner__, 就是用来跑一个一个任务的。
 + 拷贝minified/uglified 文件到 dist 文件夹
 
 但是它没发解决的是 js module 的问题，是你写代码时候如何组织代码结构的问题.
-
+<!-- more -->
 之前大家可以用 require.js, sea.js 来 require dependency, 后来出了一个 webpack 说 我们能不能把所有的文件(css, image, js) 都用 js 来 生成依赖，最后生成一个bundle呢？ 所以webpack 也叫做 __file bundler__ .
 
 同时 webpack 为了解决可以 require 不同文件的需求引入了loader, 比如面对sass文件有

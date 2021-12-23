@@ -46,12 +46,14 @@ article.post-container.is-flex.is-justify-content-center.section.container.is-ma
                         section.paginator.is-flex.is-justify-content-flex-end.is-flex-wrap-wrap.mt-5!= paginatorResult
             aside.column.is-4-tablet.is-3-widescreen
                 block sidebar
-block append script
-    script.
+//- block script
+script.
+        hljs && hljs.highlightAll();
         $claudia.fadeInImage(null, $claudia.blurBackdropImg)
-
         window.addEventListener('resize', $claudia.throttle(function () {
             var images = document.querySelectorAll('.js-img-fadeIn')
 
-            images.forEach($claudia.blurBackdropImg)
+            images.forEach($claudia.blurBackdropImg) 
         }, 150))
+        
+        

@@ -1,15 +1,17 @@
 extends widget/base
 
 block append head
-    link(rel='stylesheet', href= url_for("/style/widget-post-list.css"))
+    link(rel='stylesheet', href= url_for("/style/widget-post-list.css"))   
+    link(rel='stylesheet', href= url_for("//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"))
+    script(type="text/javascript",src= url_for("//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"))
     script(type="text/javascript",src= url_for("https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"))
-
+   
 block content
     include widget/widget-post-list
         block sidebar
             include widget/widget-search
             if theme.widgets.includes('profile')
-                include widget/widget-profile
+                include widget/widget-profile 
             if theme.widgets.includes('recent_posts')
                 include widget/widget-recent
             if theme.widgets.includes('category') && site.categories.length > 0
@@ -18,3 +20,5 @@ block content
                 include widget/widget-archives
             if theme.widgets.includes('tag') && site.tags.length > 0
                 include widget/widget-tag
+
+

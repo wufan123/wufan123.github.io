@@ -1917,6 +1917,55 @@ app.controller(&#39;myCtrl&#39;, function($scope) &#123;//获得控制器
       </tags>
   </entry>
   <entry>
+    <title>android-studio-实用技巧</title>
+    <url>/2016/10/10/android-studio-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<ul>
+<li><strong>打jar包</strong><br>android studio 默认提供的是aar包，如果要打成jar包的话，就要自己写gradle task，在库工程的build.gradle文件中添加一下代码：<pre><code class="java">task makeJar(type: Copy) &#123;
+ delete &#39;build/libs/mysdk.jar&#39;
+ from(&#39;build/intermediates/bundles/release/&#39;)
+ into(&#39;build/libs/&#39;)
+ include(&#39;classes.jar&#39;)
+ rename (&#39;classes.jar&#39;, &#39;mysdk.jar&#39;)
+&#125;
+makeJar.dependsOn(build);
+</code></pre>
+然后在终端执行命令打出jar包<pre><code class="bash">gradlew makeJar
+</code></pre>
+</li>
+<li><strong>引用aar包</strong><br>将aar拷贝至lib目录，在module中的build.gradle文件中添加以下代码<pre><code class="java">repositories &#123; flatDir &#123; dirs &#39;libs&#39; &#125; &#125;
+dependencies &#123;
+compile(name: &#39;aar_name&#39;, ext: &#39;aar&#39;)
+&#125;
+</code></pre>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>Android Studio</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>github clone 速度慢解决方案</title>
+    <url>/2021/12/27/github-clone-%E9%80%9F%E5%BA%A6%E6%85%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<p>有时候从github上clone项目速度很慢，可以将链接中域名<code>github.com</code>替换成<code>github.com.cnpmjs.org</code>,比如原先的clone url为</p>
+<pre><code class="bash">https://github.com/wufan123/xxxx.git 
+</code></pre>
+<p>替换为</p>
+<pre><code class="bash">https://github.com.cnpmjs.org/wufan123/xxxx.git
+</code></pre>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>WebView加载速度优化</title>
     <url>/2016/05/25/WebView%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<p>在做混合应用的时候，有几个痛点，一个是无网络无法使用，还有一个是受网络环境影响的网页加载速度。今天就这两个问题，和大家交流一下自己的经验。</p>
@@ -2015,35 +2064,25 @@ if(info.isAvailable())
       </tags>
   </entry>
   <entry>
-    <title>android-studio-实用技巧</title>
-    <url>/2016/10/10/android-studio-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</url>
-    <content><![CDATA[<ul>
-<li><strong>打jar包</strong><br>android studio 默认提供的是aar包，如果要打成jar包的话，就要自己写gradle task，在库工程的build.gradle文件中添加一下代码：<pre><code class="java">task makeJar(type: Copy) &#123;
- delete &#39;build/libs/mysdk.jar&#39;
- from(&#39;build/intermediates/bundles/release/&#39;)
- into(&#39;build/libs/&#39;)
- include(&#39;classes.jar&#39;)
- rename (&#39;classes.jar&#39;, &#39;mysdk.jar&#39;)
-&#125;
-makeJar.dependsOn(build);
+    <title>highlight.js使用</title>
+    <url>/2021/12/23/highlight-js%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>一个web上高亮语法的js，<a href="https://highlightjs.org/">官网</a></p>
+<p>使用(CDN)：</p>
+<pre><code class="html">&lt;link rel=&quot;stylesheet&quot;
+      href=&quot;//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/default.min.css&quot;&gt;
+&lt;script src=&quot;//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.highlightAll();&lt;/script&gt;
 </code></pre>
-然后在终端执行命令打出jar包<pre><code class="bash">gradlew makeJar
+<p>要更换主题的话，替换css，这边<code>default.css</code>是默认主题，要换主题的改css文件名称就可以了，参见<a href="https://highlightjs.org/static/demo/">主题列表</a>，比如要用<code>Vs 2015</code>，改成</p>
+<pre><code class="html">&lt;link rel=&quot;stylesheet&quot;
+      href=&quot;//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css&quot;&gt;
 </code></pre>
-</li>
-<li><strong>引用aar包</strong><br>将aar拷贝至lib目录，在module中的build.gradle文件中添加以下代码<pre><code class="java">repositories &#123; flatDir &#123; dirs &#39;libs&#39; &#125; &#125;
-dependencies &#123;
-compile(name: &#39;aar_name&#39;, ext: &#39;aar&#39;)
-&#125;
-</code></pre>
-</li>
-</ul>
 ]]></content>
       <categories>
-        <category>Android</category>
+        <category>前端</category>
       </categories>
       <tags>
-        <tag>Android</tag>
-        <tag>Android Studio</tag>
+        <tag>javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -2428,6 +2467,7 @@ module.exports = class Creator extends EventEmitter &#123;
       </categories>
       <tags>
         <tag>vue</tag>
+        <tag>cli</tag>
       </tags>
   </entry>
   <entry>

@@ -24,7 +24,7 @@ s.parentNode.insertBefore(hm, s);
     padding: 10px;
     background: white;
     box-shadow: 0 6px 30px -10px rgb(0 0 0 / 30%);
-}</style><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">wufan's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>标签 · vue</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><i class="iconfont icon--search1" id="mobileSearchIcon"></i></header><script>var icon = document.getElementById("mobileSearchIcon");
+}</style><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">wufan's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>标签 · cli</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><i class="iconfont icon--search1" id="mobileSearchIcon"></i></header><script>var icon = document.getElementById("mobileSearchIcon");
 icon.onclick = function (){
     var box = document.getElementById("searchBox"); 
     if(box){
@@ -114,68 +114,7 @@ program
     //引入lib中的create
     require(&#39;../lib/create&#39;)(name, options)
   &#125;)
-</code></pre></p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/21/vue-cli5%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/">更多</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/vue"><i class="tag post-item-tag">vue</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2021/12/10/vue-cli3-0-%E4%B8%AD%E4%BD%BF%E7%94%A8CDN%E5%8A%A0%E8%BD%BD%E8%B5%84%E6%BA%90/">vue-cli3.0+中使用CDN加载资源</a></h1><time class="has-text-grey" datetime="2021-12-10T08:04:46.000Z">2021-12-10</time><p class="is-flex-grow-2 mt-2"><p>在<code>vue.config.js</code>中配置使用CDN加载的modules（使用全局变量代替），比如</p>
-<pre><code class="js"> chainWebpack: config =&gt; &#123;
-    config.set(&#39;externals&#39;, &#123;
-        &#39;vue&#39;: &#39;Vue&#39;,//&quot;库名:引入后的别名&quot; 
-        &#39;vue-router&#39;: &#39;VueRouter&#39;,
-        &#39;vuex&#39;: &#39;Vuex&#39;,
-        &#39;mint-ui&#39;: &#39;MintUI&#39;
-    &#125;)
-  &#125;
-</code></pre>
-<p>然后在public中的<code>index.html</code>加入链接,比如上面所列的库</p>
-<pre><code class="html">    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue-router@3.5.3/dist/vue-router.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js&quot;&gt;&lt;/script&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/mint-ui/lib/style.css&quot; /&gt;
-    &lt;script src=&quot;https://unpkg.com/mint-ui/lib/index.js&quot;&gt;&lt;/script&gt; 
-</code></pre>
-<p> 资源要自己找，这边推荐两个CDN平台</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.jsdelivr.com/">jsdelivr</a> </li>
-<li><a target="_blank" rel="noopener" href="https://www.unpkg.com/">unpkg</a></li>
-</ul>
-<p>这样就配置完成了，改成CDN的话，有些库的使用方式需要改一下，参照每个库的官方说明即可，比如<a target="_blank" rel="noopener" href="https://router.vuejs.org/zh/">Vue Router</a><br>说明了CDN和NPM安装的区别:</p>
-<ul>
-<li>CDN</li>
-</ul>
-<pre><code class="HTML">&lt;!-- 在 Vue 后面加载 vue-router，它会自动安装的： --&gt;
-&lt;script src=&quot;/path/to/vue.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;/path/to/vue-router.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-<ul>
-<li>NPM</li>
-</ul>
-<pre><code class="bash">npm install vue-router
-</code></pre>
-<p>如果在一个模块化工程中使用它，必须要通过 Vue.use() 明确地安装路由功能：</p>
-<pre><code class="js">import Vue from &#39;vue&#39;
-import VueRouter from &#39;vue-router&#39;
-Vue.use(VueRouter)
-</code></pre>
-<p>其他的不一一说明了</p>
-</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/10/vue-cli3-0-%E4%B8%AD%E4%BD%BF%E7%94%A8CDN%E5%8A%A0%E8%BD%BD%E8%B5%84%E6%BA%90/">更多</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/vue"><i class="tag post-item-tag">vue</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2021/12/10/vue-cli3-0-%E6%8C%89%E9%9C%80%E5%BC%95%E5%85%A5UI/">vue-cli3.0+按需引入mint-ui</a></h1><time class="has-text-grey" datetime="2021-12-10T07:54:45.000Z">2021-12-10</time><p class="is-flex-grow-2 mt-2"><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>首先需要<code>babel-plugin-component</code></p>
-<pre><code class="bash">npm install babel-plugin-component -D 
-</code></pre>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>然后在<code>babel.config.js</code>中配置</p>
-<pre><code class="bash">module.exports = &#123;
-  presets: [&quot;@vue/cli-plugin-babel/preset&quot;],
-  plugins: [
-       [
-      &quot;component&quot;,
-      &#123;
-        libraryName: &quot;mint-ui&quot;,
-        style: true,
-      &#125;
-    ],
-  ]
-&#125;;
-</code></pre>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>在<code>main.js中</code>使用</p>
-<pre><code class="js">import &#123; Swipe, SwipeItem &#125; from &quot;mint-ui&quot;;
-</code></pre>
-</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/10/vue-cli3-0-%E6%8C%89%E9%9C%80%E5%BC%95%E5%85%A5UI/">更多</a></section></article></section><aside class="column is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="is-hidden-mobile aside-card-container tag-widget is-in-tag-page"><h3>标签</h3><section><a href="/tags/Android"><span class="tag post-item-tag" style="margin-bottom: 5px;">Android</span></a><a href="/tags/Android%20Studio"><span class="tag post-item-tag" style="margin-bottom: 5px;">Android Studio</span></a><a href="/tags/AngularJS"><span class="tag post-item-tag" style="margin-bottom: 5px;">AngularJS</span></a><a href="/tags/%E5%89%8D%E7%AB%AF"><span class="tag post-item-tag" style="margin-bottom: 5px;">前端</span></a><a href="/tags/LOL"><span class="tag post-item-tag" style="margin-bottom: 5px;">LOL</span></a><a href="/tags/%E8%8B%B1%E9%9B%84%E8%81%94%E7%9B%9F"><span class="tag post-item-tag" style="margin-bottom: 5px;">英雄联盟</span></a><a href="/tags/github"><span class="tag post-item-tag" style="margin-bottom: 5px;">github</span></a><a href="/tags/javascript"><span class="tag post-item-tag" style="margin-bottom: 5px;">javascript</span></a><a href="/tags/kotlin"><span class="tag post-item-tag" style="margin-bottom: 5px;">kotlin</span></a><a href="/tags/vue"><span class="tag post-item-tag" style="margin-bottom: 5px;">vue</span></a><a href="/tags/cli"><span class="tag post-item-tag" style="margin-bottom: 5px;">cli</span></a><a href="/tags/webpack"><span class="tag post-item-tag" style="margin-bottom: 5px;">webpack</span></a><a href="/tags/gulp"><span class="tag post-item-tag" style="margin-bottom: 5px;">gulp</span></a><a href="/tags/%E5%8D%9A%E5%AE%A2"><span class="tag post-item-tag" style="margin-bottom: 5px;">博客</span></a><a href="/tags/Hexo"><span class="tag post-item-tag" style="margin-bottom: 5px;">Hexo</span></a><a href="/tags/GitHub-Pages"><span class="tag post-item-tag" style="margin-bottom: 5px;">GitHub-Pages</span></a></section></main></div></aside></div></article><script>hljs && hljs.highlightAll();
+</code></pre></p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/21/vue-cli5%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/">更多</a></section></article></section><aside class="column is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="is-hidden-mobile aside-card-container tag-widget is-in-tag-page"><h3>标签</h3><section><a href="/tags/Android"><span class="tag post-item-tag" style="margin-bottom: 5px;">Android</span></a><a href="/tags/Android%20Studio"><span class="tag post-item-tag" style="margin-bottom: 5px;">Android Studio</span></a><a href="/tags/AngularJS"><span class="tag post-item-tag" style="margin-bottom: 5px;">AngularJS</span></a><a href="/tags/%E5%89%8D%E7%AB%AF"><span class="tag post-item-tag" style="margin-bottom: 5px;">前端</span></a><a href="/tags/LOL"><span class="tag post-item-tag" style="margin-bottom: 5px;">LOL</span></a><a href="/tags/%E8%8B%B1%E9%9B%84%E8%81%94%E7%9B%9F"><span class="tag post-item-tag" style="margin-bottom: 5px;">英雄联盟</span></a><a href="/tags/github"><span class="tag post-item-tag" style="margin-bottom: 5px;">github</span></a><a href="/tags/javascript"><span class="tag post-item-tag" style="margin-bottom: 5px;">javascript</span></a><a href="/tags/kotlin"><span class="tag post-item-tag" style="margin-bottom: 5px;">kotlin</span></a><a href="/tags/vue"><span class="tag post-item-tag" style="margin-bottom: 5px;">vue</span></a><a href="/tags/cli"><span class="tag post-item-tag" style="margin-bottom: 5px;">cli</span></a><a href="/tags/webpack"><span class="tag post-item-tag" style="margin-bottom: 5px;">webpack</span></a><a href="/tags/gulp"><span class="tag post-item-tag" style="margin-bottom: 5px;">gulp</span></a><a href="/tags/%E5%8D%9A%E5%AE%A2"><span class="tag post-item-tag" style="margin-bottom: 5px;">博客</span></a><a href="/tags/Hexo"><span class="tag post-item-tag" style="margin-bottom: 5px;">Hexo</span></a><a href="/tags/GitHub-Pages"><span class="tag post-item-tag" style="margin-bottom: 5px;">GitHub-Pages</span></a></section></main></div></aside></div></article><script>hljs && hljs.highlightAll();
 $claudia.fadeInImage(null, $claudia.blurBackdropImg)
 window.addEventListener('resize', $claudia.throttle(function () {
     var images = document.querySelectorAll('.js-img-fadeIn')

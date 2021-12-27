@@ -1949,23 +1949,6 @@ compile(name: &#39;aar_name&#39;, ext: &#39;aar&#39;)
       </tags>
   </entry>
   <entry>
-    <title>github clone 速度慢解决方案</title>
-    <url>/2021/12/27/github-clone-%E9%80%9F%E5%BA%A6%E6%85%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-    <content><![CDATA[<p>有时候从github上clone项目速度很慢，可以将链接中域名<code>github.com</code>替换成<code>github.com.cnpmjs.org</code>,比如原先的clone url为</p>
-<pre><code class="bash">https://github.com/wufan123/xxxx.git 
-</code></pre>
-<p>替换为</p>
-<pre><code class="bash">https://github.com.cnpmjs.org/wufan123/xxxx.git
-</code></pre>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>github</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>WebView加载速度优化</title>
     <url>/2016/05/25/WebView%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<p>在做混合应用的时候，有几个痛点，一个是无网络无法使用，还有一个是受网络环境影响的网页加载速度。今天就这两个问题，和大家交流一下自己的经验。</p>
@@ -2061,6 +2044,23 @@ if(info.isAvailable())
       </categories>
       <tags>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>github clone 速度慢解决方案</title>
+    <url>/2021/12/27/github-clone-%E9%80%9F%E5%BA%A6%E6%85%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<p>有时候从github上clone项目速度很慢，可以将链接中域名<code>github.com</code>替换成<code>github.com.cnpmjs.org</code>,比如原先的clone url为</p>
+<pre><code class="bash">https://github.com/wufan123/xxxx.git 
+</code></pre>
+<p>替换为</p>
+<pre><code class="bash">https://github.com.cnpmjs.org/wufan123/xxxx.git
+</code></pre>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
       </tags>
   </entry>
   <entry>

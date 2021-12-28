@@ -44,7 +44,7 @@ comment_disqus:
 
 # dark
 # light
-# user-can-set
+# user-can-set 
 appearance: light # Default value is auto
 
 # Miscellaneous

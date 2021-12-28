@@ -9,7 +9,7 @@ tags: [vue,cli]
 
 首先查看`packages/@vue/cli/bin/vue.js`文件
 
-
+<!-- more -->
 
 ```javascript
 /* @vue/cli-shared-utils集成了一些通用工具，比如chalk(终端字符串样式)，

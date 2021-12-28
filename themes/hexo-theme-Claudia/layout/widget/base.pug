@@ -14,7 +14,7 @@ html(lang=config.language class= `appearance-${ appearance }`)
     title= pageTitle
     meta(name="description" content= config.description || theme.user && theme.user.description)
     meta(name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1")
-
+    
     <!-- Google Analytics -->
     if(theme.ga_track_id)
       script.
@@ -43,6 +43,8 @@ html(lang=config.language class= `appearance-${ appearance }`)
     link(rel="stylesheet" href= url_for('/style/common/bulma.css'))
     link(rel="stylesheet" href= url_for('/style/base.css'))
     link(rel="stylesheet" href= url_for('/style/common/helper.css'))
+    link(rel='stylesheet', href= url_for("//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"))
+    script(type="text/javascript",src= url_for("//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"))
     script(src= url_for("/js/common.js"))
     block head
 
@@ -68,4 +70,6 @@ html(lang=config.language class= `appearance-${ appearance }`)
 
     script(async defer src="https://buttons.github.io/buttons.js")
     block script
+    script.
+        hljs && hljs.highlightAll(); 
 

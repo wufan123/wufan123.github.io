@@ -1,7 +1,7 @@
 @import "common/variable";
 $avatarSize: 180px;
 $coverMaxHeight: 300px;
-$coverBlurEffect: 20px;
+$coverBlurEffect: 15px;  
 
 .post-container {
   .post-item-card {
@@ -69,6 +69,9 @@ $coverBlurEffect: 20px;
       img{
         display: block;
         margin: 0 auto;
+      }
+      p a{ 
+        color: #3273dc;
       }
     }
   }

@@ -1,0 +1,54 @@
+<!DOCTYPE html><html class="appearance-light" lang="zh-CN"><head><meta charset="UTF-8"><title>wufan's blog</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '1440a68a4b8e8906f338cb023aeef906';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 5.4.0"></head><body class="is-flex is-flex-direction-column"><style>.header-widget .icon--search1{
+    position: fixed;
+    top: 10px;
+    right: 15px;
+}
+.hidden{
+    display:none;
+}
+.mobile-search{
+    display:block; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 110;
+    width: 100vw;
+    height: 42px;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 6px 30px -10px rgb(0 0 0 / 30%);
+}</style><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">wufan's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>分类 · nodejs</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><i class="iconfont icon--search1" id="mobileSearchIcon"></i></header><script>var icon = document.getElementById("mobileSearchIcon");
+icon.onclick = function (){
+    var box = document.getElementById("searchBox"); 
+    if(box){
+        box.classList.remove("is-hidden-mobile");
+        box.classList.remove("is-relative"); 
+        box.classList.remove("aside-card-container"); 
+        box.classList.add("mobile-search");
+    }
+}</script><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/npx"><i class="tag post-item-tag">npx</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2021/12/28/npx/">npx</a></h1><time class="has-text-grey" datetime="2021-12-28T02:30:06.000Z">2021-12-28</time><p class="is-flex-grow-2 mt-2"><p>npm 从5.2版开始，增加了 npx 命令，主要解决的问题是调用项目内部安装的模块，比如</p>
+<pre><code>npm install webpack -D
+</code></pre>
+<p>要调用webpack的话只能在项目脚本或者package.json的scripts字段，如果要在cli调用，要这样</p>
+<pre><code class="bash">#根目录下
+$ node-modules/.bin/webpack -v
+</code></pre>
+<p>使用npx的话可以直接调用</p>
+<pre><code class="bash">npx webpack -v
+</code></pre>
+<p>原理是npx运行时会到<code>node_modules/.bin</code>和<code>$PATH</code>里检查命令是否存在，所以系统命令也可以调用，其他具体参见<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/npx">官方说明</a> </p>
+</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/28/npx/">更多</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h1 class="mt-4 mb-0 is-family-serif"><a href="/2021/12/27/nodejs%E4%B8%AD%E7%9A%84package-json%E6%96%87%E4%BB%B6/">nodejs中的package.json文件</a></h1><time class="has-text-grey" datetime="2021-12-27T08:36:19.000Z">2021-12-27</time><p class="is-flex-grow-2 mt-2"><p>关于package.json文件的<a target="_blank" rel="noopener" href="https://docs.npmjs.com/cli/v8/configuring-npm/package-json/">官方文档说明</a>,英文好的的同学可以自行前往查看，下面是对一些文件中的常见字段的说明：</p>
+<h2 id="name"><a href="#name" class="headerlink" title="name"></a>name</h2><p>项目名称，如果要发布的话，这个字段必须</p>
+<h2 id="version"><a href="#version" class="headerlink" title="version"></a>version</h2><p>版本，同上</p></p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/27/nodejs%E4%B8%AD%E7%9A%84package-json%E6%96%87%E4%BB%B6/">更多</a></section></article></section><aside class="column is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="is-hidden-mobile aside-card-container categories-widget category-page"><h3>分类</h3><section><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nodejs/">nodejs</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F%E6%94%BB%E7%95%A5/">游戏攻略</a><span class="category-list-count">1</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+window.addEventListener('resize', $claudia.throttle(function () {
+    var images = document.querySelectorAll('.js-img-fadeIn')
+
+    images.forEach($claudia.blurBackdropImg) 
+}, 150))</script></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/wufan123"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/people/wu-hua-rong-18"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> wufan 2022</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script>hljs && hljs.highlightAll(); </script></body></html>

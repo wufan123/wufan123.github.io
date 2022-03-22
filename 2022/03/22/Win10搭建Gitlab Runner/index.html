@@ -203,7 +203,7 @@ cancel.onclick = function(){
 <h2 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI/CD"></a>CI/CD</h2><p><strong>持续集成</strong><br>持续集成（CI）是在源代码变更后自动检测、拉取、构建和（在大多数情况下）进行单元测试的过程。<br><strong>持续交付</strong><br>持续交付（CD）通常是指整个流程链（管道），它自动监测源代码变更并通过构建、测试、打包和相关操作运行它们以生成可部署的版本</p>
 <p>持续交付包含持续集成（自动检测源代码变更、执行构建过程、运行单元测试以验证变更），持续测试（对代码运行各种测试以保障代码质量），和（可选）持续部署（通过管道发布版本自动提供给用户）。</p>
 <h2 id="gitlab-使用"><a href="#gitlab-使用" class="headerlink" title="gitlab 使用"></a>gitlab 使用</h2><p>gitlab 一般是公司搭建的，如果公司还搭建了<code>Shared runners</code>那么就可以开始捣鼓<code>CI/CD</code>了，没有的话，就可以在自己的服务器或 pc 上搭建了。<br>在 gitlab 指定项目的<code>setting</code>中找到<code>CI/CD</code><br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/1.png" class=""><br>在页面中展开<code>runner</code>选项，可以看到项目的独立 token<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/2.png" class=""></p>
-<span id="more"></span>
+<span id="more"></span>   
 
 <h2 id="下载-Git-Runner"><a href="#下载-Git-Runner" class="headerlink" title="下载 Git Runner"></a>下载 Git Runner</h2><p>去官网下载<code>Gitlab Runner</code>，<a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/windows.html">Install GitLab Runner on Windows</a>，<br>下载完成后可以重命名一下<code>gitlab-runner.exe</code>，主要方便后续操作，找到该目录或者放到一个指定目录<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/3.png" class=""><br>点击左上方文件菜单以管理员身份打开<code>powershell</code><br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/4.png" class=""><br>注册 runner</p>
 <pre><code class="Bash">./gitlab-runner.exe register

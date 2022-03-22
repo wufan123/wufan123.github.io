@@ -694,172 +694,6 @@ private void dumpEx2SdCard(Throwable ex)
       </tags>
   </entry>
   <entry>
-    <title>Android中反射的简单应用</title>
-    <url>/2016/05/31/Android%E4%B8%AD%E5%8F%8D%E5%B0%84%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/</url>
-    <content><![CDATA[<p>自己对反射的理解和应用还处于比较浅显的阶段，写这篇文章更多在于整理总结，也就是帮助自己进一步的理解和学习反射机制。</p>
-<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>反射的概念是由Smith在1982年首次提出的，主要是指<strong>程序可以访问、检测和修改它本身状态或行为的一种能力</strong>。</p>
-<h2 id="java中类反射"><a href="#java中类反射" class="headerlink" title="java中类反射"></a>java中类反射</h2><p>反射是 Java 程序开发语言的特征之一，它允许运行中的 Java 程序对<strong>自身进行检查，或者说“自审”，并能直接操作程序的内部属性和方法</strong>。<br>简单总结这些定义，那就是反射可以让我们获得一个类的所有信息，包括私有属性和私有方法，对于我们这种小白，先知道这点就可以啦，那在java中如何使用发射呢。这里我们随便创建一个类来演示。比如说创建一个Book类：</p>
-<pre><code class="java">public class Book implements Parcelable
-&#123;
-    private int id=1;
-    private String name=&quot;android&quot;;
-
-    private String author=&quot;wf&quot;;
-
-    private String getName()
-    &#123;
-        return name;
-    &#125;
-&#125;
-</code></pre>
-<span id="more"></span>
-<p>Book类中属性和方法都是私有的，现在我们通过反射来访问这些属性和方法。</p>
-<pre><code class="java">String s = null;
-try
-&#123;
-    Class&lt;?&gt; bookClass = Class.forName(&quot;cc.abto.demo.Book&quot;);//完整类名
-    Object book = bookClass.newInstance();//获得实例
-    Method getAuthor = bookClass.getDeclaredMethod(&quot;getName&quot;);//获得私有方法
-    getAuthor.setAccessible(true);//调用方法前，设置访问标志
-    s = (String) getAuthor.invoke(book);//使用方法
-&#125;
-catch (Exception e)
-&#123;
-    e.printStackTrace();
-&#125;
-</code></pre>
-<p>可以看到上面代码中我们用Class和Method这两个类完成了反射，这两个类分别对应了类和方法，也就是包装了类和方法的信息，下面对反射的部分API做一下简单介绍：</p>
-<ul>
-<li> Class类：代表一个类，位于java.lang包下</li>
-<li> Field类：代表类的成员变量（成员变量也称为类的属性）</li>
-<li> Method类：代表类的方法</li>
-<li> Constructor类：代表类的构造方法</li>
-<li> Array类：提供了动态创建数组，以及访问数组的元素的静态方法</li>
-</ul>
-<p>在Java中，每个class都有一个相应的Class对象。也就是说，当我们编写一个类，编译完成后，在生成的.class文件中，就会产生一个Class对象，用于表示这个类的类型信息。 java中的Class三种获取方式：</p>
-<pre><code class="java">//使用Class类的静态方法forName()，用类的名字获取一个Class实例
-Class&lt;?&gt; bookClass = Class.forName(&quot;cc.abto.demo.Book&quot;);
-
-//利用对象调用getClass()方法获取该对象的Class实例
-Book book = new Book();
-Class&lt;? extends Book&gt; bookClass = book.getClass();
-
-//运用.class的方式来获取Class实例，对于基本数据类型的封装类，还可以采用.TYPE来获取相对应的基本数据类型的Class实例
-Class&lt;Book&gt; bookClass = Book.class;
-Class&lt;Integer&gt; type = Integer.TYPE;
-</code></pre>
-<p>然后再贴一些常用的方法</p>
-<pre><code class="java">    public Annotation[] getAnnotations () //获取这个类中所有注解
-
-    getClassLoader() //获取加载这个类的类加载器
-
-    getDeclaredMethods() //获取这个类中的所有方法
-
-    getReturnType() //获取方法的返回类型
-
-    getParameterTypes() //获取方法的传入参数类型
-
-    isAnnotation() //测试这类是否是一个注解类
-
-    getDeclaredConstructors() //获取所有的构造方法
-
-    getDeclaredMethod(String name, Class… parameterTypes)// 获取指定的构造方法（参数：参数类型.class）
-
-    getSuperclass() //获取这个类的父类
-
-    getInterfaces()// 获取这个类实现的所有接口
-
-    getFields() //获取这个类中所有被public修饰的成员变量
-
-    getField(String name) //获取指定名字的被public修饰的成员变量
-
-    newInstance() //返回此Class所表示的类，通过调用默认的（即无参数）构造函数创建的一个新实例
-</code></pre>
-<p>更多的方法和方法的注解大家可以查看文档。</p>
-<h2 id="Android中的简单应用"><a href="#Android中的简单应用" class="headerlink" title="Android中的简单应用"></a>Android中的简单应用</h2><p>查看Android SDK的源码时候。你会发现很多类或方法中经常加上了“@hide”注释标记，这些API是不允许在程序中调用的。Hidden API之所以被隐藏，是想阻止开发者使用SDK中那些未完成或不稳定的部分（接口或架构）。如图所示</p>
-<img src="/2016/05/31/Android%E4%B8%AD%E5%8F%8D%E5%B0%84%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/1.webp" class="">
-<p>所以在开发中，我们不仅可以通过反射获取私有属性和方法，也可以利用反射获取一些SDK对外部隐藏的API，比如说前阵子在做蓝牙开发的时候，自动配对的一些方法在API 19以后才对外开放的，这边我们就可以使用反射来实现配对功能了</p>
-<pre><code class="java">try
-&#123;
-    Class&lt;BluetoothDevice&gt; bluetoothDeviceClass = BluetoothDevice.class;
-    bluetoothDeviceClass.getMethod(&quot;setPin&quot;, byte[].class).invoke(device, &quot;1234&quot;.getBytes());
-    bluetoothDeviceClass.getMethod(&quot;createBond&quot;).invoke(device);
-    bluetoothDeviceClass.getMethod(&quot;setPairingConfirmation&quot;, boolean.class).invoke(device, true);
-    bluetoothDeviceClass.getMethod(&quot;cancelPairingUserInput&quot;).invoke(device);
-
-&#125;
-catch (Exception e)
-&#123;
-    e.printStackTrace();
-&#125;
-</code></pre>
-<h2 id="反射的好处"><a href="#反射的好处" class="headerlink" title="反射的好处"></a>反射的好处</h2><p>反射不仅可以让我们获得隐藏的方法和属性，还可以让<strong>对象的实例化从编译时转化为运行时</strong>，因为我们可以通过Class.forName(“cc.abto.demo.Book”).newInstance()的方法来生成新的实例，而这边的”cc.abto.demo.Book”是一个字符串，完全可以用变量来代替，再结合抽象工厂模式什么的，我们就可以很大程度上对程序应用中的功能模块进行解耦合。可能这边简单几句没能解释清楚，大家可以看看《大话设计模式》之类的书，里面就介绍的比较清楚明白了。<br>##反射的弊端<br>反射带来的两大弊端可能就是安全和性能问题了吧，这方面我知之甚少，有待进一步的了解和学习。</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>因为自己水平有限，如果有些错误的地方还请大家见谅。下面贴出几篇写得比较好和详细的博客。</p>
-<ul>
-<li><a href="http://blog.qiji.tech/archives/4374">【Android】 认识反射机制（Reflection）</a></li>
-<li><a href="http://www.cnblogs.com/crazypebble/archive/2011/04/13/2014582.html">Java反射机制的原理及在Android下的简单应用</a></li>
-<li><a href="http://zlb1986.iteye.com/blog/937781">java中的反射机制</a></li>
-<li><a href="http://efany.github.io/2016/04/02/Android%E6%B3%A8%E8%A7%A3%E4%B8%8E%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/">Android注解与反射机制</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android中的图片裁剪（一）之系统裁剪工具</title>
-    <url>/2016/05/18/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7/</url>
-    <content><![CDATA[<p>应用中图片裁剪的需求是很常见的，在android中裁剪的图片最简单的方法就是调用系统中的裁剪图片应用</p>
-<pre><code class="java">Intent intent = new Intent();
-intent.setAction(&quot;com.android.camera.action.CROP&quot;);
-intent.setDataAndType(uri, &quot;image/*&quot;);
-startActivityForResult(intent, Constants.REQUEST_CODE_RESIZE_IMAGE);
-</code></pre>
-<p>当然在调用系统的裁剪功能时，我们还可以附加一些其他的信息：</p>
-<pre><code class="java">intent.putExtra(&quot;outputX&quot;, 300);  //裁剪图片的宽
-intent.putExtra(&quot;outputY&quot;, 300);  
-intent.putExtra(&quot;aspectX&quot;, 1);  //裁剪方框宽的比例
-intent.putExtra(&quot;aspectY&quot;, 1);  
-intent.putExtra(&quot;scale&quot;, true);  //是否保持比例
-intent.putExtra(&quot;return-data&quot;, false);  //是否返回bitmap
-
-intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);  //保存图片到指定uri
-intent.putExtra(&quot;outputFormat&quot;, Bitmap.CompressFormat.JPEG.toString());  //输出格式
-</code></pre>
-<p>上面的是一些常用的附加信息，如果你的outputX和outputY设置的比较大的话，返回的图片可能会导致OOM。最后在onActivityResult中接收图片就可以了</p>
-<pre><code class="java">protected void onActivityResult(int requestCode, int resultCode, Intent data)
-&#123;
-    super.onActivityResult(requestCode, resultCode, data);
-    switch (requestCode)
-    &#123;
-        case CROP_IMAGE_SYS:
-            Bitmap bitmap = (Bitmap) data.getParcelableExtra(&quot;data&quot;);//拿到返回图片
-            /*try
-            &#123;
-             //取的裁剪后保存到本地的图片
-              bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
-            &#125;
-            catch (FileNotFoundException e)
-            &#123;
-              e.printStackTrace();
-            &#125;*/
-            //TODO
-            break;
-//...
-</code></pre>
-<p>当然因为android碎片化严重，不同厂商的系统也有所差异，所以系统的裁剪图片功能也可能有所不同，这也是坑，就像在我的项目中，发现有些手机基于内存考虑对图片缩略了很多，这样裁剪出来的图片分辨率就达不到项目要求，这时候就只能求助于第三方的开源项目或者自定义了，在第二篇文章中<a href="http://www.jianshu.com/p/941bfe005e02">Android中的图片裁剪（二）</a>，我会说说如何自己实现裁剪图片的功能。</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android中的图片裁剪（三）之自定义裁剪工具</title>
     <url>/2016/05/24/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7/</url>
     <content><![CDATA[<p>在上一篇文章中<a href="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE">Android中的图片裁剪（二）之开源项目</a>介绍了一些优秀的图片裁剪开源项目，在我们实现自己的裁剪功能的时候，也可以看下这些开源项目的源码，看看大牛们都是怎么实现的。</p>
@@ -1002,133 +836,47 @@ public boolean postRotate(float degrees)
       </tags>
   </entry>
   <entry>
-    <title>Android中退出应用的实现</title>
-    <url>/2016/05/30/Android%E4%B8%AD%E9%80%80%E5%87%BA%E5%BA%94%E7%94%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>退出应用是项目开发中很基本的一个需求，这个功能很简单，也有很多实现的方式，这里把自己知道的退出方法做一个整理，跟大家交流分享一下。</p>
-<span id="more"></span>
-<h2 id="容器式"><a href="#容器式" class="headerlink" title="容器式"></a>容器式</h2><p>就是用一个全局容器把所有的Activity存起来，退出时遍历调用容器里Activity的finish方法就可以啦，这个效果很好，也很好操作的。创建一个单例来管理Acitivity，一般是在Application中实现的。</p>
-<pre><code class="java">public class MyApplication extends Application
-&#123;
-
-    private List&lt;Activity&gt; activityList = new LinkedList&lt;Activity&gt;();//LinkedList便于删除和增加
-
-    // 省略了单例代码...
-
-    public void removeActivity(Activity activity)
-    &#123;
-        activityList.remove(activity);
-    &#125;
-
-    public void addActivity(Activity activity)
-    &#123;
-
-        activityList.add(activity);
-    &#125;
-
-    public void exit()
-    &#123;
-
-        for (Activity activity : activityList)
-        &#123;
-            activity.finish();
-        &#125;
-        System.exit(0);
-    &#125;
-&#125;
+    <title>Android中的图片裁剪（一）之系统裁剪工具</title>
+    <url>/2016/05/18/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7/</url>
+    <content><![CDATA[<p>应用中图片裁剪的需求是很常见的，在android中裁剪的图片最简单的方法就是调用系统中的裁剪图片应用</p>
+<pre><code class="java">Intent intent = new Intent();
+intent.setAction(&quot;com.android.camera.action.CROP&quot;);
+intent.setDataAndType(uri, &quot;image/*&quot;);
+startActivityForResult(intent, Constants.REQUEST_CODE_RESIZE_IMAGE);
 </code></pre>
-<p>当当当，这样就OK了。开发中在BaseActivity这样的超类统一实现后，再在需要退出的地方调用exit方法就可以退出应用了。</p>
-<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
-&#123;
+<p>当然在调用系统的裁剪功能时，我们还可以附加一些其他的信息：</p>
+<pre><code class="java">intent.putExtra(&quot;outputX&quot;, 300);  //裁剪图片的宽
+intent.putExtra(&quot;outputY&quot;, 300);  
+intent.putExtra(&quot;aspectX&quot;, 1);  //裁剪方框宽的比例
+intent.putExtra(&quot;aspectY&quot;, 1);  
+intent.putExtra(&quot;scale&quot;, true);  //是否保持比例
+intent.putExtra(&quot;return-data&quot;, false);  //是否返回bitmap
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    &#123;
-        super.onCreate(savedInstanceState);
-        MyApplication.getInstance().addActivity(this);
-    &#125;
-  //...
-    @Override
-    protected void onDestroy()
-    &#123;
-        super.onDestroy();
-        MyApplication.getInstance().removeActivity(this);
-    &#125;
- //...
-&#125;
+intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);  //保存图片到指定uri
+intent.putExtra(&quot;outputFormat&quot;, Bitmap.CompressFormat.JPEG.toString());  //输出格式
 </code></pre>
-<h2 id="广播式"><a href="#广播式" class="headerlink" title="广播式"></a>广播式</h2><p>在BaseActivity这样超类中注册一个广播，要退出时发送一个广播，就可以结束所有页面了。</p>
-<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
+<p>上面的是一些常用的附加信息，如果你的outputX和outputY设置的比较大的话，返回的图片可能会导致OOM。最后在onActivityResult中接收图片就可以了</p>
+<pre><code class="java">protected void onActivityResult(int requestCode, int resultCode, Intent data)
 &#123;
-
-    private static final String EXITACTION = &quot;action.exit&quot;;
-
-    private ExitReceiver exitReceiver = new ExitReceiver();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) &#123;
-        super.onCreate(savedInstanceState);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(EXITACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(exitReceiver, new IntentFilter(EXITACTION));
-    &#125;
-
-    @Override
-    protected void onDestroy() &#123;
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(exitReceiver);
-    &#125;
-
-    class ExitReceiver extends BroadcastReceiver
+    super.onActivityResult(requestCode, resultCode, data);
+    switch (requestCode)
     &#123;
-        @Override
-        public void onReceive(Context context, Intent intent) &#123;
-            BaseActivity.this.finish();
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>发送广播的代码就不贴啦，上面的代码用的是本地广播，效率和安全性高一点。</p>
-<h2 id="标志式"><a href="#标志式" class="headerlink" title="标志式"></a>标志式</h2><p>就是在工具类或者配置类里定义一个静态的成员属性</p>
-<pre><code class="java">public class Config
-&#123;
-    public static final Boolean isExit =false;
+        case CROP_IMAGE_SYS:
+            Bitmap bitmap = (Bitmap) data.getParcelableExtra(&quot;data&quot;);//拿到返回图片
+            /*try
+            &#123;
+             //取的裁剪后保存到本地的图片
+              bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+            &#125;
+            catch (FileNotFoundException e)
+            &#123;
+              e.printStackTrace();
+            &#125;*/
+            //TODO
+            break;
 //...
-&#125;
 </code></pre>
-<p>然后在BaseActivity的onResume方法中做判断就可以了。</p>
-<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
-&#123;
-  @Override
-  onResume() &#123;
-     super.onResume();
-     if(Config.isExit) finish();
-  &#125;
-//...
-&#125;
-</code></pre>
-<h2 id="Intent-FLAG式"><a href="#Intent-FLAG式" class="headerlink" title="Intent.FLAG式"></a>Intent.FLAG式</h2><p>在startActivity的时候，可以在intent附加一些flag信息来控制Acitivity的启动模式，里面呢有一个FLAG_ACTIVITY_CLEAR_TASK的flag，根据文档的说明，它在启动目标Acitivity的时候会清空之前所有任务关联的Acitivity，嘿嘿，这不就我们想要的效果么，所以我们完全可以利用这个启动模式来做退出功能。我们只要建立一个ExitAcitivity。</p>
-<pre><code class="java">public class ExitAcitivity extends AppCompatActivity
-&#123;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    &#123;
-        super.onCreate(savedInstanceState);
-        finish();
-    &#125;
-&#125;
-</code></pre>
-<p>然后呢，要退出的时候，通过前面提到的FLAG_ACTIVITY_CLEAR_TASK来启动这个Activity就可以啦。</p>
-<pre><code class="java">public void onClick(View v)
-&#123;
-    Intent intent = new Intent(this, ExitAcitivity .class);
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    startActivity(intent);
-&#125;
-</code></pre>
-<p>文档中说明FLAG_ACTIVITY_CLEAR_TASK要与FLAG_ACTIVITY_NEW_TASK一起使用，应该是底层实现的时候就直接把之前的Task给杀掉了。通过这种方式我们也可以简单的实现退出应用的功能，当然利用Activity的singleTask启动模式也是可以的哦。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实我一直觉得思维才是一个人的能力体现（啦啦啦，不装逼我们还是好朋友），虽然这只是一个简单的例子，但是很多时候，有些问题，你只要换一个角度去思考就迎刃而解了。所以写这些东西也是为了跟大家交流然后扩展自己的见解，那么，大家还有其他方法么，欢迎指导交流哦。</p>
+<p>当然因为android碎片化严重，不同厂商的系统也有所差异，所以系统的裁剪图片功能也可能有所不同，这也是坑，就像在我的项目中，发现有些手机基于内存考虑对图片缩略了很多，这样裁剪出来的图片分辨率就达不到项目要求，这时候就只能求助于第三方的开源项目或者自定义了，在第二篇文章中<a href="http://www.jianshu.com/p/941bfe005e02">Android中的图片裁剪（二）</a>，我会说说如何自己实现裁剪图片的功能。</p>
 ]]></content>
       <categories>
         <category>Android</category>
@@ -1271,6 +1019,142 @@ app.controller(&#39;myCtrl&#39;, function($scope) &#123;//获得控制器
       <tags>
         <tag>AngularJS</tag>
         <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android中退出应用的实现</title>
+    <url>/2016/05/30/Android%E4%B8%AD%E9%80%80%E5%87%BA%E5%BA%94%E7%94%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<p>退出应用是项目开发中很基本的一个需求，这个功能很简单，也有很多实现的方式，这里把自己知道的退出方法做一个整理，跟大家交流分享一下。</p>
+<span id="more"></span>
+<h2 id="容器式"><a href="#容器式" class="headerlink" title="容器式"></a>容器式</h2><p>就是用一个全局容器把所有的Activity存起来，退出时遍历调用容器里Activity的finish方法就可以啦，这个效果很好，也很好操作的。创建一个单例来管理Acitivity，一般是在Application中实现的。</p>
+<pre><code class="java">public class MyApplication extends Application
+&#123;
+
+    private List&lt;Activity&gt; activityList = new LinkedList&lt;Activity&gt;();//LinkedList便于删除和增加
+
+    // 省略了单例代码...
+
+    public void removeActivity(Activity activity)
+    &#123;
+        activityList.remove(activity);
+    &#125;
+
+    public void addActivity(Activity activity)
+    &#123;
+
+        activityList.add(activity);
+    &#125;
+
+    public void exit()
+    &#123;
+
+        for (Activity activity : activityList)
+        &#123;
+            activity.finish();
+        &#125;
+        System.exit(0);
+    &#125;
+&#125;
+</code></pre>
+<p>当当当，这样就OK了。开发中在BaseActivity这样的超类统一实现后，再在需要退出的地方调用exit方法就可以退出应用了。</p>
+<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
+&#123;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    &#123;
+        super.onCreate(savedInstanceState);
+        MyApplication.getInstance().addActivity(this);
+    &#125;
+  //...
+    @Override
+    protected void onDestroy()
+    &#123;
+        super.onDestroy();
+        MyApplication.getInstance().removeActivity(this);
+    &#125;
+ //...
+&#125;
+</code></pre>
+<h2 id="广播式"><a href="#广播式" class="headerlink" title="广播式"></a>广播式</h2><p>在BaseActivity这样超类中注册一个广播，要退出时发送一个广播，就可以结束所有页面了。</p>
+<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
+&#123;
+
+    private static final String EXITACTION = &quot;action.exit&quot;;
+
+    private ExitReceiver exitReceiver = new ExitReceiver();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) &#123;
+        super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(EXITACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(exitReceiver, new IntentFilter(EXITACTION));
+    &#125;
+
+    @Override
+    protected void onDestroy() &#123;
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(exitReceiver);
+    &#125;
+
+    class ExitReceiver extends BroadcastReceiver
+    &#123;
+        @Override
+        public void onReceive(Context context, Intent intent) &#123;
+            BaseActivity.this.finish();
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>发送广播的代码就不贴啦，上面的代码用的是本地广播，效率和安全性高一点。</p>
+<h2 id="标志式"><a href="#标志式" class="headerlink" title="标志式"></a>标志式</h2><p>就是在工具类或者配置类里定义一个静态的成员属性</p>
+<pre><code class="java">public class Config
+&#123;
+    public static final Boolean isExit =false;
+//...
+&#125;
+</code></pre>
+<p>然后在BaseActivity的onResume方法中做判断就可以了。</p>
+<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
+&#123;
+  @Override
+  onResume() &#123;
+     super.onResume();
+     if(Config.isExit) finish();
+  &#125;
+//...
+&#125;
+</code></pre>
+<h2 id="Intent-FLAG式"><a href="#Intent-FLAG式" class="headerlink" title="Intent.FLAG式"></a>Intent.FLAG式</h2><p>在startActivity的时候，可以在intent附加一些flag信息来控制Acitivity的启动模式，里面呢有一个FLAG_ACTIVITY_CLEAR_TASK的flag，根据文档的说明，它在启动目标Acitivity的时候会清空之前所有任务关联的Acitivity，嘿嘿，这不就我们想要的效果么，所以我们完全可以利用这个启动模式来做退出功能。我们只要建立一个ExitAcitivity。</p>
+<pre><code class="java">public class ExitAcitivity extends AppCompatActivity
+&#123;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    &#123;
+        super.onCreate(savedInstanceState);
+        finish();
+    &#125;
+&#125;
+</code></pre>
+<p>然后呢，要退出的时候，通过前面提到的FLAG_ACTIVITY_CLEAR_TASK来启动这个Activity就可以啦。</p>
+<pre><code class="java">public void onClick(View v)
+&#123;
+    Intent intent = new Intent(this, ExitAcitivity .class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
+&#125;
+</code></pre>
+<p>文档中说明FLAG_ACTIVITY_CLEAR_TASK要与FLAG_ACTIVITY_NEW_TASK一起使用，应该是底层实现的时候就直接把之前的Task给杀掉了。通过这种方式我们也可以简单的实现退出应用的功能，当然利用Activity的singleTask启动模式也是可以的哦。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实我一直觉得思维才是一个人的能力体现（啦啦啦，不装逼我们还是好朋友），虽然这只是一个简单的例子，但是很多时候，有些问题，你只要换一个角度去思考就迎刃而解了。所以写这些东西也是为了跟大家交流然后扩展自己的见解，那么，大家还有其他方法么，欢迎指导交流哦。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -1557,7 +1441,7 @@ if(info.isAvailable())
 <h2 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI/CD"></a>CI/CD</h2><p><strong>持续集成</strong><br>持续集成（CI）是在源代码变更后自动检测、拉取、构建和（在大多数情况下）进行单元测试的过程。<br><strong>持续交付</strong><br>持续交付（CD）通常是指整个流程链（管道），它自动监测源代码变更并通过构建、测试、打包和相关操作运行它们以生成可部署的版本</p>
 <p>持续交付包含持续集成（自动检测源代码变更、执行构建过程、运行单元测试以验证变更），持续测试（对代码运行各种测试以保障代码质量），和（可选）持续部署（通过管道发布版本自动提供给用户）。</p>
 <h2 id="gitlab-使用"><a href="#gitlab-使用" class="headerlink" title="gitlab 使用"></a>gitlab 使用</h2><p>gitlab 一般是公司搭建的，如果公司还搭建了<code>Shared runners</code>那么就可以开始捣鼓<code>CI/CD</code>了，没有的话，就可以在自己的服务器或 pc 上搭建了。<br>在 gitlab 指定项目的<code>setting</code>中找到<code>CI/CD</code><br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/1.png" class=""><br>在页面中展开<code>runner</code>选项，可以看到项目的独立 token<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/2.png" class=""></p>
-<span id="more"></span>
+<span id="more"></span>   
 
 <h2 id="下载-Git-Runner"><a href="#下载-Git-Runner" class="headerlink" title="下载 Git Runner"></a>下载 Git Runner</h2><p>去官网下载<code>Gitlab Runner</code>，<a href="https://docs.gitlab.com/runner/install/windows.html">Install GitLab Runner on Windows</a>，<br>下载完成后可以重命名一下<code>gitlab-runner.exe</code>，主要方便后续操作，找到该目录或者放到一个指定目录<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/3.png" class=""><br>点击左上方文件菜单以管理员身份打开<code>powershell</code><br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/4.png" class=""><br>注册 runner</p>
 <pre><code class="Bash">./gitlab-runner.exe register
@@ -1627,20 +1511,119 @@ compile(name: &#39;aar_name&#39;, ext: &#39;aar&#39;)
       </tags>
   </entry>
   <entry>
-    <title>github clone 速度慢解决方案</title>
-    <url>/2021/12/27/github-clone-%E9%80%9F%E5%BA%A6%E6%85%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-    <content><![CDATA[<p>有时候从github上clone项目速度很慢，可以将链接中域名<code>github.com</code>替换成<code>github.com.cnpmjs.org</code>,比如原先的clone url为</p>
-<pre><code class="bash">https://github.com/wufan123/xxxx.git 
+    <title>Android中反射的简单应用</title>
+    <url>/2016/05/31/Android%E4%B8%AD%E5%8F%8D%E5%B0%84%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/</url>
+    <content><![CDATA[<p>自己对反射的理解和应用还处于比较浅显的阶段，写这篇文章更多在于整理总结，也就是帮助自己进一步的理解和学习反射机制。</p>
+<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>反射的概念是由Smith在1982年首次提出的，主要是指<strong>程序可以访问、检测和修改它本身状态或行为的一种能力</strong>。</p>
+<h2 id="java中类反射"><a href="#java中类反射" class="headerlink" title="java中类反射"></a>java中类反射</h2><p>反射是 Java 程序开发语言的特征之一，它允许运行中的 Java 程序对<strong>自身进行检查，或者说“自审”，并能直接操作程序的内部属性和方法</strong>。<br>简单总结这些定义，那就是反射可以让我们获得一个类的所有信息，包括私有属性和私有方法，对于我们这种小白，先知道这点就可以啦，那在java中如何使用发射呢。这里我们随便创建一个类来演示。比如说创建一个Book类：</p>
+<pre><code class="java">public class Book implements Parcelable
+&#123;
+    private int id=1;
+    private String name=&quot;android&quot;;
+
+    private String author=&quot;wf&quot;;
+
+    private String getName()
+    &#123;
+        return name;
+    &#125;
+&#125;
 </code></pre>
-<p>替换为</p>
-<pre><code class="bash">https://github.com.cnpmjs.org/wufan123/xxxx.git
+<span id="more"></span>
+<p>Book类中属性和方法都是私有的，现在我们通过反射来访问这些属性和方法。</p>
+<pre><code class="java">String s = null;
+try
+&#123;
+    Class&lt;?&gt; bookClass = Class.forName(&quot;cc.abto.demo.Book&quot;);//完整类名
+    Object book = bookClass.newInstance();//获得实例
+    Method getAuthor = bookClass.getDeclaredMethod(&quot;getName&quot;);//获得私有方法
+    getAuthor.setAccessible(true);//调用方法前，设置访问标志
+    s = (String) getAuthor.invoke(book);//使用方法
+&#125;
+catch (Exception e)
+&#123;
+    e.printStackTrace();
+&#125;
 </code></pre>
+<p>可以看到上面代码中我们用Class和Method这两个类完成了反射，这两个类分别对应了类和方法，也就是包装了类和方法的信息，下面对反射的部分API做一下简单介绍：</p>
+<ul>
+<li> Class类：代表一个类，位于java.lang包下</li>
+<li> Field类：代表类的成员变量（成员变量也称为类的属性）</li>
+<li> Method类：代表类的方法</li>
+<li> Constructor类：代表类的构造方法</li>
+<li> Array类：提供了动态创建数组，以及访问数组的元素的静态方法</li>
+</ul>
+<p>在Java中，每个class都有一个相应的Class对象。也就是说，当我们编写一个类，编译完成后，在生成的.class文件中，就会产生一个Class对象，用于表示这个类的类型信息。 java中的Class三种获取方式：</p>
+<pre><code class="java">//使用Class类的静态方法forName()，用类的名字获取一个Class实例
+Class&lt;?&gt; bookClass = Class.forName(&quot;cc.abto.demo.Book&quot;);
+
+//利用对象调用getClass()方法获取该对象的Class实例
+Book book = new Book();
+Class&lt;? extends Book&gt; bookClass = book.getClass();
+
+//运用.class的方式来获取Class实例，对于基本数据类型的封装类，还可以采用.TYPE来获取相对应的基本数据类型的Class实例
+Class&lt;Book&gt; bookClass = Book.class;
+Class&lt;Integer&gt; type = Integer.TYPE;
+</code></pre>
+<p>然后再贴一些常用的方法</p>
+<pre><code class="java">    public Annotation[] getAnnotations () //获取这个类中所有注解
+
+    getClassLoader() //获取加载这个类的类加载器
+
+    getDeclaredMethods() //获取这个类中的所有方法
+
+    getReturnType() //获取方法的返回类型
+
+    getParameterTypes() //获取方法的传入参数类型
+
+    isAnnotation() //测试这类是否是一个注解类
+
+    getDeclaredConstructors() //获取所有的构造方法
+
+    getDeclaredMethod(String name, Class… parameterTypes)// 获取指定的构造方法（参数：参数类型.class）
+
+    getSuperclass() //获取这个类的父类
+
+    getInterfaces()// 获取这个类实现的所有接口
+
+    getFields() //获取这个类中所有被public修饰的成员变量
+
+    getField(String name) //获取指定名字的被public修饰的成员变量
+
+    newInstance() //返回此Class所表示的类，通过调用默认的（即无参数）构造函数创建的一个新实例
+</code></pre>
+<p>更多的方法和方法的注解大家可以查看文档。</p>
+<h2 id="Android中的简单应用"><a href="#Android中的简单应用" class="headerlink" title="Android中的简单应用"></a>Android中的简单应用</h2><p>查看Android SDK的源码时候。你会发现很多类或方法中经常加上了“@hide”注释标记，这些API是不允许在程序中调用的。Hidden API之所以被隐藏，是想阻止开发者使用SDK中那些未完成或不稳定的部分（接口或架构）。如图所示</p>
+<img src="/2016/05/31/Android%E4%B8%AD%E5%8F%8D%E5%B0%84%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/1.webp" class="">
+<p>所以在开发中，我们不仅可以通过反射获取私有属性和方法，也可以利用反射获取一些SDK对外部隐藏的API，比如说前阵子在做蓝牙开发的时候，自动配对的一些方法在API 19以后才对外开放的，这边我们就可以使用反射来实现配对功能了</p>
+<pre><code class="java">try
+&#123;
+    Class&lt;BluetoothDevice&gt; bluetoothDeviceClass = BluetoothDevice.class;
+    bluetoothDeviceClass.getMethod(&quot;setPin&quot;, byte[].class).invoke(device, &quot;1234&quot;.getBytes());
+    bluetoothDeviceClass.getMethod(&quot;createBond&quot;).invoke(device);
+    bluetoothDeviceClass.getMethod(&quot;setPairingConfirmation&quot;, boolean.class).invoke(device, true);
+    bluetoothDeviceClass.getMethod(&quot;cancelPairingUserInput&quot;).invoke(device);
+
+&#125;
+catch (Exception e)
+&#123;
+    e.printStackTrace();
+&#125;
+</code></pre>
+<h2 id="反射的好处"><a href="#反射的好处" class="headerlink" title="反射的好处"></a>反射的好处</h2><p>反射不仅可以让我们获得隐藏的方法和属性，还可以让<strong>对象的实例化从编译时转化为运行时</strong>，因为我们可以通过Class.forName(“cc.abto.demo.Book”).newInstance()的方法来生成新的实例，而这边的”cc.abto.demo.Book”是一个字符串，完全可以用变量来代替，再结合抽象工厂模式什么的，我们就可以很大程度上对程序应用中的功能模块进行解耦合。可能这边简单几句没能解释清楚，大家可以看看《大话设计模式》之类的书，里面就介绍的比较清楚明白了。<br>##反射的弊端<br>反射带来的两大弊端可能就是安全和性能问题了吧，这方面我知之甚少，有待进一步的了解和学习。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>因为自己水平有限，如果有些错误的地方还请大家见谅。下面贴出几篇写得比较好和详细的博客。</p>
+<ul>
+<li><a href="http://blog.qiji.tech/archives/4374">【Android】 认识反射机制（Reflection）</a></li>
+<li><a href="http://www.cnblogs.com/crazypebble/archive/2011/04/13/2014582.html">Java反射机制的原理及在Android下的简单应用</a></li>
+<li><a href="http://zlb1986.iteye.com/blog/937781">java中的反射机制</a></li>
+<li><a href="http://efany.github.io/2016/04/02/Android%E6%B3%A8%E8%A7%A3%E4%B8%8E%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/">Android注解与反射机制</a></li>
+</ul>
 ]]></content>
       <categories>
-        <category>前端</category>
+        <category>Android</category>
       </categories>
       <tags>
-        <tag>github</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -1771,6 +1754,23 @@ fruits//Using lambda
       <categories>
         <category>nodejs</category>
       </categories>
+  </entry>
+  <entry>
+    <title>github clone 速度慢解决方案</title>
+    <url>/2021/12/27/github-clone-%E9%80%9F%E5%BA%A6%E6%85%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<p>有时候从github上clone项目速度很慢，可以将链接中域名<code>github.com</code>替换成<code>github.com.cnpmjs.org</code>,比如原先的clone url为</p>
+<pre><code class="bash">https://github.com/wufan123/xxxx.git 
+</code></pre>
+<p>替换为</p>
+<pre><code class="bash">https://github.com.cnpmjs.org/wufan123/xxxx.git
+</code></pre>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
+      </tags>
   </entry>
   <entry>
     <title>npx</title>

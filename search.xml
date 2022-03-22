@@ -76,6 +76,168 @@
       </tags>
   </entry>
   <entry>
+    <title>Android中AIDL的使用详解</title>
+    <url>/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<p>为了说的深入浅出一点，我们先从AIDL的作用和使用说起，然后再开始介绍一些概念和工作原理。</p>
+<h2 id="AIDL用来做什么"><a href="#AIDL用来做什么" class="headerlink" title="AIDL用来做什么"></a>AIDL用来做什么</h2><p>AIDL是Android中<strong>IPC（Inter-Process Communication）</strong>方式中的一种，AIDL是<strong>Android Interface definition language</strong>的缩写，对于小白来说，AIDL的作用是让你可以在自己的APP里绑定一个其他APP的service，这样你的APP可以和其他APP交互。<br> <span id="more"></span></p>
+<h2 id="AIDL的使用"><a href="#AIDL的使用" class="headerlink" title="AIDL的使用"></a>AIDL的使用</h2><p>在android studio 2.0里面使用AIDL，因为是两个APP交互么，所以当然要两个APP啦，我们在第一个工程目录右键</p>
+<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/1.webp" class="">
+
+<p>输入名称后，sutido就帮我们创建了一个AIDL文件。</p>
+<pre><code class="java">// IMyAidlInterface.aidl
+package cc.abto.demo;
+
+// Declare any non-default types here with import statements
+
+interface IMyAidlInterface &#123;
+    /**
+     * Demonstrates some basic types that you can use as parameters
+     * and return values in AIDL.
+     */
+    void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
+            double aDouble, String aString);
+&#125;
+</code></pre>
+<p>上面就是studio帮我生成的aidl文件。basicTypes这个方法可以无视，看注解知道这个方法只是告诉你在AIDL中你可以使用的基本类型（int, long, boolean, float, double, String），因为这里是要跨进程通讯的，所以不是随便你自己定义的一个类型就可以在AIDL使用的，这些后面会说。我们在AIDL文件中定义一个我们要提供给第二个APP使用的接口。</p>
+<pre><code class="java">interface IMyAidlInterface &#123;
+   String getName();
+&#125;
+</code></pre>
+<p>定义好之后，就可以<strong>sync project</strong>一下，然后新建一个service。在service里面创建一个内部类，继承你刚才创建的AIDL的名称里的Stub类,并实现接口方法,在onBind返回内部类的实例。</p>
+<pre><code class="java">public class MyService extends Service
+&#123;
+
+    public MyService()
+    &#123;
+
+    &#125;
+
+    @Override
+    public IBinder onBind(Intent intent)
+    &#123;
+        return new MyBinder();
+    &#125;
+
+    class MyBinder extends IMyAidlInterface.Stub
+    &#123;
+
+        @Override
+        public String getName() throws RemoteException
+        &#123;
+            return &quot;test&quot;;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>接下来，将我们的AIDL文件拷贝到第二个项目，然后<strong>sync project</strong>一下工程。</p>
+<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/2.webp" class="">
+
+<p>这边的包名要跟第一个项目的一样哦，这之后在Activity中绑定服务。</p>
+<pre><code class="java">public class MainActivity extends AppCompatActivity
+&#123;
+
+
+    private IMyAidlInterface iMyAidlInterface;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    &#123;
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        bindService(new Intent(&quot;cc.abto.server&quot;), new ServiceConnection()
+        &#123;
+
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service)
+            &#123;
+
+                iMyAidlInterface = IMyAidlInterface.Stub.asInterface(service);
+            &#125;
+
+            @Override
+            public void onServiceDisconnected(ComponentName name)
+            &#123;
+
+            &#125;
+        &#125;, BIND_AUTO_CREATE);
+    &#125;
+
+    public void onClick(View view)
+    &#123;
+        try
+        &#123;
+            Toast.makeText(MainActivity.this, iMyAidlInterface.getName(), Toast.LENGTH_SHORT).show();
+        &#125;
+        catch (RemoteException e)
+        &#123;
+            e.printStackTrace();
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>这边我们通过隐式意图来绑定service，在onServiceConnected方法中通过**IMyAidlInterface.Stub.asInterface(service)**获取iMyAidlInterface对象，然后在onClick中调用iMyAidlInterface.getName()。</p>
+<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/3.webp" class="">
+
+<h2 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h2><p>如果我要在AIDL中使用自定义的类型，要怎么做呢。首先我们的自定义类型要实现<strong>Parcelable</strong>接口，下面的代码中创建了一个User类并实现Parcelable接口。这边就不对Parcelable进行介绍了，不熟悉的童鞋自行查找资料，总之我们这边可以借助studio的Show Intention Action（也就是Eclipse中的Quick Fix，默认是alt+enter键）帮我们快速实现Parcelable接口。</p>
+<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/4.webp" class="">
+
+<p>接下新建一个aidl文件，名称为我们自定义类型的名称，这边是User.aidl。在User.aidl申明我们的自定义类型和它的完整包名，注意这边parcelable是小写的，不是Parcelable接口，一个自定类型需要一个这样同名的AIDL文件。</p>
+<pre><code class="java">package cc.abto.demo;
+parcelable User;
+</code></pre>
+<p>然后再在我们的AIDL接口中导入我们的AIDL类型。</p>
+<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/5.webp" class="">
+<p>然后定义接口方法，<strong>sync project</strong>后就可以在service中做具体实现了。</p>
+<pre><code class="java">public class MyService extends Service
+&#123;
+    //...
+    @Override
+    public IBinder onBind(Intent intent)
+    &#123;
+        return new MyBinder();
+    &#125;
+
+    class MyBinder extends IMyAidlInterface.Stub
+    &#123;
+        //...
+        @Override
+        public User getUserName() throws RemoteException
+        &#123;
+            return new User(&quot;wswf&quot;);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>最后将我们的AIDL文件和自定义类型的java一并拷贝到第二个项目，注意包名都要一样哦</p>
+<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/6.webp" class="">
+<p>然后就可以在Activity中使用该自定义类型的AIDL接口了</p>
+<pre><code class="java">public class MainActivity extends AppCompatActivity
+&#123;
+    //...
+    public void onClick(View view)
+    &#123;
+        try
+        &#123;
+            Toast.makeText(MainActivity.this, iMyAidlInterface.getUserName().getName(), Toast.LENGTH_SHORT).show();
+        &#125;
+        catch (RemoteException e)
+        &#123;
+            e.printStackTrace();
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>效果图就不贴了哈，通过这种方式我们就可以让两个APP之间进行交互了。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>为什么APP间的进程交互这么麻烦，是因为它们属于不同的进程，之间的交互涉及到进程间的通讯。而AIDL只是Android中众多进程间通讯方式中的一种方式，那么AIDL到底是什么鬼，它是如何工作的，Android的IPC机制又是怎样的呢。我将在下一篇文章<a href="http://www.jianshu.com/writer#/notebooks/4326108/notes/4350318">Android中AIDL的工作原理</a>中介绍。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android中AIDL的工作原理</title>
     <url>/2016/06/14/Android%E4%B8%ADAIDL%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<p>在上一篇文章中<a href="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3">Android中AIDL的使用详解</a>介绍了AIDL的使用流程，这篇文章我们说说AIDL的工作原理。</p>
@@ -418,168 +580,6 @@ public String getVersionName();
       </tags>
   </entry>
   <entry>
-    <title>Android中AIDL的使用详解</title>
-    <url>/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<p>为了说的深入浅出一点，我们先从AIDL的作用和使用说起，然后再开始介绍一些概念和工作原理。</p>
-<h2 id="AIDL用来做什么"><a href="#AIDL用来做什么" class="headerlink" title="AIDL用来做什么"></a>AIDL用来做什么</h2><p>AIDL是Android中<strong>IPC（Inter-Process Communication）</strong>方式中的一种，AIDL是<strong>Android Interface definition language</strong>的缩写，对于小白来说，AIDL的作用是让你可以在自己的APP里绑定一个其他APP的service，这样你的APP可以和其他APP交互。<br> <span id="more"></span></p>
-<h2 id="AIDL的使用"><a href="#AIDL的使用" class="headerlink" title="AIDL的使用"></a>AIDL的使用</h2><p>在android studio 2.0里面使用AIDL，因为是两个APP交互么，所以当然要两个APP啦，我们在第一个工程目录右键</p>
-<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/1.webp" class="">
-
-<p>输入名称后，sutido就帮我们创建了一个AIDL文件。</p>
-<pre><code class="java">// IMyAidlInterface.aidl
-package cc.abto.demo;
-
-// Declare any non-default types here with import statements
-
-interface IMyAidlInterface &#123;
-    /**
-     * Demonstrates some basic types that you can use as parameters
-     * and return values in AIDL.
-     */
-    void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
-            double aDouble, String aString);
-&#125;
-</code></pre>
-<p>上面就是studio帮我生成的aidl文件。basicTypes这个方法可以无视，看注解知道这个方法只是告诉你在AIDL中你可以使用的基本类型（int, long, boolean, float, double, String），因为这里是要跨进程通讯的，所以不是随便你自己定义的一个类型就可以在AIDL使用的，这些后面会说。我们在AIDL文件中定义一个我们要提供给第二个APP使用的接口。</p>
-<pre><code class="java">interface IMyAidlInterface &#123;
-   String getName();
-&#125;
-</code></pre>
-<p>定义好之后，就可以<strong>sync project</strong>一下，然后新建一个service。在service里面创建一个内部类，继承你刚才创建的AIDL的名称里的Stub类,并实现接口方法,在onBind返回内部类的实例。</p>
-<pre><code class="java">public class MyService extends Service
-&#123;
-
-    public MyService()
-    &#123;
-
-    &#125;
-
-    @Override
-    public IBinder onBind(Intent intent)
-    &#123;
-        return new MyBinder();
-    &#125;
-
-    class MyBinder extends IMyAidlInterface.Stub
-    &#123;
-
-        @Override
-        public String getName() throws RemoteException
-        &#123;
-            return &quot;test&quot;;
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>接下来，将我们的AIDL文件拷贝到第二个项目，然后<strong>sync project</strong>一下工程。</p>
-<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/2.webp" class="">
-
-<p>这边的包名要跟第一个项目的一样哦，这之后在Activity中绑定服务。</p>
-<pre><code class="java">public class MainActivity extends AppCompatActivity
-&#123;
-
-
-    private IMyAidlInterface iMyAidlInterface;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    &#123;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        bindService(new Intent(&quot;cc.abto.server&quot;), new ServiceConnection()
-        &#123;
-
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service)
-            &#123;
-
-                iMyAidlInterface = IMyAidlInterface.Stub.asInterface(service);
-            &#125;
-
-            @Override
-            public void onServiceDisconnected(ComponentName name)
-            &#123;
-
-            &#125;
-        &#125;, BIND_AUTO_CREATE);
-    &#125;
-
-    public void onClick(View view)
-    &#123;
-        try
-        &#123;
-            Toast.makeText(MainActivity.this, iMyAidlInterface.getName(), Toast.LENGTH_SHORT).show();
-        &#125;
-        catch (RemoteException e)
-        &#123;
-            e.printStackTrace();
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>这边我们通过隐式意图来绑定service，在onServiceConnected方法中通过**IMyAidlInterface.Stub.asInterface(service)**获取iMyAidlInterface对象，然后在onClick中调用iMyAidlInterface.getName()。</p>
-<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/3.webp" class="">
-
-<h2 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h2><p>如果我要在AIDL中使用自定义的类型，要怎么做呢。首先我们的自定义类型要实现<strong>Parcelable</strong>接口，下面的代码中创建了一个User类并实现Parcelable接口。这边就不对Parcelable进行介绍了，不熟悉的童鞋自行查找资料，总之我们这边可以借助studio的Show Intention Action（也就是Eclipse中的Quick Fix，默认是alt+enter键）帮我们快速实现Parcelable接口。</p>
-<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/4.webp" class="">
-
-<p>接下新建一个aidl文件，名称为我们自定义类型的名称，这边是User.aidl。在User.aidl申明我们的自定义类型和它的完整包名，注意这边parcelable是小写的，不是Parcelable接口，一个自定类型需要一个这样同名的AIDL文件。</p>
-<pre><code class="java">package cc.abto.demo;
-parcelable User;
-</code></pre>
-<p>然后再在我们的AIDL接口中导入我们的AIDL类型。</p>
-<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/5.webp" class="">
-<p>然后定义接口方法，<strong>sync project</strong>后就可以在service中做具体实现了。</p>
-<pre><code class="java">public class MyService extends Service
-&#123;
-    //...
-    @Override
-    public IBinder onBind(Intent intent)
-    &#123;
-        return new MyBinder();
-    &#125;
-
-    class MyBinder extends IMyAidlInterface.Stub
-    &#123;
-        //...
-        @Override
-        public User getUserName() throws RemoteException
-        &#123;
-            return new User(&quot;wswf&quot;);
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>最后将我们的AIDL文件和自定义类型的java一并拷贝到第二个项目，注意包名都要一样哦</p>
-<img src="/2016/06/09/Android%E4%B8%ADAIDL%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/6.webp" class="">
-<p>然后就可以在Activity中使用该自定义类型的AIDL接口了</p>
-<pre><code class="java">public class MainActivity extends AppCompatActivity
-&#123;
-    //...
-    public void onClick(View view)
-    &#123;
-        try
-        &#123;
-            Toast.makeText(MainActivity.this, iMyAidlInterface.getUserName().getName(), Toast.LENGTH_SHORT).show();
-        &#125;
-        catch (RemoteException e)
-        &#123;
-            e.printStackTrace();
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>效果图就不贴了哈，通过这种方式我们就可以让两个APP之间进行交互了。</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>为什么APP间的进程交互这么麻烦，是因为它们属于不同的进程，之间的交互涉及到进程间的通讯。而AIDL只是Android中众多进程间通讯方式中的一种方式，那么AIDL到底是什么鬼，它是如何工作的，Android的IPC机制又是怎样的呢。我将在下一篇文章<a href="http://www.jianshu.com/writer#/notebooks/4326108/notes/4350318">Android中AIDL的工作原理</a>中介绍。</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android中webview与js的交互（一）</title>
     <url>/2016/05/17/Android%E4%B8%ADwebview%E4%B8%8Ejs%E7%9A%84%E4%BA%A4%E4%BA%92%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h2 id="webview中调用js"><a href="#webview中调用js" class="headerlink" title="webview中调用js"></a>webview中调用js</h2><pre><code class="java">webView.getSettings().setJavaScriptEnabled(true);//设置js脚本可用
@@ -860,37 +860,6 @@ intent.putExtra(&quot;outputFormat&quot;, Bitmap.CompressFormat.JPEG.toString()
       </tags>
   </entry>
   <entry>
-    <title>Android中的图片裁剪（二）之开源项目</title>
-    <url>/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
-    <content><![CDATA[<p>在上一篇博客<a href="/2016/05/18/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7">Android中的图片裁剪（一）</a>中，简单介绍了一下使用系统自带的裁剪软件实现图片裁剪功能。可是有时候系统自带的裁剪软件不能满足项目需求的时候,只能用三方的或者自己写一个了。</p>
-<span id="more"></span>
-
-<h2 id="第三方开源项目"><a href="#第三方开源项目" class="headerlink" title="第三方开源项目"></a>第三方开源项目</h2><p>都说不要重复造轮子么，github上有很多优秀的开源项目：</p>
-<ul>
-<li><p><a href="https://github.com/jdamcd/android-crop">android-crop</a><br>在github搜crop这个项目是star最多的，我之前做的一个应用就是集成的这个开源项目，感觉还是不错的哈，直接拿来用还是挺方便的，在上面做二次开发也是挺快的。下面是效果图：</p>
-<img src="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/1.webp" class=""></li>
-<li><p><a href="https://github.com/edmodo/cropper">Cropper</a><br>这个不仅能裁剪还能旋转哦，这个我也用过感觉也挺好的，集成也挺快的，能快速定制包括裁剪框在内的几个基础属性。下面是效果图：</p>
-<img src="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/2.webp" class=""></li>
-<li><p><a href="https://github.com/beartung/tclip-android">itmap Smart Clipping using OpenCV</a><br>能自动识别图片中的重要区域，并且在图片裁剪时保留重要区域，比如说人脸识别啥的，还能自动识别其它重要区域。如果图片中未识别出人脸，则会根据特征分布计算出重区域 。下面是效果图：</p>
-</li>
-</ul>
-<img src="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/3.webp" class="">
-
-<ul>
-<li>其他还有很多像<a href="https://github.com/biokys/cropimage">cropimage</a>，<a href="https://github.com/IsseiAoki/SimpleCropView">SimpleCropView</a>，大家可以上github上自行查找。</li>
-</ul>
-<br>
-
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>大部分情况下集成这些优秀的开源项目就可完成需求了。但在需要高度定制裁剪功能的时候，要怎么实现呢，下一篇文章中，就和大家探讨一下裁剪图片实现的原理。</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android中的图片裁剪（三）之自定义裁剪工具</title>
     <url>/2016/05/24/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7/</url>
     <content><![CDATA[<p>在上一篇文章中<a href="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE">Android中的图片裁剪（二）之开源项目</a>介绍了一些优秀的图片裁剪开源项目，在我们实现自己的裁剪功能的时候，也可以看下这些开源项目的源码，看看大牛们都是怎么实现的。</p>
@@ -993,6 +962,173 @@ public boolean postRotate(float degrees)
 &#125;
 </code></pre>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>图片的裁剪就先写到这里，主要介绍了一些关键方法和整体的实现思路，后面有时间的话，我会把代码整理后发布到github上去的，到时候再来补链接。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android中的图片裁剪（二）之开源项目</title>
+    <url>/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
+    <content><![CDATA[<p>在上一篇博客<a href="/2016/05/18/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%A3%81%E5%89%AA%E5%B7%A5%E5%85%B7">Android中的图片裁剪（一）</a>中，简单介绍了一下使用系统自带的裁剪软件实现图片裁剪功能。可是有时候系统自带的裁剪软件不能满足项目需求的时候,只能用三方的或者自己写一个了。</p>
+<span id="more"></span>
+
+<h2 id="第三方开源项目"><a href="#第三方开源项目" class="headerlink" title="第三方开源项目"></a>第三方开源项目</h2><p>都说不要重复造轮子么，github上有很多优秀的开源项目：</p>
+<ul>
+<li><p><a href="https://github.com/jdamcd/android-crop">android-crop</a><br>在github搜crop这个项目是star最多的，我之前做的一个应用就是集成的这个开源项目，感觉还是不错的哈，直接拿来用还是挺方便的，在上面做二次开发也是挺快的。下面是效果图：</p>
+<img src="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/1.webp" class=""></li>
+<li><p><a href="https://github.com/edmodo/cropper">Cropper</a><br>这个不仅能裁剪还能旋转哦，这个我也用过感觉也挺好的，集成也挺快的，能快速定制包括裁剪框在内的几个基础属性。下面是效果图：</p>
+<img src="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/2.webp" class=""></li>
+<li><p><a href="https://github.com/beartung/tclip-android">itmap Smart Clipping using OpenCV</a><br>能自动识别图片中的重要区域，并且在图片裁剪时保留重要区域，比如说人脸识别啥的，还能自动识别其它重要区域。如果图片中未识别出人脸，则会根据特征分布计算出重区域 。下面是效果图：</p>
+</li>
+</ul>
+<img src="/2016/05/19/Android%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/3.webp" class="">
+
+<ul>
+<li>其他还有很多像<a href="https://github.com/biokys/cropimage">cropimage</a>，<a href="https://github.com/IsseiAoki/SimpleCropView">SimpleCropView</a>，大家可以上github上自行查找。</li>
+</ul>
+<br>
+
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>大部分情况下集成这些优秀的开源项目就可完成需求了。但在需要高度定制裁剪功能的时候，要怎么实现呢，下一篇文章中，就和大家探讨一下裁剪图片实现的原理。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android中退出应用的实现</title>
+    <url>/2016/05/30/Android%E4%B8%AD%E9%80%80%E5%87%BA%E5%BA%94%E7%94%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<p>退出应用是项目开发中很基本的一个需求，这个功能很简单，也有很多实现的方式，这里把自己知道的退出方法做一个整理，跟大家交流分享一下。</p>
+<span id="more"></span>
+<h2 id="容器式"><a href="#容器式" class="headerlink" title="容器式"></a>容器式</h2><p>就是用一个全局容器把所有的Activity存起来，退出时遍历调用容器里Activity的finish方法就可以啦，这个效果很好，也很好操作的。创建一个单例来管理Acitivity，一般是在Application中实现的。</p>
+<pre><code class="java">public class MyApplication extends Application
+&#123;
+
+    private List&lt;Activity&gt; activityList = new LinkedList&lt;Activity&gt;();//LinkedList便于删除和增加
+
+    // 省略了单例代码...
+
+    public void removeActivity(Activity activity)
+    &#123;
+        activityList.remove(activity);
+    &#125;
+
+    public void addActivity(Activity activity)
+    &#123;
+
+        activityList.add(activity);
+    &#125;
+
+    public void exit()
+    &#123;
+
+        for (Activity activity : activityList)
+        &#123;
+            activity.finish();
+        &#125;
+        System.exit(0);
+    &#125;
+&#125;
+</code></pre>
+<p>当当当，这样就OK了。开发中在BaseActivity这样的超类统一实现后，再在需要退出的地方调用exit方法就可以退出应用了。</p>
+<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
+&#123;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    &#123;
+        super.onCreate(savedInstanceState);
+        MyApplication.getInstance().addActivity(this);
+    &#125;
+  //...
+    @Override
+    protected void onDestroy()
+    &#123;
+        super.onDestroy();
+        MyApplication.getInstance().removeActivity(this);
+    &#125;
+ //...
+&#125;
+</code></pre>
+<h2 id="广播式"><a href="#广播式" class="headerlink" title="广播式"></a>广播式</h2><p>在BaseActivity这样超类中注册一个广播，要退出时发送一个广播，就可以结束所有页面了。</p>
+<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
+&#123;
+
+    private static final String EXITACTION = &quot;action.exit&quot;;
+
+    private ExitReceiver exitReceiver = new ExitReceiver();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) &#123;
+        super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(EXITACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(exitReceiver, new IntentFilter(EXITACTION));
+    &#125;
+
+    @Override
+    protected void onDestroy() &#123;
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(exitReceiver);
+    &#125;
+
+    class ExitReceiver extends BroadcastReceiver
+    &#123;
+        @Override
+        public void onReceive(Context context, Intent intent) &#123;
+            BaseActivity.this.finish();
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>发送广播的代码就不贴啦，上面的代码用的是本地广播，效率和安全性高一点。</p>
+<h2 id="标志式"><a href="#标志式" class="headerlink" title="标志式"></a>标志式</h2><p>就是在工具类或者配置类里定义一个静态的成员属性</p>
+<pre><code class="java">public class Config
+&#123;
+    public static final Boolean isExit =false;
+//...
+&#125;
+</code></pre>
+<p>然后在BaseActivity的onResume方法中做判断就可以了。</p>
+<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
+&#123;
+  @Override
+  onResume() &#123;
+     super.onResume();
+     if(Config.isExit) finish();
+  &#125;
+//...
+&#125;
+</code></pre>
+<h2 id="Intent-FLAG式"><a href="#Intent-FLAG式" class="headerlink" title="Intent.FLAG式"></a>Intent.FLAG式</h2><p>在startActivity的时候，可以在intent附加一些flag信息来控制Acitivity的启动模式，里面呢有一个FLAG_ACTIVITY_CLEAR_TASK的flag，根据文档的说明，它在启动目标Acitivity的时候会清空之前所有任务关联的Acitivity，嘿嘿，这不就我们想要的效果么，所以我们完全可以利用这个启动模式来做退出功能。我们只要建立一个ExitAcitivity。</p>
+<pre><code class="java">public class ExitAcitivity extends AppCompatActivity
+&#123;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    &#123;
+        super.onCreate(savedInstanceState);
+        finish();
+    &#125;
+&#125;
+</code></pre>
+<p>然后呢，要退出的时候，通过前面提到的FLAG_ACTIVITY_CLEAR_TASK来启动这个Activity就可以啦。</p>
+<pre><code class="java">public void onClick(View v)
+&#123;
+    Intent intent = new Intent(this, ExitAcitivity .class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
+&#125;
+</code></pre>
+<p>文档中说明FLAG_ACTIVITY_CLEAR_TASK要与FLAG_ACTIVITY_NEW_TASK一起使用，应该是底层实现的时候就直接把之前的Task给杀掉了。通过这种方式我们也可以简单的实现退出应用的功能，当然利用Activity的singleTask启动模式也是可以的哦。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实我一直觉得思维才是一个人的能力体现（啦啦啦，不装逼我们还是好朋友），虽然这只是一个简单的例子，但是很多时候，有些问题，你只要换一个角度去思考就迎刃而解了。所以写这些东西也是为了跟大家交流然后扩展自己的见解，那么，大家还有其他方法么，欢迎指导交流哦。</p>
 ]]></content>
       <categories>
         <category>Android</category>
@@ -1135,142 +1271,6 @@ app.controller(&#39;myCtrl&#39;, function($scope) &#123;//获得控制器
       <tags>
         <tag>AngularJS</tag>
         <tag>前端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android中退出应用的实现</title>
-    <url>/2016/05/30/Android%E4%B8%AD%E9%80%80%E5%87%BA%E5%BA%94%E7%94%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>退出应用是项目开发中很基本的一个需求，这个功能很简单，也有很多实现的方式，这里把自己知道的退出方法做一个整理，跟大家交流分享一下。</p>
-<span id="more"></span>
-<h2 id="容器式"><a href="#容器式" class="headerlink" title="容器式"></a>容器式</h2><p>就是用一个全局容器把所有的Activity存起来，退出时遍历调用容器里Activity的finish方法就可以啦，这个效果很好，也很好操作的。创建一个单例来管理Acitivity，一般是在Application中实现的。</p>
-<pre><code class="java">public class MyApplication extends Application
-&#123;
-
-    private List&lt;Activity&gt; activityList = new LinkedList&lt;Activity&gt;();//LinkedList便于删除和增加
-
-    // 省略了单例代码...
-
-    public void removeActivity(Activity activity)
-    &#123;
-        activityList.remove(activity);
-    &#125;
-
-    public void addActivity(Activity activity)
-    &#123;
-
-        activityList.add(activity);
-    &#125;
-
-    public void exit()
-    &#123;
-
-        for (Activity activity : activityList)
-        &#123;
-            activity.finish();
-        &#125;
-        System.exit(0);
-    &#125;
-&#125;
-</code></pre>
-<p>当当当，这样就OK了。开发中在BaseActivity这样的超类统一实现后，再在需要退出的地方调用exit方法就可以退出应用了。</p>
-<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
-&#123;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    &#123;
-        super.onCreate(savedInstanceState);
-        MyApplication.getInstance().addActivity(this);
-    &#125;
-  //...
-    @Override
-    protected void onDestroy()
-    &#123;
-        super.onDestroy();
-        MyApplication.getInstance().removeActivity(this);
-    &#125;
- //...
-&#125;
-</code></pre>
-<h2 id="广播式"><a href="#广播式" class="headerlink" title="广播式"></a>广播式</h2><p>在BaseActivity这样超类中注册一个广播，要退出时发送一个广播，就可以结束所有页面了。</p>
-<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
-&#123;
-
-    private static final String EXITACTION = &quot;action.exit&quot;;
-
-    private ExitReceiver exitReceiver = new ExitReceiver();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) &#123;
-        super.onCreate(savedInstanceState);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(EXITACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(exitReceiver, new IntentFilter(EXITACTION));
-    &#125;
-
-    @Override
-    protected void onDestroy() &#123;
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(exitReceiver);
-    &#125;
-
-    class ExitReceiver extends BroadcastReceiver
-    &#123;
-        @Override
-        public void onReceive(Context context, Intent intent) &#123;
-            BaseActivity.this.finish();
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>发送广播的代码就不贴啦，上面的代码用的是本地广播，效率和安全性高一点。</p>
-<h2 id="标志式"><a href="#标志式" class="headerlink" title="标志式"></a>标志式</h2><p>就是在工具类或者配置类里定义一个静态的成员属性</p>
-<pre><code class="java">public class Config
-&#123;
-    public static final Boolean isExit =false;
-//...
-&#125;
-</code></pre>
-<p>然后在BaseActivity的onResume方法中做判断就可以了。</p>
-<pre><code class="java">public abstract class BaseActivity extends AppCompatActivity
-&#123;
-  @Override
-  onResume() &#123;
-     super.onResume();
-     if(Config.isExit) finish();
-  &#125;
-//...
-&#125;
-</code></pre>
-<h2 id="Intent-FLAG式"><a href="#Intent-FLAG式" class="headerlink" title="Intent.FLAG式"></a>Intent.FLAG式</h2><p>在startActivity的时候，可以在intent附加一些flag信息来控制Acitivity的启动模式，里面呢有一个FLAG_ACTIVITY_CLEAR_TASK的flag，根据文档的说明，它在启动目标Acitivity的时候会清空之前所有任务关联的Acitivity，嘿嘿，这不就我们想要的效果么，所以我们完全可以利用这个启动模式来做退出功能。我们只要建立一个ExitAcitivity。</p>
-<pre><code class="java">public class ExitAcitivity extends AppCompatActivity
-&#123;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    &#123;
-        super.onCreate(savedInstanceState);
-        finish();
-    &#125;
-&#125;
-</code></pre>
-<p>然后呢，要退出的时候，通过前面提到的FLAG_ACTIVITY_CLEAR_TASK来启动这个Activity就可以啦。</p>
-<pre><code class="java">public void onClick(View v)
-&#123;
-    Intent intent = new Intent(this, ExitAcitivity .class);
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    startActivity(intent);
-&#125;
-</code></pre>
-<p>文档中说明FLAG_ACTIVITY_CLEAR_TASK要与FLAG_ACTIVITY_NEW_TASK一起使用，应该是底层实现的时候就直接把之前的Task给杀掉了。通过这种方式我们也可以简单的实现退出应用的功能，当然利用Activity的singleTask启动模式也是可以的哦。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实我一直觉得思维才是一个人的能力体现（啦啦啦，不装逼我们还是好朋友），虽然这只是一个简单的例子，但是很多时候，有些问题，你只要换一个角度去思考就迎刃而解了。所以写这些东西也是为了跟大家交流然后扩展自己的见解，那么，大家还有其他方法么，欢迎指导交流哦。</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -1452,51 +1452,6 @@ __星界__ `3000`金币，__中娅__ `2600`金币，__女妖__ `2600` 金币，_
       </tags>
   </entry>
   <entry>
-    <title>charles常用技巧</title>
-    <url>/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/</url>
-    <content><![CDATA[ <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/cover.webp" class=""> 
-<h2 id="Charles修改接口返回数据-Breakpoints"><a href="#Charles修改接口返回数据-Breakpoints" class="headerlink" title="Charles修改接口返回数据(Breakpoints)"></a>Charles修改接口返回数据(Breakpoints)</h2><p>可以在上方的proxy中添加需要断点的请求<br> <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/1.png" class=""><br>也可以直接在请求链接上右键菜单选择Breakpoints。设置完成之后，发起请求，charles会进入断点模式，如下图<br> <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/2.png" class=""><br>这边选择<code>Edit Request</code>可以修改请求<br> <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/3.png" class=""><br>点击<code>Execute</code>会进去下一步，等待服务器返回，得到返回后，再次进入断点<br> <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/4.png" class=""><br>这边选择<code>Edit Response</code>可以修改返回<br> <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/5.png" class=""> </p>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>charles</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>android-studio-实用技巧</title>
-    <url>/2016/10/10/android-studio-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</url>
-    <content><![CDATA[<ul>
-<li><strong>打jar包</strong><br>android studio 默认提供的是aar包，如果要打成jar包的话，就要自己写gradle task，在库工程的build.gradle文件中添加一下代码：<pre><code class="java">task makeJar(type: Copy) &#123;
- delete &#39;build/libs/mysdk.jar&#39;
- from(&#39;build/intermediates/bundles/release/&#39;)
- into(&#39;build/libs/&#39;)
- include(&#39;classes.jar&#39;)
- rename (&#39;classes.jar&#39;, &#39;mysdk.jar&#39;)
-&#125;
-makeJar.dependsOn(build);
-</code></pre>
-然后在终端执行命令打出jar包<pre><code class="bash">gradlew makeJar
-</code></pre>
-</li>
-<li><strong>引用aar包</strong><br>将aar拷贝至lib目录，在module中的build.gradle文件中添加以下代码<pre><code class="java">repositories &#123; flatDir &#123; dirs &#39;libs&#39; &#125; &#125;
-dependencies &#123;
-compile(name: &#39;aar_name&#39;, ext: &#39;aar&#39;)
-&#125;
-</code></pre>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>Android Studio</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>WebView加载速度优化</title>
     <url>/2016/05/25/WebView%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<p>在做混合应用的时候，有几个痛点，一个是无网络无法使用，还有一个是受网络环境影响的网页加载速度。今天就这两个问题，和大家交流一下自己的经验。</p>
@@ -1595,6 +1550,100 @@ if(info.isAvailable())
       </tags>
   </entry>
   <entry>
+    <title>Win10搭建Gitlab Runner</title>
+    <url>/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/</url>
+    <content><![CDATA[ <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/cover.webp" class="">
+
+<h2 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI/CD"></a>CI/CD</h2><p><strong>持续集成</strong><br>持续集成（CI）是在源代码变更后自动检测、拉取、构建和（在大多数情况下）进行单元测试的过程。<br><strong>持续交付</strong><br>持续交付（CD）通常是指整个流程链（管道），它自动监测源代码变更并通过构建、测试、打包和相关操作运行它们以生成可部署的版本</p>
+<p>持续交付包含持续集成（自动检测源代码变更、执行构建过程、运行单元测试以验证变更），持续测试（对代码运行各种测试以保障代码质量），和（可选）持续部署（通过管道发布版本自动提供给用户）。</p>
+<h2 id="gitlab-使用"><a href="#gitlab-使用" class="headerlink" title="gitlab 使用"></a>gitlab 使用</h2><p>gitlab 一般是公司搭建的，如果公司还搭建了<code>Shared runners</code>那么就可以开始捣鼓<code>CI/CD</code>了，没有的话，就可以在自己的服务器或 pc 上搭建了。<br>在 gitlab 指定项目的<code>setting</code>中找到<code>CI/CD</code><br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/1.png" class=""><br>在页面中展开<code>runner</code>选项，可以看到项目的独立 token<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/2.png" class=""></p>
+<span id="more"></span>
+
+<h2 id="下载-Git-Runner"><a href="#下载-Git-Runner" class="headerlink" title="下载 Git Runner"></a>下载 Git Runner</h2><p>去官网下载<code>Gitlab Runner</code>，<a href="https://docs.gitlab.com/runner/install/windows.html">Install GitLab Runner on Windows</a>，<br>下载完成后可以重命名一下<code>gitlab-runner.exe</code>，主要方便后续操作，找到该目录或者放到一个指定目录<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/3.png" class=""><br>点击左上方文件菜单以管理员身份打开<code>powershell</code><br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/4.png" class=""><br>注册 runner</p>
+<pre><code class="Bash">./gitlab-runner.exe register
+</code></pre>
+<p>然后出现以下内容<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/5.png" class=""><br>第一个是你 gitlab 的地址<br>第二个是该项目的独立 token，请参考第一部分的说明<a href="./#gitlab-%E4%BD%BF%E7%94%A8">gitlab 使用</a><br>中间的 description，tags，notes 都可以放空，最后的 executor 选 shell，完成之后，在同目录下会生成一个<code>config.toml</code>，打开文件编辑<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/6.png" class=""><br>将上图的指示的内容改为</p>
+<pre><code class="text">shell = &quot;powershell&quot;
+</code></pre>
+<p>然后再运行</p>
+<pre><code class="Bash">.\gitlab-runner.exe install
+.\gitlab-runner.exe start
+</code></pre>
+ <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/8.png" class="">
+<p>此时再去 gitlab 查看项目 setting 中的 runner 时</p>
+ <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/7.png" class="">
+<p>已有可用的 runner，然后在 gitlab 的 CI/CD 面板中可以运行<code>run pipeline</code><br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/9.png" class=""><br>具体执行什么任务，则是在你项目里面的<code>.gitlab-ci.yml</code>中描述<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/10.png" class=""></p>
+]]></content>
+      <categories>
+        <category>CI/CD</category>
+      </categories>
+      <tags>
+        <tag>Gitlab Runner</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>android-studio-实用技巧</title>
+    <url>/2016/10/10/android-studio-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<ul>
+<li><strong>打jar包</strong><br>android studio 默认提供的是aar包，如果要打成jar包的话，就要自己写gradle task，在库工程的build.gradle文件中添加一下代码：<pre><code class="java">task makeJar(type: Copy) &#123;
+ delete &#39;build/libs/mysdk.jar&#39;
+ from(&#39;build/intermediates/bundles/release/&#39;)
+ into(&#39;build/libs/&#39;)
+ include(&#39;classes.jar&#39;)
+ rename (&#39;classes.jar&#39;, &#39;mysdk.jar&#39;)
+&#125;
+makeJar.dependsOn(build);
+</code></pre>
+然后在终端执行命令打出jar包<pre><code class="bash">gradlew makeJar
+</code></pre>
+</li>
+<li><strong>引用aar包</strong><br>将aar拷贝至lib目录，在module中的build.gradle文件中添加以下代码<pre><code class="java">repositories &#123; flatDir &#123; dirs &#39;libs&#39; &#125; &#125;
+dependencies &#123;
+compile(name: &#39;aar_name&#39;, ext: &#39;aar&#39;)
+&#125;
+</code></pre>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>Android Studio</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>charles常用技巧</title>
+    <url>/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[ <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/cover.webp" class=""> 
+<h2 id="Charles修改接口返回数据-Breakpoints"><a href="#Charles修改接口返回数据-Breakpoints" class="headerlink" title="Charles修改接口返回数据(Breakpoints)"></a>Charles修改接口返回数据(Breakpoints)</h2><p>可以在上方的proxy中添加需要断点的请求<br> <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/1.png" class=""><br>也可以直接在请求链接上右键菜单选择Breakpoints。设置完成之后，发起请求，charles会进入断点模式，如下图<br> <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/2.png" class=""><br>这边选择<code>Edit Request</code>可以修改请求<br> <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/3.png" class=""><br>点击<code>Execute</code>会进去下一步，等待服务器返回，得到返回后，再次进入断点<br> <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/4.png" class=""><br>这边选择<code>Edit Response</code>可以修改返回<br> <img src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/5.png" class=""> </p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>charles</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>github clone 速度慢解决方案</title>
+    <url>/2021/12/27/github-clone-%E9%80%9F%E5%BA%A6%E6%85%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<p>有时候从github上clone项目速度很慢，可以将链接中域名<code>github.com</code>替换成<code>github.com.cnpmjs.org</code>,比如原先的clone url为</p>
+<pre><code class="bash">https://github.com/wufan123/xxxx.git 
+</code></pre>
+<p>替换为</p>
+<pre><code class="bash">https://github.com.cnpmjs.org/wufan123/xxxx.git
+</code></pre>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>highlight.js使用</title>
     <url>/2021/12/23/highlight-js%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<p>一个web上高亮语法的js，<a href="https://highlightjs.org/">官网</a></p>
@@ -1614,23 +1663,6 @@ if(info.isAvailable())
       </categories>
       <tags>
         <tag>javascript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>github clone 速度慢解决方案</title>
-    <url>/2021/12/27/github-clone-%E9%80%9F%E5%BA%A6%E6%85%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-    <content><![CDATA[<p>有时候从github上clone项目速度很慢，可以将链接中域名<code>github.com</code>替换成<code>github.com.cnpmjs.org</code>,比如原先的clone url为</p>
-<pre><code class="bash">https://github.com/wufan123/xxxx.git 
-</code></pre>
-<p>替换为</p>
-<pre><code class="bash">https://github.com.cnpmjs.org/wufan123/xxxx.git
-</code></pre>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>github</tag>
       </tags>
   </entry>
   <entry>
@@ -1710,28 +1742,6 @@ fruits//Using lambda
       </tags>
   </entry>
   <entry>
-    <title>npx</title>
-    <url>/2021/12/28/npx/</url>
-    <content><![CDATA[<p>npm 从5.2版开始，增加了 npx 命令，主要解决的问题是调用项目内部安装的模块，比如</p>
-<pre><code>npm install webpack -D
-</code></pre>
-<p>要调用webpack的话只能在项目脚本或者package.json的scripts字段，如果要在cli调用，要这样</p>
-<pre><code class="bash">#根目录下
-$ node-modules/.bin/webpack -v
-</code></pre>
-<p>使用npx的话可以直接调用</p>
-<pre><code class="bash">npx webpack -v
-</code></pre>
-<p>原理是npx运行时会到<code>node_modules/.bin</code>和<code>$PATH</code>里检查命令是否存在，所以系统命令也可以调用，其他具体参见<a href="https://www.npmjs.com/package/npx">官方说明</a> </p>
-]]></content>
-      <categories>
-        <category>nodejs</category>
-      </categories>
-      <tags>
-        <tag>npx</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>nodejs中的package.json文件</title>
     <url>/2021/12/27/nodejs%E4%B8%AD%E7%9A%84package-json%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<p>关于package.json文件的<a href="https://docs.npmjs.com/cli/v8/configuring-npm/package-json/">官方文档说明</a>,英文好的的同学可以自行前往查看，下面是对一些文件中的常见字段的说明：</p>
@@ -1763,55 +1773,25 @@ $ node-modules/.bin/webpack -v
       </categories>
   </entry>
   <entry>
-    <title>vue-cli3.0+中使用CDN加载资源</title>
-    <url>/2021/12/10/vue-cli3-0-%E4%B8%AD%E4%BD%BF%E7%94%A8CDN%E5%8A%A0%E8%BD%BD%E8%B5%84%E6%BA%90/</url>
-    <content><![CDATA[<p>在<code>vue.config.js</code>中配置使用CDN加载的modules（使用全局变量代替），比如</p>
-<pre><code class="js"> chainWebpack: config =&gt; &#123;
-    config.set(&#39;externals&#39;, &#123;
-        &#39;vue&#39;: &#39;Vue&#39;,//&quot;库名:引入后的别名&quot; 
-        &#39;vue-router&#39;: &#39;VueRouter&#39;,
-        &#39;vuex&#39;: &#39;Vuex&#39;,
-        &#39;mint-ui&#39;: &#39;MintUI&#39;
-    &#125;)
-  &#125;
+    <title>npx</title>
+    <url>/2021/12/28/npx/</url>
+    <content><![CDATA[<p>npm 从5.2版开始，增加了 npx 命令，主要解决的问题是调用项目内部安装的模块，比如</p>
+<pre><code>npm install webpack -D
 </code></pre>
-<p>然后在public中的<code>index.html</code>加入链接,比如上面所列的库</p>
-<pre><code class="html">    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue-router@3.5.3/dist/vue-router.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js&quot;&gt;&lt;/script&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/mint-ui/lib/style.css&quot; /&gt;
-    &lt;script src=&quot;https://unpkg.com/mint-ui/lib/index.js&quot;&gt;&lt;/script&gt; 
+<p>要调用webpack的话只能在项目脚本或者package.json的scripts字段，如果要在cli调用，要这样</p>
+<pre><code class="bash">#根目录下
+$ node-modules/.bin/webpack -v
 </code></pre>
-<p> 资源要自己找，这边推荐两个CDN平台</p>
-<ul>
-<li><a href="https://www.jsdelivr.com/">jsdelivr</a> </li>
-<li><a href="https://www.unpkg.com/">unpkg</a></li>
-</ul>
-<p>这样就配置完成了，改成CDN的话，有些库的使用方式需要改一下，参照每个库的官方说明即可，比如<a href="https://router.vuejs.org/zh/">Vue Router</a><br>说明了CDN和NPM安装的区别:</p>
-<ul>
-<li>CDN</li>
-</ul>
-<pre><code class="HTML">&lt;!-- 在 Vue 后面加载 vue-router，它会自动安装的： --&gt;
-&lt;script src=&quot;/path/to/vue.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;/path/to/vue-router.js&quot;&gt;&lt;/script&gt;
+<p>使用npx的话可以直接调用</p>
+<pre><code class="bash">npx webpack -v
 </code></pre>
-<ul>
-<li>NPM</li>
-</ul>
-<pre><code class="bash">npm install vue-router
-</code></pre>
-<p>如果在一个模块化工程中使用它，必须要通过 Vue.use() 明确地安装路由功能：</p>
-<pre><code class="js">import Vue from &#39;vue&#39;
-import VueRouter from &#39;vue-router&#39;
-Vue.use(VueRouter)
-</code></pre>
-<p>其他的不一一说明了</p>
+<p>原理是npx运行时会到<code>node_modules/.bin</code>和<code>$PATH</code>里检查命令是否存在，所以系统命令也可以调用，其他具体参见<a href="https://www.npmjs.com/package/npx">官方说明</a> </p>
 ]]></content>
       <categories>
-        <category>前端</category>
+        <category>nodejs</category>
       </categories>
       <tags>
-        <tag>vue</tag>
+        <tag>npx</tag>
       </tags>
   </entry>
   <entry>
@@ -1863,6 +1843,58 @@ alt + shift + d 删除所有 console.log
       </categories>
       <tags>
         <tag>vscode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue-cli3.0+中使用CDN加载资源</title>
+    <url>/2021/12/10/vue-cli3-0-%E4%B8%AD%E4%BD%BF%E7%94%A8CDN%E5%8A%A0%E8%BD%BD%E8%B5%84%E6%BA%90/</url>
+    <content><![CDATA[<p>在<code>vue.config.js</code>中配置使用CDN加载的modules（使用全局变量代替），比如</p>
+<pre><code class="js"> chainWebpack: config =&gt; &#123;
+    config.set(&#39;externals&#39;, &#123;
+        &#39;vue&#39;: &#39;Vue&#39;,//&quot;库名:引入后的别名&quot; 
+        &#39;vue-router&#39;: &#39;VueRouter&#39;,
+        &#39;vuex&#39;: &#39;Vuex&#39;,
+        &#39;mint-ui&#39;: &#39;MintUI&#39;
+    &#125;)
+  &#125;
+</code></pre>
+<p>然后在public中的<code>index.html</code>加入链接,比如上面所列的库</p>
+<pre><code class="html">    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue-router@3.5.3/dist/vue-router.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/mint-ui/lib/style.css&quot; /&gt;
+    &lt;script src=&quot;https://unpkg.com/mint-ui/lib/index.js&quot;&gt;&lt;/script&gt; 
+</code></pre>
+<p> 资源要自己找，这边推荐两个CDN平台</p>
+<ul>
+<li><a href="https://www.jsdelivr.com/">jsdelivr</a> </li>
+<li><a href="https://www.unpkg.com/">unpkg</a></li>
+</ul>
+<p>这样就配置完成了，改成CDN的话，有些库的使用方式需要改一下，参照每个库的官方说明即可，比如<a href="https://router.vuejs.org/zh/">Vue Router</a><br>说明了CDN和NPM安装的区别:</p>
+<ul>
+<li>CDN</li>
+</ul>
+<pre><code class="HTML">&lt;!-- 在 Vue 后面加载 vue-router，它会自动安装的： --&gt;
+&lt;script src=&quot;/path/to/vue.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/path/to/vue-router.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<ul>
+<li>NPM</li>
+</ul>
+<pre><code class="bash">npm install vue-router
+</code></pre>
+<p>如果在一个模块化工程中使用它，必须要通过 Vue.use() 明确地安装路由功能：</p>
+<pre><code class="js">import Vue from &#39;vue&#39;
+import VueRouter from &#39;vue-router&#39;
+Vue.use(VueRouter)
+</code></pre>
+<p>其他的不一一说明了</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -2159,6 +2191,25 @@ module.exports = class Creator extends EventEmitter &#123;
       </tags>
   </entry>
   <entry>
+    <title>前端github库star推荐</title>
+    <url>/2022/02/11/%E5%89%8D%E7%AB%AFgithub%E5%BA%93star%E6%8E%A8%E8%8D%90/</url>
+    <content><![CDATA[<h2 id="JavaScript数据结构和算法完全解析-javascript-algorithms"><a href="#JavaScript数据结构和算法完全解析-javascript-algorithms" class="headerlink" title="JavaScript数据结构和算法完全解析 javascript-algorithms"></a>JavaScript数据结构和算法完全解析 <a href="https://github.com/trekhleb/javascript-algorithms">javascript-algorithms</a></h2><p><code>stars：134k+</code><br>几乎涵盖了常用数据结构和算法的解析和JavaScript实现，慢慢肝吧。</p>
+<p>每种算法和数据结构都有自己的 README，包含相关说明和链接，以便进一步学习 (还有 YouTube 视频) 。</p>
+<h2 id="30秒代码-30-seconds-of-code"><a href="#30秒代码-30-seconds-of-code" class="headerlink" title="30秒代码 30-seconds-of-code"></a>30秒代码 <a href="https://github.com/30-seconds/30-seconds-of-code">30-seconds-of-code</a></h2><p><code>stars：91.8k+</code><br>满足您所有开发需求的简短 JavaScript 代码片段，适合平时琐碎时间学习，将前端的相关知识划分为小知识点，并且附有代码片段</p>
+<h2 id="JavaScript-样式指南-airbnb-js-style-guide"><a href="#JavaScript-样式指南-airbnb-js-style-guide" class="headerlink" title="JavaScript 样式指南 airbnb-js-style-guide"></a>JavaScript 样式指南 <a href="https://github.com/airbnb/javascript">airbnb-js-style-guide</a></h2><p><code>stars：119k+</code><br>太经典了，无论你是初级中级，还是高级工程师，平时多看看规范是进步最快的方式。</p>
+<h2 id="你不知道的JavaScriptYou-Dont-Know-JS"><a href="#你不知道的JavaScriptYou-Dont-Know-JS" class="headerlink" title="你不知道的JavaScriptYou-Dont-Know-JS"></a>你不知道的JavaScript<a href="https://github.com/getify/You-Dont-Know-JS">You-Dont-Know-JS</a></h2><p><code>stars：149k+</code></p>
+<p>这是深入探讨 JavaScript 语言核心机制的书籍，这是第二版。系统性的学习JavaScript，这个仓库是最高不过了。</p>
+<h2 id="什么是-的JavaScriptwtfjs"><a href="#什么是-的JavaScriptwtfjs" class="headerlink" title="什么是**的JavaScriptwtfjs"></a>什么是**的JavaScript<a href="https://github.com/denysdovhan/wtfjs">wtfjs</a></h2><p><code>stars：25.2k+</code></p>
+<p>一个有趣的JavaScript学习仓库，快乐学习每一天。just for fun。</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在vs内调试js</title>
     <url>/2022/03/14/%E5%9C%A8vs%E5%86%85%E8%B0%83%E8%AF%95js/</url>
     <content><![CDATA[<p>在工作区中，找到调试面板，点击创建<code>launch.json</code></p>
@@ -2184,25 +2235,6 @@ module.exports = class Creator extends EventEmitter &#123;
       </categories>
       <tags>
         <tag>vscode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端github库star推荐</title>
-    <url>/2022/02/11/%E5%89%8D%E7%AB%AFgithub%E5%BA%93star%E6%8E%A8%E8%8D%90/</url>
-    <content><![CDATA[<h2 id="JavaScript数据结构和算法完全解析-javascript-algorithms"><a href="#JavaScript数据结构和算法完全解析-javascript-algorithms" class="headerlink" title="JavaScript数据结构和算法完全解析 javascript-algorithms"></a>JavaScript数据结构和算法完全解析 <a href="https://github.com/trekhleb/javascript-algorithms">javascript-algorithms</a></h2><p><code>stars：134k+</code><br>几乎涵盖了常用数据结构和算法的解析和JavaScript实现，慢慢肝吧。</p>
-<p>每种算法和数据结构都有自己的 README，包含相关说明和链接，以便进一步学习 (还有 YouTube 视频) 。</p>
-<h2 id="30秒代码-30-seconds-of-code"><a href="#30秒代码-30-seconds-of-code" class="headerlink" title="30秒代码 30-seconds-of-code"></a>30秒代码 <a href="https://github.com/30-seconds/30-seconds-of-code">30-seconds-of-code</a></h2><p><code>stars：91.8k+</code><br>满足您所有开发需求的简短 JavaScript 代码片段，适合平时琐碎时间学习，将前端的相关知识划分为小知识点，并且附有代码片段</p>
-<h2 id="JavaScript-样式指南-airbnb-js-style-guide"><a href="#JavaScript-样式指南-airbnb-js-style-guide" class="headerlink" title="JavaScript 样式指南 airbnb-js-style-guide"></a>JavaScript 样式指南 <a href="https://github.com/airbnb/javascript">airbnb-js-style-guide</a></h2><p><code>stars：119k+</code><br>太经典了，无论你是初级中级，还是高级工程师，平时多看看规范是进步最快的方式。</p>
-<h2 id="你不知道的JavaScriptYou-Dont-Know-JS"><a href="#你不知道的JavaScriptYou-Dont-Know-JS" class="headerlink" title="你不知道的JavaScriptYou-Dont-Know-JS"></a>你不知道的JavaScript<a href="https://github.com/getify/You-Dont-Know-JS">You-Dont-Know-JS</a></h2><p><code>stars：149k+</code></p>
-<p>这是深入探讨 JavaScript 语言核心机制的书籍，这是第二版。系统性的学习JavaScript，这个仓库是最高不过了。</p>
-<h2 id="什么是-的JavaScriptwtfjs"><a href="#什么是-的JavaScriptwtfjs" class="headerlink" title="什么是**的JavaScriptwtfjs"></a>什么是**的JavaScript<a href="https://github.com/denysdovhan/wtfjs">wtfjs</a></h2><p><code>stars：25.2k+</code></p>
-<p>一个有趣的JavaScript学习仓库，快乐学习每一天。just for fun。</p>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>github</tag>
       </tags>
   </entry>
   <entry>

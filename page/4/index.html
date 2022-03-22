@@ -1,0 +1,205 @@
+<!DOCTYPE html><html class="appearance-light" lang="zh-CN"><head><meta charset="UTF-8"><title>wufan's blog</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '1440a68a4b8e8906f338cb023aeef906';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-flex is-flex-direction-column"><style>.header-widget .icon--search1{
+    position: fixed;
+    top: 10px;
+    right: 15px;
+}
+.hidden{
+    display:none;
+}
+.mobile-search{
+    display:block; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 110;
+    width: 100vw;
+    height: 42px;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 6px 30px -10px rgb(0 0 0 / 30%);
+}</style><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">wufan's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><i class="iconfont icon--search1" id="mobileSearchIcon"></i></header><script>var icon = document.getElementById("mobileSearchIcon");
+icon.onclick = function (){
+    var box = document.getElementById("searchBox"); 
+    if(box){
+        box.classList.remove("is-hidden-mobile");
+        box.classList.remove("is-relative"); 
+        box.classList.remove("aside-card-container"); 
+        box.classList.add("mobile-search");
+    }
+}</script><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/Android"><i class="tag post-item-tag">Android</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2016/05/17/Android%E4%B8%ADwebview%E4%B8%8Ejs%E7%9A%84%E4%BA%A4%E4%BA%92%EF%BC%88%E4%B8%80%EF%BC%89/">Android中webview与js的交互（一）</a></h1><time class="has-text-grey" datetime="2016-05-17T08:51:00.000Z">2016-05-17</time><p class="is-flex-grow-2 mt-2"><h2 id="webview中调用js"><a href="#webview中调用js" class="headerlink" title="webview中调用js"></a>webview中调用js</h2><pre><code class="java">webView.getSettings().setJavaScriptEnabled(true);//设置js脚本可用
+webView.loadUrl(&quot;url&quot;);//加载页面
+webView.loadUrl(&quot;javascript:test(a,b,c)&quot;);//调用js方法
+</code></pre></p><a class="button is-default mt-2 has-text-weight-semibold" href="/2016/05/17/Android%E4%B8%ADwebview%E4%B8%8Ejs%E7%9A%84%E4%BA%A4%E4%BA%92%EF%BC%88%E4%B8%80%EF%BC%89/">更多</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><a class="extend prev" rel="prev" href="/page/3/"><i class="iconfont icon-prev has-text-grey"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span></section></section><aside class="column is-4-tablet is-3-widescreen"><style>.search-widget .search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--second-text-color);
+}
+.search-widget .search-content {
+    position: absolute;
+    left: 0;
+    top: calc(100% - 3px);
+    z-index: 2;
+
+    width: 100%;
+    height: 0;
+    max-height: 550px;
+
+    overflow: auto;
+    box-sizing: border-box;
+
+    background: var(--top-bar-bg-color);
+    backdrop-filter: blur(var(--backdropFilter));
+    -webkit-backdrop-filter: blur(var(--backdropFilter));
+
+    border-bottom-left-radius: var(--borderRadius);
+    border-bottom-right-radius: var(--borderRadius);
+    box-shadow: 0 12px 15px rgba(0, 0, 0, 0.08);
+}
+
+.search-widget .search-content a:hover h5 {
+    color: #3273dc!important;
+}
+.search-content.content span{
+    color:darkorange !important; 
+}
+.aside-card-container #mobileCancel{
+    display:none;
+}
+.mobile-search #mobileCancel{
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    font-size:0.8em; 
+}</style><main class="aside-card-container search-widget is-relative is-hidden-mobile" id="searchBox"><label for="searchInput"><div class="is-flex px-4" id="searchButton"><i class="iconfont icon--search1 mr-1"></i><input class="search-input is-flex-grow-1" id="searchInput" placeholder="搜索内容.."></div></label><section class="search-content content" id="searchContent"></section><span id="mobileCancel">取消</span></main><script>var searchDatabase = []
+var searchInputEl = document.getElementById('searchInput')
+var searchButtonEl = document.getElementById('searchButton')
+var searchResultEl = document.getElementById('searchContent')
+var cancel = document.getElementById('mobileCancel')
+
+searchInputEl.oninput = _.debounce(function (evt) {
+    var searchValue = evt.srcElement.value
+    var haveSearchValue = Boolean(searchValue.trim())
+    if (!haveSearchValue) {
+        searchResultEl.style.height = 0
+        searchResultEl.innerHTML = null
+        return
+    }
+    var searchResults = searching(searchValue)
+
+    if (searchResults.length > 0) {
+        renderSearchResults(searchResults)
+    }else{
+        searchResultEl.style.height = 0
+        searchResultEl.innerHTML = null
+    }
+},200) 
+
+function renderSearchResults(results) {
+    searchResultEl.innerHTML = null
+    var fragment = document.createDocumentFragment()
+
+    results.forEach(function (item) {
+        var link = document.createElement('a')
+        var title = document.createElement('h5')
+        var content = document.createElement('p')
+
+        title.className = 'mb-1'
+        title.innerHTML = item.title
+        content.innerHTML = item.content
+
+        link.href = item.link
+        link.appendChild(title)
+        link.appendChild(content)
+        link.className = 'p-4 is-block'
+
+        fragment.appendChild(link)
+    })
+
+    searchResultEl.appendChild(fragment)
+    searchResultEl.style.height = 'auto'
+}
+
+ function searching(inputText) {
+    var inputTexts = inputText.split(' ')
+    var searchResults = []
+    inputTexts.forEach(function (searchKey) {
+        var haveSearchValue = Boolean(searchKey.trim())
+        if (!haveSearchValue) return
+
+        var key = searchKey.toLowerCase()
+
+        for (var entry of searchDatabase) { 
+            var title = entry.getElementsByTagName('title')[0].textContent
+            //- var link = entry.getElementsByTagName('link')[0].getAttribute('href')
+            var link = entry.getElementsByTagName('url')[0].textContent
+            var contentWithTags = entry.getElementsByTagName('content')[0].textContent
+            var rawTitle =title.trim().replace(/<[^>]+>/g, '').toLowerCase()
+            var rawContent = contentWithTags.trim().replace(/<[^>]+>/g, '').toLowerCase()
+
+            var LENGTH = 80
+            var finalContent = ''
+            var contentLength = rawContent.length 
+            searchResultIdx=rawContent.indexOf(key);
+            var startIdx = searchResultIdx - 20,
+                endIdx = startIdx + LENGTH
+
+            if (startIdx < 0) {
+                startIdx = 0
+                endIdx = 80
+            }
+
+            endIdx > contentLength && (endIdx = contentLength)
+
+            finalContent = rawContent.substring(startIdx, endIdx)
+            var titleArr = searchResults.map(item=>{
+                return item.title
+            })
+            if (titleArr.indexOf(title)<0&&(rawTitle.indexOf(key) > -1 || searchResultIdx > -1)) {
+                title= title.replace(new RegExp(key,"gim"),`<span>${key}</span>`)
+                finalContent= finalContent.replace(new RegExp(key,"gim"),`<span>${key}</span>`)
+                searchResults.unshift({
+                    link: link,
+                    title: title,
+                    content: finalContent
+                })
+            }
+        }
+    })
+    return searchResults
+}
+
+searchButtonEl.onclick = function () {
+    if (searchDatabase.length > 0) return; 
+
+    fetch('/search.xml').then(res => res.text()).then(res => {
+        var domparser = new DOMParser
+        var doc = domparser.parseFromString(res, 'application/xml')
+        searchDatabase = doc.getElementsByTagName('search')[0].children
+    })
+}
+
+cancel.onclick = function(){
+    var box = document.getElementById("searchBox");
+    if(box){
+        box.classList.remove("mobile-search");
+        box.classList.add("is-hidden-mobile"); 
+        box.classList.add("is-relative"); 
+        box.classList.add("aside-card-container"); 
+    }
+    if(searchInputEl){
+        searchInputEl.value = "";
+    }
+}</script><main class="is-hidden-mobile aside-card-container profile-widget"><!-- todo: 使用取色工具动态阴影--><section class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center"><section class="is-flex is-justify-content-center avatar is-clipped skeleton"><!-- debug images "https://api.ixiaowai.cn/gqapi/gqapi.php"--><img class="js-img-fadeIn" src="/images/avatar.jpg" alt="user avatar"></section><h3 class="user-name">wufan</h3><blockquote class="has-text-centered is-relative"><span style="margin-bottom: 5px;">357114638@qq.com</span></blockquote><address class="has-text-centered has-text-grey"><i class="iconfont icon-location" style="margin-right: 5px;"></i><span class="has-text-grey">福建厦门</span></address></section><section class="sns-container is-flex is-justify-content-center is-align-items-center"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/wufan123"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/people/wu-hua-rong-18"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--></section></main><main class="is-hidden-mobile aside-card-container recent-widget"><h3>最近</h3><ul><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=An" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2016/05/17/Android%E4%B8%ADwebview%E4%B8%8Ejs%E7%9A%84%E4%BA%A4%E4%BA%92%EF%BC%88%E4%B8%80%EF%BC%89/">Android中webview与js的交互（一）</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2016-05-17T08:51:00.000Z">2016-05-17</time></section></li></ul></main><main class="is-hidden-mobile aside-card-container categories-widget category-page"><h3>分类</h3><section><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CI-CD/">CI/CD</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nodejs/">nodejs</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F%E6%94%BB%E7%95%A5/">游戏攻略</a><span class="category-list-count">1</span></li></ul></section></main><main class="is-hidden-mobile aside-card-container archives-widget"><h3>归档</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">9</span></li></ul></section></main><main class="is-hidden-mobile aside-card-container tag-widget"><h3>标签</h3><section><a href="/tags/Android"><span class="tag post-item-tag" style="margin-bottom: 5px;">Android</span></a><a href="/tags/Android%20Studio"><span class="tag post-item-tag" style="margin-bottom: 5px;">Android Studio</span></a><a href="/tags/AngularJS"><span class="tag post-item-tag" style="margin-bottom: 5px;">AngularJS</span></a><a href="/tags/%E5%89%8D%E7%AB%AF"><span class="tag post-item-tag" style="margin-bottom: 5px;">前端</span></a><a href="/tags/LOL"><span class="tag post-item-tag" style="margin-bottom: 5px;">LOL</span></a><a href="/tags/%E8%8B%B1%E9%9B%84%E8%81%94%E7%9B%9F"><span class="tag post-item-tag" style="margin-bottom: 5px;">英雄联盟</span></a><a href="/tags/Gitlab%20Runner"><span class="tag post-item-tag" style="margin-bottom: 5px;">Gitlab Runner</span></a><a href="/tags/charles"><span class="tag post-item-tag" style="margin-bottom: 5px;">charles</span></a><a href="/tags/github"><span class="tag post-item-tag" style="margin-bottom: 5px;">github</span></a><a href="/tags/javascript"><span class="tag post-item-tag" style="margin-bottom: 5px;">javascript</span></a><a href="/tags/kotlin"><span class="tag post-item-tag" style="margin-bottom: 5px;">kotlin</span></a><a href="/tags/npx"><span class="tag post-item-tag" style="margin-bottom: 5px;">npx</span></a><a href="/tags/vscode"><span class="tag post-item-tag" style="margin-bottom: 5px;">vscode</span></a><a href="/tags/vue"><span class="tag post-item-tag" style="margin-bottom: 5px;">vue</span></a><a href="/tags/cli"><span class="tag post-item-tag" style="margin-bottom: 5px;">cli</span></a><a href="/tags/webpack"><span class="tag post-item-tag" style="margin-bottom: 5px;">webpack</span></a><a href="/tags/gulp"><span class="tag post-item-tag" style="margin-bottom: 5px;">gulp</span></a><a href="/tags/%E5%8D%9A%E5%AE%A2"><span class="tag post-item-tag" style="margin-bottom: 5px;">博客</span></a><a href="/tags/Hexo"><span class="tag post-item-tag" style="margin-bottom: 5px;">Hexo</span></a><a href="/tags/GitHub-Pages"><span class="tag post-item-tag" style="margin-bottom: 5px;">GitHub-Pages</span></a><a href="/tags/css"><span class="tag post-item-tag" style="margin-bottom: 5px;">css</span></a></section></main></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+window.addEventListener('resize', $claudia.throttle(function () {
+    var images = document.querySelectorAll('.js-img-fadeIn')
+
+    images.forEach($claudia.blurBackdropImg) 
+}, 150))</script></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/wufan123"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/people/wu-hua-rong-18"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> wufan 2022</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script>hljs && hljs.highlightAll(); </script></body></html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html><html class="appearance-light" lang="zh-CN"><head><meta charset="UTF-8"><title>Win10搭建Gitlab Runner</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '1440a68a4b8e8906f338cb023aeef906';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/viewer.css"><!--link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))--><!--script(src= url_for("/js/highlight.pack.js")) --><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/loadsh@0.0.4/lodash.min.js"></script><script src="/js/viewer.js"></script><meta name="description" content=" 
+
+CI/CD持续集成持续集成（CI）是在源代码变更后自动检测、拉取、构建和（在大多数情况下）进行单元测试的过程。持续交付持续交付（CD）通常是指整个流程链（管道），它自动监测源代码变更并通过构建、测试、打包和相关操作运行它们以生成可部署的版本
+持续交付包含持续集成（自动检测源代码变更、执行构建过程、运行单元测试以验证变更），持续测试（对代码运行各种测试以保障代码质量），和（可选）持续部署（通过管道发布版本自动提供给用户）。
+gitlab 使用gitlab 一般是公司搭建的，如果公司还搭建了Shared runners那么就可以开始捣鼓CI/CD了，没有的话，就可以在自己的服务器或 pc 上搭建了。在 gitlab 指定项目的setting中找到CI/CD 在页面中展开runner选项，可以看到项目的独立.."><meta name="generator" content="Hexo 5.4.0"></head><body class="is-flex is-flex-direction-column"><style>.header-widget .icon--search1{
+    position: fixed;
+    top: 10px;
+    right: 15px;
+}
+.hidden{
+    display:none;
+}
+.mobile-search{
+    display:block; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 110;
+    width: 100vw;
+    height: 42px;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 6px 30px -10px rgb(0 0 0 / 30%);
+}</style><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">wufan's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Win10搭建Gitlab Runner</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><i class="iconfont icon--search1" id="mobileSearchIcon"></i></header><script>var icon = document.getElementById("mobileSearchIcon");
+icon.onclick = function (){
+    var box = document.getElementById("searchBox"); 
+    if(box){
+        box.classList.remove("is-hidden-mobile");
+        box.classList.remove("is-relative"); 
+        box.classList.remove("aside-card-container"); 
+        box.classList.add("mobile-search");
+    }
+}</script><main><style>.search-widget .search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--second-text-color);
+}
+.search-widget .search-content {
+    position: absolute;
+    left: 0;
+    top: calc(100% - 3px);
+    z-index: 2;
+
+    width: 100%;
+    height: 0;
+    max-height: 550px;
+
+    overflow: auto;
+    box-sizing: border-box;
+
+    background: var(--top-bar-bg-color);
+    backdrop-filter: blur(var(--backdropFilter));
+    -webkit-backdrop-filter: blur(var(--backdropFilter));
+
+    border-bottom-left-radius: var(--borderRadius);
+    border-bottom-right-radius: var(--borderRadius);
+    box-shadow: 0 12px 15px rgba(0, 0, 0, 0.08);
+}
+
+.search-widget .search-content a:hover h5 {
+    color: #3273dc!important;
+}
+.search-content.content span{
+    color:darkorange !important; 
+}
+.aside-card-container #mobileCancel{
+    display:none;
+}
+.mobile-search #mobileCancel{
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    font-size:0.8em; 
+}</style><main class="aside-card-container search-widget is-relative is-hidden-mobile" id="searchBox"><label for="searchInput"><div class="is-flex px-4" id="searchButton"><i class="iconfont icon--search1 mr-1"></i><input class="search-input is-flex-grow-1" id="searchInput" placeholder="搜索内容.."></div></label><section class="search-content content" id="searchContent"></section><span id="mobileCancel">取消</span></main><script>var searchDatabase = []
+var searchInputEl = document.getElementById('searchInput')
+var searchButtonEl = document.getElementById('searchButton')
+var searchResultEl = document.getElementById('searchContent')
+var cancel = document.getElementById('mobileCancel')
+
+searchInputEl.oninput = _.debounce(function (evt) {
+    var searchValue = evt.srcElement.value
+    var haveSearchValue = Boolean(searchValue.trim())
+    if (!haveSearchValue) {
+        searchResultEl.style.height = 0
+        searchResultEl.innerHTML = null
+        return
+    }
+    var searchResults = searching(searchValue)
+
+    if (searchResults.length > 0) {
+        renderSearchResults(searchResults)
+    }else{
+        searchResultEl.style.height = 0
+        searchResultEl.innerHTML = null
+    }
+},200) 
+
+function renderSearchResults(results) {
+    searchResultEl.innerHTML = null
+    var fragment = document.createDocumentFragment()
+
+    results.forEach(function (item) {
+        var link = document.createElement('a')
+        var title = document.createElement('h5')
+        var content = document.createElement('p')
+
+        title.className = 'mb-1'
+        title.innerHTML = item.title
+        content.innerHTML = item.content
+
+        link.href = item.link
+        link.appendChild(title)
+        link.appendChild(content)
+        link.className = 'p-4 is-block'
+
+        fragment.appendChild(link)
+    })
+
+    searchResultEl.appendChild(fragment)
+    searchResultEl.style.height = 'auto'
+}
+
+ function searching(inputText) {
+    var inputTexts = inputText.split(' ')
+    var searchResults = []
+    inputTexts.forEach(function (searchKey) {
+        var haveSearchValue = Boolean(searchKey.trim())
+        if (!haveSearchValue) return
+
+        var key = searchKey.toLowerCase()
+
+        for (var entry of searchDatabase) { 
+            var title = entry.getElementsByTagName('title')[0].textContent
+            //- var link = entry.getElementsByTagName('link')[0].getAttribute('href')
+            var link = entry.getElementsByTagName('url')[0].textContent
+            var contentWithTags = entry.getElementsByTagName('content')[0].textContent
+            var rawTitle =title.trim().replace(/<[^>]+>/g, '').toLowerCase()
+            var rawContent = contentWithTags.trim().replace(/<[^>]+>/g, '').toLowerCase()
+
+            var LENGTH = 80
+            var finalContent = ''
+            var contentLength = rawContent.length 
+            searchResultIdx=rawContent.indexOf(key);
+            var startIdx = searchResultIdx - 20,
+                endIdx = startIdx + LENGTH
+
+            if (startIdx < 0) {
+                startIdx = 0
+                endIdx = 80
+            }
+
+            endIdx > contentLength && (endIdx = contentLength)
+
+            finalContent = rawContent.substring(startIdx, endIdx)
+            var titleArr = searchResults.map(item=>{
+                return item.title
+            })
+            if (titleArr.indexOf(title)<0&&(rawTitle.indexOf(key) > -1 || searchResultIdx > -1)) {
+                title= title.replace(new RegExp(key,"gim"),`<span>${key}</span>`)
+                finalContent= finalContent.replace(new RegExp(key,"gim"),`<span>${key}</span>`)
+                searchResults.unshift({
+                    link: link,
+                    title: title,
+                    content: finalContent
+                })
+            }
+        }
+    })
+    return searchResults
+}
+
+searchButtonEl.onclick = function () {
+    if (searchDatabase.length > 0) return; 
+
+    fetch('/search.xml').then(res => res.text()).then(res => {
+        var domparser = new DOMParser
+        var doc = domparser.parseFromString(res, 'application/xml')
+        searchDatabase = doc.getElementsByTagName('search')[0].children
+    })
+}
+
+cancel.onclick = function(){
+    var box = document.getElementById("searchBox");
+    if(box){
+        box.classList.remove("mobile-search");
+        box.classList.add("is-hidden-mobile"); 
+        box.classList.add("is-relative"); 
+        box.classList.add("aside-card-container"); 
+    }
+    if(searchInputEl){
+        searchInputEl.value = "";
+    }
+}</script><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CI-CD"><span class="toc-text">CI&#x2F;CD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gitlab-%E4%BD%BF%E7%94%A8"><span class="toc-text">gitlab 使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD-Git-Runner"><span class="toc-text">下载 Git Runner</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/Gitlab%20Runner"><i class="tag post-item-tag">Gitlab Runner</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Win10搭建Gitlab Runner</h1><time class="has-text-grey" datetime="2022-03-22T08:36:52.000Z">2022-03-22</time><article class="mt-2 post-content"> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/cover.webp" class="">
+
+<h2 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI/CD"></a>CI/CD</h2><p><strong>持续集成</strong><br>持续集成（CI）是在源代码变更后自动检测、拉取、构建和（在大多数情况下）进行单元测试的过程。<br><strong>持续交付</strong><br>持续交付（CD）通常是指整个流程链（管道），它自动监测源代码变更并通过构建、测试、打包和相关操作运行它们以生成可部署的版本</p>
+<p>持续交付包含持续集成（自动检测源代码变更、执行构建过程、运行单元测试以验证变更），持续测试（对代码运行各种测试以保障代码质量），和（可选）持续部署（通过管道发布版本自动提供给用户）。</p>
+<h2 id="gitlab-使用"><a href="#gitlab-使用" class="headerlink" title="gitlab 使用"></a>gitlab 使用</h2><p>gitlab 一般是公司搭建的，如果公司还搭建了<code>Shared runners</code>那么就可以开始捣鼓<code>CI/CD</code>了，没有的话，就可以在自己的服务器或 pc 上搭建了。<br>在 gitlab 指定项目的<code>setting</code>中找到<code>CI/CD</code><br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/1.png" class=""><br>在页面中展开<code>runner</code>选项，可以看到项目的独立 token<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/2.png" class=""></p>
+<span id="more"></span>
+
+<h2 id="下载-Git-Runner"><a href="#下载-Git-Runner" class="headerlink" title="下载 Git Runner"></a>下载 Git Runner</h2><p>去官网下载<code>Gitlab Runner</code>，<a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/windows.html">Install GitLab Runner on Windows</a>，<br>下载完成后可以重命名一下<code>gitlab-runner.exe</code>，主要方便后续操作，找到该目录或者放到一个指定目录<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/3.png" class=""><br>点击左上方文件菜单以管理员身份打开<code>powershell</code><br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/4.png" class=""><br>注册 runner</p>
+<pre><code class="Bash">./gitlab-runner.exe register
+</code></pre>
+<p>然后出现以下内容<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/5.png" class=""><br>第一个是你 gitlab 的地址<br>第二个是该项目的独立 token，请参考第一部分的说明<a href="./#gitlab-%E4%BD%BF%E7%94%A8">gitlab 使用</a><br>中间的 description，tags，notes 都可以放空，最后的 executor 选 shell，完成之后，在同目录下会生成一个<code>config.toml</code>，打开文件编辑<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/6.png" class=""><br>将上图的指示的内容改为</p>
+<pre><code class="text">shell = &quot;powershell&quot;
+</code></pre>
+<p>然后再运行</p>
+<pre><code class="Bash">.\gitlab-runner.exe install
+.\gitlab-runner.exe start
+</code></pre>
+ <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/8.png" class="">
+<p>此时再去 gitlab 查看项目 setting 中的 runner 时</p>
+ <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/7.png" class="">
+<p>已有可用的 runner，然后在 gitlab 的 CI/CD 面板中可以运行<code>run pipeline</code><br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/9.png" class=""><br>具体执行什么任务，则是在你项目里面的<code>.gitlab-ci.yml</code>中描述<br> <img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/10.png" class=""></p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2022/03/22/%E8%A7%A3%E5%86%B3%E7%A7%BB%E5%8A%A8%E7%AB%AFborder%201px%20%E9%97%AE%E9%A2%98/" title="解决移动端border 1px 问题"><span class="has-text-weight-semibold">下一页: 解决移动端border 1px 问题</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="wufan123/wufan123.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/wufan123"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/people/wu-hua-rong-18"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> wufan 2022</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script><script>$('.content').viewer({toolbar:false});</script><script>hljs && hljs.highlightAll(); </script></body></html>

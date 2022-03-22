@@ -4,6 +4,7 @@ date: 2022-03-14 17:33:10
 categories: 
     - [前端]
 tags: [vscode]
+cover: /images/vscode.webp
 ---
 在工作区中，找到调试面板，点击创建`launch.json`
 {% asset_img 0.png  %} 

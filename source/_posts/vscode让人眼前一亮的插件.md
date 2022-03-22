@@ -4,6 +4,7 @@ date: 2022-03-14 10:41:38
 categories: 
     - [前端]
 tags: [vscode]
+cover: /images/vscode.webp
 ---
 
 ## Project Manager
@@ -17,6 +18,8 @@ tags: [vscode]
 ## Bookmarks
 可以在你代码或文档中设置书签，然后通过书签进行快速的位置跳转
  {% asset_img 5.png  %} 
+ 
+<!-- more -->
 
 ## Blockman
 一款可以很直观的显示代码层次结构的插件
@@ -59,6 +62,20 @@ tags: [vscode]
 ## Regex Previewer
 实时测试正则表达式的实用工具。它可以将正则表达式模式应用在任何打开的文件上，并高亮所有的匹配项
 {% asset_img 14.png  %}
+
+
+## Turbo Console Log
+快捷添加 console.log，一键 注释 / 启用 / 删除 所有 console.log
+{% asset_img 16.gif  %}
+
+快捷键,容易跟其他软件快捷键冲突
+```
+ctrl + alt + l 选中变量之后，使用这个快捷键生成 console.log
+alt + shift + c 注释所有 console.log
+alt + shift + u 启用所有 console.log
+alt + shift + d 删除所有 console.log
+```
+
 
 ## vscode-fileheader
 添加注释到文件头，并且自动更新文件修改时间

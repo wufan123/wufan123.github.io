@@ -20,7 +20,7 @@
         height: 300px;
         object-fit: cover;
         transform: scale(1.2);
-        filter: blur(20px); }
+        filter: blur(15px); }
     .post-container .post-item-card > header .post-cover-link {
       position: relative;
       z-index: 2;
@@ -40,6 +40,8 @@
     .post-container .post-item-card .post-card-content img {
       display: block;
       margin: 0 auto; }
+    .post-container .post-item-card .post-card-content p a {
+      color: #3273dc; }
 
 .post-container .aside-card-container {
   padding: 10px;

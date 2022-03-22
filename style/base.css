@@ -133,5 +133,7 @@
     margin: 0 8px;
     font-weight: bold;
     color: var(--primary-text-color); }
+  .header-widget h2 {
+    font-size: 2rem; }
   .header-widget h3 {
     font-weight: bold; }

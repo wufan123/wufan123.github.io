@@ -1,0 +1,261 @@
+<!DOCTYPE html><html class="appearance-light" lang="zh-CN"><head><meta charset="UTF-8"><title>wufan's blog</title><meta name="description" content="个人博客"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '1440a68a4b8e8906f338cb023aeef906';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 5.4.0"></head><body class="is-flex is-flex-direction-column"><style>.header-widget .icon--search1{
+    position: fixed;
+    top: 10px;
+    right: 15px;
+}
+.hidden{
+    display:none;
+}
+.mobile-search{
+    display:block; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 110;
+    width: 100vw;
+    height: 42px;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 6px 30px -10px rgb(0 0 0 / 30%);
+}</style><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">wufan's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>归档 · 2022</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><i class="iconfont icon--search1" id="mobileSearchIcon"></i></header><script>var icon = document.getElementById("mobileSearchIcon");
+icon.onclick = function (){
+    var box = document.getElementById("searchBox"); 
+    if(box){
+        box.classList.remove("is-hidden-mobile");
+        box.classList.remove("is-relative"); 
+        box.classList.remove("aside-card-container"); 
+        box.classList.add("mobile-search");
+    }
+}</script><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/1.jpg" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/"><img class="post-cover-img js-img-fadeIn" src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/1.jpg" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/svg"><i class="tag post-item-tag">svg</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/">svg路径动画</a></h1><time class="has-text-grey" datetime="2022-04-12T03:22:25.000Z">2022-04-12</time><p class="is-flex-grow-2 mt-2"><h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>在日常工作中遇到这样的任务</p>
+  
+<p>  通过svp可以相对比较方便的把路径画出来，参考代码</p>
+<pre><code class="SVG">//通过viewBox做适配
+&lt;svg version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; width=&quot;7.5rem&quot;
+           height=&quot;6.35rem&quot; id=&quot;map&quot; viewBox=&quot;0,0,750,635&quot;&gt;
+           &lt;line x1=&quot;318&quot; y1=&quot;148&quot; x2=&quot;478&quot; y2=&quot;178&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;478&quot; y1=&quot;178&quot; x2=&quot;581&quot; y2=&quot;264&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;581&quot; y1=&quot;264&quot; x2=&quot;690&quot; y2=&quot;376&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;690&quot; y1=&quot;376&quot; x2=&quot;590&quot; y2=&quot;485&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;590&quot; y1=&quot;485&quot; x2=&quot;447&quot; y2=&quot;581&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;447&quot; y1=&quot;581&quot; x2=&quot;260&quot; y2=&quot;518&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;260&quot; y1=&quot;518&quot; x2=&quot;94&quot; y2=&quot;429&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;94&quot; y1=&quot;429&quot; x2=&quot;63&quot; y2=&quot;313&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;63&quot; y1=&quot;313&quot; x2=&quot;127&quot; y2=&quot;197&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;127&quot; y1=&quot;197&quot; x2=&quot;191&quot; y2=&quot;206&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;191&quot; y1=&quot;206&quot; x2=&quot;318&quot; y2=&quot;148&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;circle cx=&quot;318&quot; cy=&quot;148&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;478&quot; cy=&quot;178&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;581&quot; cy=&quot;264&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;690&quot; cy=&quot;376&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;590&quot; cy=&quot;485&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;447&quot; cy=&quot;581&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;260&quot; cy=&quot;518&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;94&quot; cy=&quot;429&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;63&quot; cy=&quot;313&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;127&quot; cy=&quot;197&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+       &lt;/svg&gt;
+</code></pre>
+<p> 因为只讲svg相关的，精简一些其他元素</p>
+   
+
+<h2 id="Transition"><a href="#Transition" class="headerlink" title="Transition"></a>Transition</h2><p>  这边想让它按照路径线路运动起来，我一开始通过<code>js</code>设置运动元素的top和left，效果用<code>transition</code>来实现,参考代码</p>
+<pre><code class="javascript">      //收集点坐标
+      var pointArr = [&#123; x: &quot;3.18rem&quot;, y: &quot;1.48rem&quot; &#125;,
+      &#123; x: &quot;4.78rem&quot;, y: &quot;1.78rem&quot;, next: true &#125;,
+      &#123; x: &quot;5.81rem&quot;, y: &quot;2.64rem&quot;, next: true &#125;,
+      &#123; x: &quot;6.90rem&quot;, y: &quot;3.76rem&quot;, next: true &#125;,
+      &#123; x: &quot;5.90rem&quot;, y: &quot;4.85rem&quot;, next: true &#125;,
+      &#123; x: &quot;4.47rem&quot;, y: &quot;5.81rem&quot; &#125;,
+      &#123; x: &quot;2.60rem&quot;, y: &quot;5.18rem&quot;, next: true &#125;,
+      &#123; x: &quot;0.94rem&quot;, y: &quot;4.29rem&quot;, next: true &#125;,
+      &#123; x: &quot;0.63rem&quot;, y: &quot;3.13rem&quot;, next: true &#125;,
+      &#123; x: &quot;1.27rem&quot;, y: &quot;1.97rem&quot;, next: true &#125;,
+      &#123; x: &quot;1.91rem&quot;, y: &quot;2.06rem&quot;, next: true &#125;,
+          // &#123; x: &quot;3.18rem&quot;, y: &quot;1.48rem&quot;&#125;
+      ];
+      //移动方法，参数一为需要移动的选择器，参数二为移动点，参数3是移动时间
+      function moveNext(selector,points,duration)&#123;
+          var el = $(selector);
+          if(!el.length)&#123;
+              throw new Error(&quot;selector: &#39;&quot;+selector+&quot;&#39; no find!&quot;)
+          &#125;;
+          if(!points.length)return;
+          if(!points.index&amp;&amp;points.index!=0)&#123; 
+              points.index =0;
+          &#125;
+          points.index = ++points.index%points.length
+          var p = points[points.index]
+          el.css(&quot;pointer-events&quot;,&quot;none&quot;);
+          el.css(&quot;transition&quot;,&quot;all linear &quot;+duration+&quot;ms&quot;)
+          el.css(&quot;left&quot;, p.x).css(&quot;top&quot;, p.y);
+          setTimeout(function()&#123;
+              el.css(&quot;pointer-events&quot;,&quot;initial&quot;);
+              el.css(&quot;transition&quot;,&quot;none&quot;)
+              if(p.next)&#123;
+                  moveNext(selector,pointArr,duration)
+              &#125;
+          &#125;, duration);
+      &#125;
+      //绑定点击事件
+      $(&quot;.mapbox .imgbox&quot;).click(function () &#123;
+          moveNext(&quot;.mapbox .imgbox&quot;,pointArr,600);
+      &#125;)
+</code></pre>
+<p>得到的效果如图</p>
+   
+
+<p>做到这边就想到之前做过的路径图</p>
+   
+
+<h2 id="Path命令"><a href="#Path命令" class="headerlink" title="Path命令"></a>Path命令</h2><p>它这边的是曲线路径，当时简单切图，现在如果要能沿路径运动的话，要改造一番，所以是画曲线，刚才直线很好画，参数也好理解，两点成线，现在用svg画曲线，第一个先了解<code>path</code> ,我们可以用<code>path</code>画出复杂的图形，当然也包括曲线，它包含下面的命令</p>
+<ul>
+<li>M = moveto</li>
+<li>L = lineto</li>
+<li>H = horizontal lineto</li>
+<li>V = vertical lineto</li>
+<li>C = curveto</li>
+<li>S = smooth curveto</li>
+<li>Q = quadratic Bézier curve</li>
+<li>T = smooth quadratic Bézier curveto</li>
+<li>A = elliptical Arc</li>
+<li>Z = closepath</li>
+</ul>
+<p>比如</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+    &lt;path d=&quot;M150 0 L75 200 L225 200 Z&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>可以画出一个三角形</p>
+   
+
+<p>画曲线主要用到</p>
+<ul>
+<li>C = curveto</li>
+<li>S = smooth curveto</li>
+<li>Q = quadratic Bézier curve</li>
+<li>T = smooth quadratic Bézier curveto<br>这几个命令，C是三阶贝塞尔曲线，Q是二阶贝塞尔曲线，所以如果贝塞尔曲线不了解的话，这边简单介绍一下</li>
+</ul>
+<h2 id="贝塞尔曲线（Bezier-curve）"><a href="#贝塞尔曲线（Bezier-curve）" class="headerlink" title="贝塞尔曲线（Bézier curve）"></a>贝塞尔曲线（Bézier curve）</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>组成：由起点、终点、控制点组成。</p>
+<p>说明：其中控制点的个数可以是0-n, 0个控制点的时候为一阶贝塞尔曲线（一条直线），1个控制点的时候为二阶贝塞尔曲线，以此类推。</p>
+<p>重要性：是计算机图形学中相当重要的参数曲线。</p>
+<p>前身：伯恩斯坦多项式，德卡斯特里奥算法</p>
+<p>由来：由法国工程师（数学家）皮埃尔·贝塞尔（Pierre Bézier）所广泛发表，他运用贝塞尔曲线来为汽车的主体进行设计。</p>
+<p>出发点：只需要很少的控制点，就可以绘制出一条平滑复杂的曲线。</p>
+<h3 id="数学知识-二阶贝塞尔曲线为例"><a href="#数学知识-二阶贝塞尔曲线为例" class="headerlink" title="数学知识(二阶贝塞尔曲线为例)"></a>数学知识(二阶贝塞尔曲线为例)</h3><ul>
+<li><p>步骤一：在平面内选3个不同线的点并且依次用线段连接</p>
+  </li>
+<li><p>步骤二：在AB和BC线段上找出点D和点E，使得 AD/AB = BE/BC</p>
+  </li>
+<li><p>步骤三：连接DE，在DE上寻找点F，F点需要满足：DF/DE = AD/AB = BE/BC</p>
+ </li>
+<li><p>步骤四：DF/DE = AD/AB = BE/BC = t<br>当 t 从 0-1 变化时，逆推出的所有 F 点连接起来，就绘制出了一条曲线</p>
+ </li>
+<li><p>公式推导</p>
+<ul>
+<li><p>P点为已知点，B点为最终所求的点(上面图所示的F点)。</p>
+</li>
+<li><p>一阶贝塞尔：B(t) = P0(1-t) + p1t</p>
+</li>
+<li><p>二阶贝塞尔：B(t) = P0(1-t)² + 2P1t(1-t) + P2t²</p>
+</li>
+<li><p>三阶贝塞尔：B(t) = P0(1-t)³ + 3P1t(1-t)² + 3P2t²(1-t) + P3t³</p>
+</li>
+<li><p>n阶贝塞尔  </p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="曲线绘制过程"><a href="#曲线绘制过程" class="headerlink" title="曲线绘制过程"></a>曲线绘制过程</h3><ul>
+<li>一阶贝塞尔曲线 </li>
+<li>二阶贝塞尔曲线 </li>
+<li>三阶贝塞尔曲线 </li>
+<li>四阶贝塞尔曲线 </li>
+<li>高阶贝塞尔曲线 </li>
+</ul>
+<p>如果只是用<code>path</code>画曲线的话，那我们了解到这边就可以了</p>
+<h2 id="path画曲线"><a href="#path画曲线" class="headerlink" title="path画曲线"></a>path画曲线</h2><p>通过前面知识我们知道，<code>path</code>中的<code>C</code>命令是三阶需要4个坐标，即开始和结束坐标以及两个控制坐标，<code>Q</code>命令是二阶需要3个坐标，开始结束一个坐标点，<br><code>S</code>命令：当一个点某一侧的控制点是它另外一侧的控制点的对称（以保持斜率不变），可使用<code>S</code>命令。简写的贝塞尔曲线命令。如下图</p>
+ 
+<p><code>T</code>命令：是Q命令的简写命令。<br>与S命令类似，T也会经过前一个控制点，推断出一个新的控制点。<br>（T命令前面必须是一个Q命令，或者是另外一个T命令，才能达到这种效果。若是T单独使用，那么控制点就会被认为和终点是同一个点，因此画出来的将是一条直线。）如下图</p>
+
+<p>学习完基础知识，我们按照设计稿将曲线画出，大概是这样</p>
+
+<p>参考代码</p>
+<pre><code class="SVG">        &lt;svg version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; width=&quot;7.5rem&quot;
+            height=&quot;5.8rem&quot; id=&quot;map&quot; viewBox=&quot;0,0,750,580&quot;&gt;
+            &lt;path d=&quot;M80,255T126,266&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot; stroke-width=&quot;3&quot; /&gt;
+            &lt;path d=&quot;M126,266C207,261 271,220 333,219&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot;
+                stroke-width=&quot;3&quot; /&gt;
+            &lt;path d=&quot;M333,219C394,348 488,296 537,320&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot;
+                stroke-width=&quot;3&quot; /&gt;
+            &lt;path d=&quot;M537,320C465,490 680,384 410,556&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot;
+                stroke-width=&quot;3&quot; /&gt;
+            &lt;path d=&quot;M410,556Q267,526 208,546&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot; stroke-width=&quot;3&quot; /&gt;
+            &lt;path d=&quot;M208,546Q147,556 75,522&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot; stroke-width=&quot;3&quot; /&gt;
+            &lt;circle cx=&quot;126&quot; cy=&quot;266&quot; r=&quot;15&quot; fill=&quot;#ffb88a&quot; /&gt;
+            &lt;text x=&quot;126&quot; y=&quot;266 &quot; fill=&quot;#e76f4e&quot; font-size=&quot;22&quot;&gt;1&lt;/text&gt;
+            &lt;circle cx=&quot;333&quot; cy=&quot;219&quot; r=&quot;15&quot; fill=&quot;#ffb88a&quot; /&gt;
+            &lt;text x=&quot;333&quot; y=&quot;219 &quot; fill=&quot;#e76f4e&quot; font-size=&quot;22&quot;&gt;2&lt;/text&gt;
+            &lt;circle cx=&quot;537&quot; cy=&quot;320&quot; r=&quot;15&quot; fill=&quot;#ffb88a&quot; /&gt;
+            &lt;text x=&quot;537&quot; y=&quot;320 &quot; fill=&quot;#e76f4e&quot; font-size=&quot;22&quot;&gt;3&lt;/text&gt;
+            &lt;circle cx=&quot;410&quot; cy=&quot;556&quot; r=&quot;15&quot; fill=&quot;#ffb88a&quot; /&gt;
+            &lt;text x=&quot;410&quot; y=&quot;556 &quot; fill=&quot;#e76f4e&quot; font-size=&quot;22&quot;&gt;4&lt;/text&gt;
+            &lt;circle cx=&quot;208&quot; cy=&quot;546&quot; r=&quot;15&quot; fill=&quot;#ffb88a&quot; /&gt;
+            &lt;text x=&quot;208&quot; y=&quot;546 &quot; fill=&quot;#e76f4e&quot; font-size=&quot;22&quot;&gt;5&lt;/text&gt;
+        &lt;/svg&gt;
+</code></pre>
+<p>运动小车是绝对定位和svg中点坐标一致</p>
+<h2 id="曲线运动"><a href="#曲线运动" class="headerlink" title="曲线运动"></a>曲线运动</h2><p>接下来要让小车动起来，原先的js写法是不行了，我们要用到svg的DOM接口，主要有</p>
+<ul>
+<li>getTotalLength() 获取path的总长度</li>
+<li>getPointAtLength() 根据长度获取线上的点<br>这样我们就可以递增长度获取运动点，让元素沿曲线运动起来,参考代码<pre><code class="javascript">function moveNext(selector, paths) &#123;
+var el = $(selector);
+if (!el.length) &#123;
+  throw new Error(&quot;selector: &#39;&quot; + selector + &quot;&#39; no find!&quot;);
+&#125;
+if (!paths.length) return;
+if (!paths.current &amp;&amp; paths.current != 0) &#123;
+  paths.current = 0;
+&#125;
+var p = paths[paths.current];
+paths.current = ++paths.current % paths.length;
+var step = 0;
+var move = function () &#123;
+  step += 0.03;
+  if (step &gt;= 1) &#123;
+    if (p.next) &#123; 
+      moveNext(selector, paths);
+    &#125; else &#123;
+      el.css(&quot;pointer-events&quot;, &quot;initial&quot;);
+    &#125;
+    return;
+  &#125;
+  var nextpoint = p.getPointAtLength(step * p.getTotalLength());
+  el.css(&quot;pointer-events&quot;, &quot;none&quot;);
+  el.css(&#123;
+    left: (nextpoint.x / 100).toFixed(2) + &quot;rem&quot;,
+    top: (nextpoint.y / 100).toFixed(2) + &quot;rem&quot;,
+  &#125;);
+  //DOM帧回调
+  requestAnimationFrame(move);
+&#125;;
+requestAnimationFrame(move);
+&#125;
+</code></pre>
+上面用<code>requestAnimationFrame</code>优化了<code>setTimeout</code>,<code>requestAnimationFrame</code>相比<code>setTimeout</code>、<code>setInterval</code>优势有</li>
+<li>requestAnimationFrame 会把每一帧中的所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。</li>
+<li>在隐藏或不可见的元素中，requestAnimationFrame将不会进行重绘或回流，这当然就意味着更少的的cpu，gpu和内存使用量</li>
+</ul>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2>
+</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/">更多</a></section></article></section><aside class="column is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="is-hidden-mobile aside-card-container archives-widget is-in-archive-page"><h3>归档</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">9</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+window.addEventListener('resize', $claudia.throttle(function () {
+    var images = document.querySelectorAll('.js-img-fadeIn')
+
+    images.forEach($claudia.blurBackdropImg) 
+}, 150))</script></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/wufan123"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/people/wu-hua-rong-18"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> wufan 2022</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script>hljs && hljs.highlightAll(); </script></body></html>

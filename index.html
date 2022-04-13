@@ -33,7 +33,227 @@ icon.onclick = function (){
         box.classList.remove("aside-card-container"); 
         box.classList.add("mobile-search");
     }
-}</script><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/cover.webp" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/"><img class="post-cover-img js-img-fadeIn" src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/cover.webp" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/Gitlab%20Runner"><i class="tag post-item-tag">Gitlab Runner</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/">Win10搭建Gitlab Runner</a></h1><time class="has-text-grey" datetime="2022-03-22T08:36:52.000Z">2022-03-22</time><p class="is-flex-grow-2 mt-2">
+}</script><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/1.jpg" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/"><img class="post-cover-img js-img-fadeIn" src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/1.jpg" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/svg"><i class="tag post-item-tag">svg</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/">svg路径动画</a></h1><time class="has-text-grey" datetime="2022-04-12T03:22:25.000Z">2022-04-12</time><p class="is-flex-grow-2 mt-2"><h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>在日常工作中遇到这样的任务</p>
+  
+<p>  通过svp可以相对比较方便的把路径画出来，参考代码</p>
+<pre><code class="SVG">//通过viewBox做适配
+&lt;svg version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; width=&quot;7.5rem&quot;
+           height=&quot;6.35rem&quot; id=&quot;map&quot; viewBox=&quot;0,0,750,635&quot;&gt;
+           &lt;line x1=&quot;318&quot; y1=&quot;148&quot; x2=&quot;478&quot; y2=&quot;178&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;478&quot; y1=&quot;178&quot; x2=&quot;581&quot; y2=&quot;264&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;581&quot; y1=&quot;264&quot; x2=&quot;690&quot; y2=&quot;376&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;690&quot; y1=&quot;376&quot; x2=&quot;590&quot; y2=&quot;485&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;590&quot; y1=&quot;485&quot; x2=&quot;447&quot; y2=&quot;581&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;447&quot; y1=&quot;581&quot; x2=&quot;260&quot; y2=&quot;518&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;260&quot; y1=&quot;518&quot; x2=&quot;94&quot; y2=&quot;429&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;94&quot; y1=&quot;429&quot; x2=&quot;63&quot; y2=&quot;313&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;63&quot; y1=&quot;313&quot; x2=&quot;127&quot; y2=&quot;197&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;127&quot; y1=&quot;197&quot; x2=&quot;191&quot; y2=&quot;206&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;line x1=&quot;191&quot; y1=&quot;206&quot; x2=&quot;318&quot; y2=&quot;148&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
+           &lt;circle cx=&quot;318&quot; cy=&quot;148&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;478&quot; cy=&quot;178&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;581&quot; cy=&quot;264&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;690&quot; cy=&quot;376&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;590&quot; cy=&quot;485&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;447&quot; cy=&quot;581&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;260&quot; cy=&quot;518&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;94&quot; cy=&quot;429&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;63&quot; cy=&quot;313&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+           &lt;circle cx=&quot;127&quot; cy=&quot;197&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
+       &lt;/svg&gt;
+</code></pre>
+<p> 因为只讲svg相关的，精简一些其他元素</p>
+   
+
+<h2 id="Transition"><a href="#Transition" class="headerlink" title="Transition"></a>Transition</h2><p>  这边想让它按照路径线路运动起来，我一开始通过<code>js</code>设置运动元素的top和left，效果用<code>transition</code>来实现,参考代码</p>
+<pre><code class="javascript">      //收集点坐标
+      var pointArr = [&#123; x: &quot;3.18rem&quot;, y: &quot;1.48rem&quot; &#125;,
+      &#123; x: &quot;4.78rem&quot;, y: &quot;1.78rem&quot;, next: true &#125;,
+      &#123; x: &quot;5.81rem&quot;, y: &quot;2.64rem&quot;, next: true &#125;,
+      &#123; x: &quot;6.90rem&quot;, y: &quot;3.76rem&quot;, next: true &#125;,
+      &#123; x: &quot;5.90rem&quot;, y: &quot;4.85rem&quot;, next: true &#125;,
+      &#123; x: &quot;4.47rem&quot;, y: &quot;5.81rem&quot; &#125;,
+      &#123; x: &quot;2.60rem&quot;, y: &quot;5.18rem&quot;, next: true &#125;,
+      &#123; x: &quot;0.94rem&quot;, y: &quot;4.29rem&quot;, next: true &#125;,
+      &#123; x: &quot;0.63rem&quot;, y: &quot;3.13rem&quot;, next: true &#125;,
+      &#123; x: &quot;1.27rem&quot;, y: &quot;1.97rem&quot;, next: true &#125;,
+      &#123; x: &quot;1.91rem&quot;, y: &quot;2.06rem&quot;, next: true &#125;,
+          // &#123; x: &quot;3.18rem&quot;, y: &quot;1.48rem&quot;&#125;
+      ];
+      //移动方法，参数一为需要移动的选择器，参数二为移动点，参数3是移动时间
+      function moveNext(selector,points,duration)&#123;
+          var el = $(selector);
+          if(!el.length)&#123;
+              throw new Error(&quot;selector: &#39;&quot;+selector+&quot;&#39; no find!&quot;)
+          &#125;;
+          if(!points.length)return;
+          if(!points.index&amp;&amp;points.index!=0)&#123; 
+              points.index =0;
+          &#125;
+          points.index = ++points.index%points.length
+          var p = points[points.index]
+          el.css(&quot;pointer-events&quot;,&quot;none&quot;);
+          el.css(&quot;transition&quot;,&quot;all linear &quot;+duration+&quot;ms&quot;)
+          el.css(&quot;left&quot;, p.x).css(&quot;top&quot;, p.y);
+          setTimeout(function()&#123;
+              el.css(&quot;pointer-events&quot;,&quot;initial&quot;);
+              el.css(&quot;transition&quot;,&quot;none&quot;)
+              if(p.next)&#123;
+                  moveNext(selector,pointArr,duration)
+              &#125;
+          &#125;, duration);
+      &#125;
+      //绑定点击事件
+      $(&quot;.mapbox .imgbox&quot;).click(function () &#123;
+          moveNext(&quot;.mapbox .imgbox&quot;,pointArr,600);
+      &#125;)
+</code></pre>
+<p>得到的效果如图</p>
+   
+
+<p>做到这边就想到之前做过的路径图</p>
+   
+
+<h2 id="Path命令"><a href="#Path命令" class="headerlink" title="Path命令"></a>Path命令</h2><p>它这边的是曲线路径，当时简单切图，现在如果要能沿路径运动的话，要改造一番，所以是画曲线，刚才直线很好画，参数也好理解，两点成线，现在用svg画曲线，第一个先了解<code>path</code> ,我们可以用<code>path</code>画出复杂的图形，当然也包括曲线，它包含下面的命令</p>
+<ul>
+<li>M = moveto</li>
+<li>L = lineto</li>
+<li>H = horizontal lineto</li>
+<li>V = vertical lineto</li>
+<li>C = curveto</li>
+<li>S = smooth curveto</li>
+<li>Q = quadratic Bézier curve</li>
+<li>T = smooth quadratic Bézier curveto</li>
+<li>A = elliptical Arc</li>
+<li>Z = closepath</li>
+</ul>
+<p>比如</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+    &lt;path d=&quot;M150 0 L75 200 L225 200 Z&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>可以画出一个三角形</p>
+   
+
+<p>画曲线主要用到</p>
+<ul>
+<li>C = curveto</li>
+<li>S = smooth curveto</li>
+<li>Q = quadratic Bézier curve</li>
+<li>T = smooth quadratic Bézier curveto<br>这几个命令，C是三阶贝塞尔曲线，Q是二阶贝塞尔曲线，所以如果贝塞尔曲线不了解的话，这边简单介绍一下</li>
+</ul>
+<h2 id="贝塞尔曲线（Bezier-curve）"><a href="#贝塞尔曲线（Bezier-curve）" class="headerlink" title="贝塞尔曲线（Bézier curve）"></a>贝塞尔曲线（Bézier curve）</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>组成：由起点、终点、控制点组成。</p>
+<p>说明：其中控制点的个数可以是0-n, 0个控制点的时候为一阶贝塞尔曲线（一条直线），1个控制点的时候为二阶贝塞尔曲线，以此类推。</p>
+<p>重要性：是计算机图形学中相当重要的参数曲线。</p>
+<p>前身：伯恩斯坦多项式，德卡斯特里奥算法</p>
+<p>由来：由法国工程师（数学家）皮埃尔·贝塞尔（Pierre Bézier）所广泛发表，他运用贝塞尔曲线来为汽车的主体进行设计。</p>
+<p>出发点：只需要很少的控制点，就可以绘制出一条平滑复杂的曲线。</p>
+<h3 id="数学知识-二阶贝塞尔曲线为例"><a href="#数学知识-二阶贝塞尔曲线为例" class="headerlink" title="数学知识(二阶贝塞尔曲线为例)"></a>数学知识(二阶贝塞尔曲线为例)</h3><ul>
+<li><p>步骤一：在平面内选3个不同线的点并且依次用线段连接</p>
+  </li>
+<li><p>步骤二：在AB和BC线段上找出点D和点E，使得 AD/AB = BE/BC</p>
+  </li>
+<li><p>步骤三：连接DE，在DE上寻找点F，F点需要满足：DF/DE = AD/AB = BE/BC</p>
+ </li>
+<li><p>步骤四：DF/DE = AD/AB = BE/BC = t<br>当 t 从 0-1 变化时，逆推出的所有 F 点连接起来，就绘制出了一条曲线</p>
+ </li>
+<li><p>公式推导</p>
+<ul>
+<li><p>P点为已知点，B点为最终所求的点(上面图所示的F点)。</p>
+</li>
+<li><p>一阶贝塞尔：B(t) = P0(1-t) + p1t</p>
+</li>
+<li><p>二阶贝塞尔：B(t) = P0(1-t)² + 2P1t(1-t) + P2t²</p>
+</li>
+<li><p>三阶贝塞尔：B(t) = P0(1-t)³ + 3P1t(1-t)² + 3P2t²(1-t) + P3t³</p>
+</li>
+<li><p>n阶贝塞尔  </p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="曲线绘制过程"><a href="#曲线绘制过程" class="headerlink" title="曲线绘制过程"></a>曲线绘制过程</h3><ul>
+<li>一阶贝塞尔曲线 </li>
+<li>二阶贝塞尔曲线 </li>
+<li>三阶贝塞尔曲线 </li>
+<li>四阶贝塞尔曲线 </li>
+<li>高阶贝塞尔曲线 </li>
+</ul>
+<p>如果只是用<code>path</code>画曲线的话，那我们了解到这边就可以了</p>
+<h2 id="path画曲线"><a href="#path画曲线" class="headerlink" title="path画曲线"></a>path画曲线</h2><p>通过前面知识我们知道，<code>path</code>中的<code>C</code>命令是三阶需要4个坐标，即开始和结束坐标以及两个控制坐标，<code>Q</code>命令是二阶需要3个坐标，开始结束一个坐标点，<br><code>S</code>命令：当一个点某一侧的控制点是它另外一侧的控制点的对称（以保持斜率不变），可使用<code>S</code>命令。简写的贝塞尔曲线命令。如下图</p>
+ 
+<p><code>T</code>命令：是Q命令的简写命令。<br>与S命令类似，T也会经过前一个控制点，推断出一个新的控制点。<br>（T命令前面必须是一个Q命令，或者是另外一个T命令，才能达到这种效果。若是T单独使用，那么控制点就会被认为和终点是同一个点，因此画出来的将是一条直线。）如下图</p>
+
+<p>学习完基础知识，我们按照设计稿将曲线画出，大概是这样</p>
+
+<p>参考代码</p>
+<pre><code class="SVG">        &lt;svg version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; width=&quot;7.5rem&quot;
+            height=&quot;5.8rem&quot; id=&quot;map&quot; viewBox=&quot;0,0,750,580&quot;&gt;
+            &lt;path d=&quot;M80,255T126,266&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot; stroke-width=&quot;3&quot; /&gt;
+            &lt;path d=&quot;M126,266C207,261 271,220 333,219&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot;
+                stroke-width=&quot;3&quot; /&gt;
+            &lt;path d=&quot;M333,219C394,348 488,296 537,320&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot;
+                stroke-width=&quot;3&quot; /&gt;
+            &lt;path d=&quot;M537,320C465,490 680,384 410,556&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot;
+                stroke-width=&quot;3&quot; /&gt;
+            &lt;path d=&quot;M410,556Q267,526 208,546&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot; stroke-width=&quot;3&quot; /&gt;
+            &lt;path d=&quot;M208,546Q147,556 75,522&quot; stroke=&quot;#ffb88a&quot; fill=&quot;none&quot; stroke-dasharray=&quot;5&quot; stroke-width=&quot;3&quot; /&gt;
+            &lt;circle cx=&quot;126&quot; cy=&quot;266&quot; r=&quot;15&quot; fill=&quot;#ffb88a&quot; /&gt;
+            &lt;text x=&quot;126&quot; y=&quot;266 &quot; fill=&quot;#e76f4e&quot; font-size=&quot;22&quot;&gt;1&lt;/text&gt;
+            &lt;circle cx=&quot;333&quot; cy=&quot;219&quot; r=&quot;15&quot; fill=&quot;#ffb88a&quot; /&gt;
+            &lt;text x=&quot;333&quot; y=&quot;219 &quot; fill=&quot;#e76f4e&quot; font-size=&quot;22&quot;&gt;2&lt;/text&gt;
+            &lt;circle cx=&quot;537&quot; cy=&quot;320&quot; r=&quot;15&quot; fill=&quot;#ffb88a&quot; /&gt;
+            &lt;text x=&quot;537&quot; y=&quot;320 &quot; fill=&quot;#e76f4e&quot; font-size=&quot;22&quot;&gt;3&lt;/text&gt;
+            &lt;circle cx=&quot;410&quot; cy=&quot;556&quot; r=&quot;15&quot; fill=&quot;#ffb88a&quot; /&gt;
+            &lt;text x=&quot;410&quot; y=&quot;556 &quot; fill=&quot;#e76f4e&quot; font-size=&quot;22&quot;&gt;4&lt;/text&gt;
+            &lt;circle cx=&quot;208&quot; cy=&quot;546&quot; r=&quot;15&quot; fill=&quot;#ffb88a&quot; /&gt;
+            &lt;text x=&quot;208&quot; y=&quot;546 &quot; fill=&quot;#e76f4e&quot; font-size=&quot;22&quot;&gt;5&lt;/text&gt;
+        &lt;/svg&gt;
+</code></pre>
+<p>运动小车是绝对定位和svg中点坐标一致</p>
+<h2 id="曲线运动"><a href="#曲线运动" class="headerlink" title="曲线运动"></a>曲线运动</h2><p>接下来要让小车动起来，原先的js写法是不行了，我们要用到svg的DOM接口，主要有</p>
+<ul>
+<li>getTotalLength() 获取path的总长度</li>
+<li>getPointAtLength() 根据长度获取线上的点<br>这样我们就可以递增长度获取运动点，让元素沿曲线运动起来,参考代码<pre><code class="javascript">function moveNext(selector, paths) &#123;
+var el = $(selector);
+if (!el.length) &#123;
+  throw new Error(&quot;selector: &#39;&quot; + selector + &quot;&#39; no find!&quot;);
+&#125;
+if (!paths.length) return;
+if (!paths.current &amp;&amp; paths.current != 0) &#123;
+  paths.current = 0;
+&#125;
+var p = paths[paths.current];
+paths.current = ++paths.current % paths.length;
+var step = 0;
+var move = function () &#123;
+  step += 0.03;
+  if (step &gt;= 1) &#123;
+    if (p.next) &#123; 
+      moveNext(selector, paths);
+    &#125; else &#123;
+      el.css(&quot;pointer-events&quot;, &quot;initial&quot;);
+    &#125;
+    return;
+  &#125;
+  var nextpoint = p.getPointAtLength(step * p.getTotalLength());
+  el.css(&quot;pointer-events&quot;, &quot;none&quot;);
+  el.css(&#123;
+    left: (nextpoint.x / 100).toFixed(2) + &quot;rem&quot;,
+    top: (nextpoint.y / 100).toFixed(2) + &quot;rem&quot;,
+  &#125;);
+  //DOM帧回调
+  requestAnimationFrame(move);
+&#125;;
+requestAnimationFrame(move);
+&#125;
+</code></pre>
+上面用<code>requestAnimationFrame</code>优化了<code>setTimeout</code>,<code>requestAnimationFrame</code>相比<code>setTimeout</code>、<code>setInterval</code>优势有</li>
+<li>requestAnimationFrame 会把每一帧中的所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。</li>
+<li>在隐藏或不可见的元素中，requestAnimationFrame将不会进行重绘或回流，这当然就意味着更少的的cpu，gpu和内存使用量</li>
+</ul>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2>
+</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/">更多</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/cover.webp" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/"><img class="post-cover-img js-img-fadeIn" src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/cover.webp" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/Gitlab%20Runner"><i class="tag post-item-tag">Gitlab Runner</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/">Win10搭建Gitlab Runner</a></h1><time class="has-text-grey" datetime="2022-03-22T08:36:52.000Z">2022-03-22</time><p class="is-flex-grow-2 mt-2">
 
 <h2 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI/CD"></a>CI/CD</h2><p><strong>持续集成（CI）</strong>是在源代码变更后自动检测、拉取、构建和（在大多数情况下）进行单元测试的过程。<br><strong>持续交付（CD）</strong>通常是指整个流程链（管道），它自动监测源代码变更并通过构建、测试、打包和相关操作运行它们以生成可部署的版本<br>持续交付包含持续集成（自动检测源代码变更、执行构建过程、运行单元测试以验证变更），持续测试（对代码运行各种测试以保障代码质量），和（可选）持续部署（通过管道发布版本自动提供给用户）。</p>
 <h2 id="gitlab-使用"><a href="#gitlab-使用" class="headerlink" title="gitlab 使用"></a>gitlab 使用</h2><p>gitlab 一般是公司搭建的，如果公司还搭建了<code>Shared runners</code>那么就可以开始捣鼓<code>CI/CD</code>了，没有的话，就可以在自己的服务器或 pc 上搭建了。<br>在 gitlab 指定项目的<code>setting</code>中找到<code>CI/CD</code><br> <br>在页面中展开<code>runner</code>选项，可以看到项目的独立 token<br> </p></p><a class="button is-default mt-2 has-text-weight-semibold" href="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/">更多</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/css"><i class="tag post-item-tag">css</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2022/03/22/%E8%A7%A3%E5%86%B3%E7%A7%BB%E5%8A%A8%E7%AB%AFborder%201px%20%E9%97%AE%E9%A2%98/">解决移动端border 1px 问题</a></h1><time class="has-text-grey" datetime="2022-03-22T07:45:22.000Z">2022-03-22</time><p class="is-flex-grow-2 mt-2"><p>由于某些机型分辨率过高,会导致1px变成2+px的问题,样式解决的话，通过媒体选择器和<code>transform</code>方式,参考代码如下</p>
@@ -111,18 +331,7 @@ $ node-modules/.bin/webpack -v
 <p>替换为</p>
 <pre><code class="bash">https://github.com.cnpmjs.org/wufan123/xxxx.git
 </code></pre>
-</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/27/github-clone-%E9%80%9F%E5%BA%A6%E6%85%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">更多</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/javascript"><i class="tag post-item-tag">javascript</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2021/12/23/highlight-js%E4%BD%BF%E7%94%A8/">highlight.js使用</a></h1><time class="has-text-grey" datetime="2021-12-23T08:45:46.000Z">2021-12-23</time><p class="is-flex-grow-2 mt-2"><p>一个web上高亮语法的js，<a target="_blank" rel="noopener" href="https://highlightjs.org/">官网</a></p>
-<p>使用(CDN)：</p>
-<pre><code class="html">&lt;link rel=&quot;stylesheet&quot;
-      href=&quot;//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/default.min.css&quot;&gt;
-&lt;script src=&quot;//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;hljs.highlightAll();&lt;/script&gt;
-</code></pre>
-<p>要更换主题的话，替换css，这边<code>default.css</code>是默认主题，要换主题的改css文件名称就可以了，参见<a target="_blank" rel="noopener" href="https://highlightjs.org/static/demo/">主题列表</a>，比如要用<code>Vs 2015</code>，改成</p>
-<pre><code class="html">&lt;link rel=&quot;stylesheet&quot;
-      href=&quot;//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/vs2015.min.css&quot;&gt;
-</code></pre>
-</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/23/highlight-js%E4%BD%BF%E7%94%A8/">更多</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-next has-text-grey"></i></a></section></section><aside class="column is-4-tablet is-3-widescreen"><style>.search-widget .search-input {
+</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/27/github-clone-%E9%80%9F%E5%BA%A6%E6%85%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">更多</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-next has-text-grey"></i></a></section></section><aside class="column is-4-tablet is-3-widescreen"><style>.search-widget .search-input {
     border: none;
     outline: none;
     background: transparent;
@@ -283,7 +492,7 @@ cancel.onclick = function(){
     if(searchInputEl){
         searchInputEl.value = "";
     }
-}</script><main class="is-hidden-mobile aside-card-container profile-widget"><!-- todo: 使用取色工具动态阴影--><section class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center"><section class="is-flex is-justify-content-center avatar is-clipped skeleton"><!-- debug images "https://api.ixiaowai.cn/gqapi/gqapi.php"--><img class="js-img-fadeIn" src="/images/avatar.jpg" alt="user avatar"></section><h3 class="user-name">wufan</h3><blockquote class="has-text-centered is-relative"><span style="margin-bottom: 5px;">357114638@qq.com</span></blockquote><address class="has-text-centered has-text-grey"><i class="iconfont icon-location" style="margin-right: 5px;"></i><span class="has-text-grey">福建厦门</span></address></section><section class="sns-container is-flex is-justify-content-center is-align-items-center"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/wufan123"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/people/wu-hua-rong-18"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--></section></main><main class="is-hidden-mobile aside-card-container recent-widget"><h3>最近</h3><ul><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/cover.webp" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/">Win10搭建Gitlab Runner</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-03-22T08:36:52.000Z">2022-03-22</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=解决" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/03/22/%E8%A7%A3%E5%86%B3%E7%A7%BB%E5%8A%A8%E7%AB%AFborder%201px%20%E9%97%AE%E9%A2%98/">解决移动端border 1px 问题</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-03-22T07:45:22.000Z">2022-03-22</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/cover.webp" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/">charles常用技巧</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-03-22T05:58:40.000Z">2022-03-22</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="/2022/03/14/%E5%9C%A8vs%E5%86%85%E8%B0%83%E8%AF%95js/0.png" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/03/14/%E5%9C%A8vs%E5%86%85%E8%B0%83%E8%AF%95js/">在vs内调试js</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-03-14T09:33:10.000Z">2022-03-14</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="/2022/03/14/vscode%E8%AE%A9%E4%BA%BA%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE%E7%9A%84%E6%8F%92%E4%BB%B6/1.png" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/03/14/vscode%E8%AE%A9%E4%BA%BA%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE%E7%9A%84%E6%8F%92%E4%BB%B6/">vscode让人眼前一亮的插件</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-03-14T02:41:38.000Z">2022-03-14</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=前端" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/02/11/%E5%89%8D%E7%AB%AFgithub%E5%BA%93star%E6%8E%A8%E8%8D%90/">前端github库star推荐</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-02-11T08:43:00.000Z">2022-02-11</time></section></li></ul></main><main class="is-hidden-mobile aside-card-container categories-widget category-page"><h3>分类</h3><section><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CI-CD/">CI/CD</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nodejs/">nodejs</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F%E6%94%BB%E7%95%A5/">游戏攻略</a><span class="category-list-count">1</span></li></ul></section></main><main class="is-hidden-mobile aside-card-container archives-widget"><h3>归档</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">9</span></li></ul></section></main><main class="is-hidden-mobile aside-card-container tag-widget"><h3>标签</h3><section><a href="/tags/Android"><span class="tag post-item-tag" style="margin-bottom: 5px;">Android</span></a><a href="/tags/Android%20Studio"><span class="tag post-item-tag" style="margin-bottom: 5px;">Android Studio</span></a><a href="/tags/AngularJS"><span class="tag post-item-tag" style="margin-bottom: 5px;">AngularJS</span></a><a href="/tags/%E5%89%8D%E7%AB%AF"><span class="tag post-item-tag" style="margin-bottom: 5px;">前端</span></a><a href="/tags/LOL"><span class="tag post-item-tag" style="margin-bottom: 5px;">LOL</span></a><a href="/tags/%E8%8B%B1%E9%9B%84%E8%81%94%E7%9B%9F"><span class="tag post-item-tag" style="margin-bottom: 5px;">英雄联盟</span></a><a href="/tags/Gitlab%20Runner"><span class="tag post-item-tag" style="margin-bottom: 5px;">Gitlab Runner</span></a><a href="/tags/charles"><span class="tag post-item-tag" style="margin-bottom: 5px;">charles</span></a><a href="/tags/github"><span class="tag post-item-tag" style="margin-bottom: 5px;">github</span></a><a href="/tags/javascript"><span class="tag post-item-tag" style="margin-bottom: 5px;">javascript</span></a><a href="/tags/kotlin"><span class="tag post-item-tag" style="margin-bottom: 5px;">kotlin</span></a><a href="/tags/npx"><span class="tag post-item-tag" style="margin-bottom: 5px;">npx</span></a><a href="/tags/vscode"><span class="tag post-item-tag" style="margin-bottom: 5px;">vscode</span></a><a href="/tags/vue"><span class="tag post-item-tag" style="margin-bottom: 5px;">vue</span></a><a href="/tags/webpack"><span class="tag post-item-tag" style="margin-bottom: 5px;">webpack</span></a><a href="/tags/gulp"><span class="tag post-item-tag" style="margin-bottom: 5px;">gulp</span></a><a href="/tags/%E5%8D%9A%E5%AE%A2"><span class="tag post-item-tag" style="margin-bottom: 5px;">博客</span></a><a href="/tags/Hexo"><span class="tag post-item-tag" style="margin-bottom: 5px;">Hexo</span></a><a href="/tags/GitHub-Pages"><span class="tag post-item-tag" style="margin-bottom: 5px;">GitHub-Pages</span></a><a href="/tags/css"><span class="tag post-item-tag" style="margin-bottom: 5px;">css</span></a><a href="/tags/cli"><span class="tag post-item-tag" style="margin-bottom: 5px;">cli</span></a></section></main></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+}</script><main class="is-hidden-mobile aside-card-container profile-widget"><!-- todo: 使用取色工具动态阴影--><section class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center"><section class="is-flex is-justify-content-center avatar is-clipped skeleton"><!-- debug images "https://api.ixiaowai.cn/gqapi/gqapi.php"--><img class="js-img-fadeIn" src="/images/about2.webp" alt="user avatar"></section><h3 class="user-name">wufan</h3><blockquote class="has-text-centered is-relative"><span style="margin-bottom: 5px;">357114638@qq.com</span></blockquote><address class="has-text-centered has-text-grey"><i class="iconfont icon-location" style="margin-right: 5px;"></i><span class="has-text-grey">福建厦门</span></address></section><section class="sns-container is-flex is-justify-content-center is-align-items-center"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/wufan123"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/people/wu-hua-rong-18"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--></section></main><main class="is-hidden-mobile aside-card-container recent-widget"><h3>最近</h3><ul><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/1.jpg" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/">svg路径动画</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-04-12T03:22:25.000Z">2022-04-12</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/cover.webp" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/03/22/Win10%E6%90%AD%E5%BB%BAGitlab%20Runner/">Win10搭建Gitlab Runner</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-03-22T08:36:52.000Z">2022-03-22</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=解决" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/03/22/%E8%A7%A3%E5%86%B3%E7%A7%BB%E5%8A%A8%E7%AB%AFborder%201px%20%E9%97%AE%E9%A2%98/">解决移动端border 1px 问题</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-03-22T07:45:22.000Z">2022-03-22</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/cover.webp" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/03/22/charles%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/">charles常用技巧</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-03-22T05:58:40.000Z">2022-03-22</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="/2022/03/14/%E5%9C%A8vs%E5%86%85%E8%B0%83%E8%AF%95js/0.png" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/03/14/%E5%9C%A8vs%E5%86%85%E8%B0%83%E8%AF%95js/">在vs内调试js</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-03-14T09:33:10.000Z">2022-03-14</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="/2022/03/14/vscode%E8%AE%A9%E4%BA%BA%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE%E7%9A%84%E6%8F%92%E4%BB%B6/1.png" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2022/03/14/vscode%E8%AE%A9%E4%BA%BA%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE%E7%9A%84%E6%8F%92%E4%BB%B6/">vscode让人眼前一亮的插件</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2022-03-14T02:41:38.000Z">2022-03-14</time></section></li></ul></main><main class="is-hidden-mobile aside-card-container categories-widget category-page"><h3>分类</h3><section><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CI-CD/">CI/CD</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nodejs/">nodejs</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F%E6%94%BB%E7%95%A5/">游戏攻略</a><span class="category-list-count">1</span></li></ul></section></main><main class="is-hidden-mobile aside-card-container archives-widget"><h3>归档</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">9</span></li></ul></section></main><main class="is-hidden-mobile aside-card-container tag-widget"><h3>标签</h3><section><a href="/tags/Android"><span class="tag post-item-tag" style="margin-bottom: 5px;">Android</span></a><a href="/tags/Android%20Studio"><span class="tag post-item-tag" style="margin-bottom: 5px;">Android Studio</span></a><a href="/tags/AngularJS"><span class="tag post-item-tag" style="margin-bottom: 5px;">AngularJS</span></a><a href="/tags/%E5%89%8D%E7%AB%AF"><span class="tag post-item-tag" style="margin-bottom: 5px;">前端</span></a><a href="/tags/LOL"><span class="tag post-item-tag" style="margin-bottom: 5px;">LOL</span></a><a href="/tags/%E8%8B%B1%E9%9B%84%E8%81%94%E7%9B%9F"><span class="tag post-item-tag" style="margin-bottom: 5px;">英雄联盟</span></a><a href="/tags/Gitlab%20Runner"><span class="tag post-item-tag" style="margin-bottom: 5px;">Gitlab Runner</span></a><a href="/tags/charles"><span class="tag post-item-tag" style="margin-bottom: 5px;">charles</span></a><a href="/tags/github"><span class="tag post-item-tag" style="margin-bottom: 5px;">github</span></a><a href="/tags/javascript"><span class="tag post-item-tag" style="margin-bottom: 5px;">javascript</span></a><a href="/tags/kotlin"><span class="tag post-item-tag" style="margin-bottom: 5px;">kotlin</span></a><a href="/tags/npx"><span class="tag post-item-tag" style="margin-bottom: 5px;">npx</span></a><a href="/tags/vscode"><span class="tag post-item-tag" style="margin-bottom: 5px;">vscode</span></a><a href="/tags/vue"><span class="tag post-item-tag" style="margin-bottom: 5px;">vue</span></a><a href="/tags/webpack"><span class="tag post-item-tag" style="margin-bottom: 5px;">webpack</span></a><a href="/tags/gulp"><span class="tag post-item-tag" style="margin-bottom: 5px;">gulp</span></a><a href="/tags/%E5%8D%9A%E5%AE%A2"><span class="tag post-item-tag" style="margin-bottom: 5px;">博客</span></a><a href="/tags/Hexo"><span class="tag post-item-tag" style="margin-bottom: 5px;">Hexo</span></a><a href="/tags/GitHub-Pages"><span class="tag post-item-tag" style="margin-bottom: 5px;">GitHub-Pages</span></a><a href="/tags/css"><span class="tag post-item-tag" style="margin-bottom: 5px;">css</span></a><a href="/tags/cli"><span class="tag post-item-tag" style="margin-bottom: 5px;">cli</span></a><a href="/tags/svg"><span class="tag post-item-tag" style="margin-bottom: 5px;">svg</span></a></section></main></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
 window.addEventListener('resize', $claudia.throttle(function () {
     var images = document.querySelectorAll('.js-img-fadeIn')
 

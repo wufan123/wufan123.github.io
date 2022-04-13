@@ -33,7 +33,48 @@ icon.onclick = function (){
         box.classList.remove("aside-card-container"); 
         box.classList.add("mobile-search");
     }
-}</script><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/vue"><i class="tag post-item-tag">vue</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2021/12/10/vue-cli3-0-%E6%8C%89%E9%9C%80%E5%BC%95%E5%85%A5UI/">vue-cli3.0+按需引入mint-ui</a></h1><time class="has-text-grey" datetime="2021-12-10T07:54:45.000Z">2021-12-10</time><p class="is-flex-grow-2 mt-2"><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>首先需要<code>babel-plugin-component</code></p>
+}</script><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/vue"><i class="tag post-item-tag">vue</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2021/12/10/vue-cli3-0-%E4%B8%AD%E4%BD%BF%E7%94%A8CDN%E5%8A%A0%E8%BD%BD%E8%B5%84%E6%BA%90/">vue-cli3.0+中使用CDN加载资源</a></h1><time class="has-text-grey" datetime="2021-12-10T08:04:46.000Z">2021-12-10</time><p class="is-flex-grow-2 mt-2"><p>在<code>vue.config.js</code>中配置使用CDN加载的modules（使用全局变量代替），比如</p>
+<pre><code class="js"> chainWebpack: config =&gt; &#123;
+    config.set(&#39;externals&#39;, &#123;
+        &#39;vue&#39;: &#39;Vue&#39;,//&quot;库名:引入后的别名&quot; 
+        &#39;vue-router&#39;: &#39;VueRouter&#39;,
+        &#39;vuex&#39;: &#39;Vuex&#39;,
+        &#39;mint-ui&#39;: &#39;MintUI&#39;
+    &#125;)
+  &#125;
+</code></pre>
+<p>然后在public中的<code>index.html</code>加入链接,比如上面所列的库</p>
+<pre><code class="html">    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue-router@3.5.3/dist/vue-router.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/mint-ui/lib/style.css&quot; /&gt;
+    &lt;script src=&quot;https://unpkg.com/mint-ui/lib/index.js&quot;&gt;&lt;/script&gt; 
+</code></pre>
+<p> 资源要自己找，这边推荐两个CDN平台</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.jsdelivr.com/">jsdelivr</a> </li>
+<li><a target="_blank" rel="noopener" href="https://www.unpkg.com/">unpkg</a></li>
+</ul>
+<p>这样就配置完成了，改成CDN的话，有些库的使用方式需要改一下，参照每个库的官方说明即可，比如<a target="_blank" rel="noopener" href="https://router.vuejs.org/zh/">Vue Router</a><br>说明了CDN和NPM安装的区别:</p>
+<ul>
+<li>CDN</li>
+</ul>
+<pre><code class="HTML">&lt;!-- 在 Vue 后面加载 vue-router，它会自动安装的： --&gt;
+&lt;script src=&quot;/path/to/vue.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/path/to/vue-router.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<ul>
+<li>NPM</li>
+</ul>
+<pre><code class="bash">npm install vue-router
+</code></pre>
+<p>如果在一个模块化工程中使用它，必须要通过 Vue.use() 明确地安装路由功能：</p>
+<pre><code class="js">import Vue from &#39;vue&#39;
+import VueRouter from &#39;vue-router&#39;
+Vue.use(VueRouter)
+</code></pre>
+<p>其他的不一一说明了</p>
+</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/10/vue-cli3-0-%E4%B8%AD%E4%BD%BF%E7%94%A8CDN%E5%8A%A0%E8%BD%BD%E8%B5%84%E6%BA%90/">更多</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/vue"><i class="tag post-item-tag">vue</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2021/12/10/vue-cli3-0-%E6%8C%89%E9%9C%80%E5%BC%95%E5%85%A5UI/">vue-cli3.0+按需引入mint-ui</a></h1><time class="has-text-grey" datetime="2021-12-10T07:54:45.000Z">2021-12-10</time><p class="is-flex-grow-2 mt-2"><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>首先需要<code>babel-plugin-component</code></p>
 <pre><code class="bash">npm install babel-plugin-component -D 
 </code></pre>
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>然后在<code>babel.config.js</code>中配置</p>
@@ -59,7 +100,7 @@ icon.onclick = function (){
 <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>静态网站非常适合专注于内容的网站，比如像博客网站，这边记录一下我搭建这个静态博客的步骤，首先选择服务器，虽然现在云服务器很方便，但如果只是做个静态网站的话，有个更方便的方法是用<a target="_blank" rel="noopener" href="https://pages.github.com/">Github Pages</a>，将资源部署在github上，并且还会有自己的域名，省时省力。</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/11/30/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/">更多</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/AngularJS"><i class="tag post-item-tag">AngularJS</i></a><a href="/tags/%E5%89%8D%E7%AB%AF"><i class="tag post-item-tag">前端</i></a></header><h1 class="mt-4 mb-0 is-family-serif"><a href="/2016/10/08/AngularJS%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/">AngularJS简单介绍</a></h1><time class="has-text-grey" datetime="2016-10-07T19:25:00.000Z">2016-10-08</time><p class="is-flex-grow-2 mt-2"><p>AngularJS是一款优秀的前端框架，主要解决hmtl在构建web应用上不足的问题。AngularJS核心的特点是模块化，数据的双向绑定，依赖注入。</p>
 <h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><p>在html标签中使用ng-app指示符定义一个模块</p>
 <pre><code class="html">&lt;html ng-app=&quot;mall-app&quot; style=&quot;height: 100%;&quot;&gt;                   
-</code></pre></p><a class="button is-default mt-2 has-text-weight-semibold" href="/2016/10/08/AngularJS%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/">更多</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><a class="extend prev" rel="prev" href="/categories/%E5%89%8D%E7%AB%AF/"><i class="iconfont icon-prev has-text-grey"></i></a><a class="page-number" href="/categories/%E5%89%8D%E7%AB%AF/">1</a><span class="page-number current">2</span></section></section><aside class="column is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="is-hidden-mobile aside-card-container categories-widget category-page"><h3>分类</h3><section><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CI-CD/">CI/CD</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nodejs/">nodejs</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F%E6%94%BB%E7%95%A5/">游戏攻略</a><span class="category-list-count">1</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+</code></pre></p><a class="button is-default mt-2 has-text-weight-semibold" href="/2016/10/08/AngularJS%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/">更多</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><a class="extend prev" rel="prev" href="/categories/%E5%89%8D%E7%AB%AF/"><i class="iconfont icon-prev has-text-grey"></i></a><a class="page-number" href="/categories/%E5%89%8D%E7%AB%AF/">1</a><span class="page-number current">2</span></section></section><aside class="column is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="is-hidden-mobile aside-card-container categories-widget category-page"><h3>分类</h3><section><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CI-CD/">CI/CD</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nodejs/">nodejs</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F%E6%94%BB%E7%95%A5/">游戏攻略</a><span class="category-list-count">1</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
 window.addEventListener('resize', $claudia.throttle(function () {
     var images = document.querySelectorAll('.js-img-fadeIn')
 

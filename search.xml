@@ -2495,7 +2495,7 @@ module.exports = class Creator extends EventEmitter &#123;
 <p>做到这边就想到之前做过的另一个路径图</p>
   <img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/4.jpg" class="" width="500"> 
 
-<h2 id="Path命令"><a href="#Path命令" class="headerlink" title="Path命令"></a>Path命令</h2><p>它这边的是曲线路径，当时简单切图，现在要能沿路径运动的话，需要改造一番，刚才直线很好画，参数也好理解，两点成线，现在用svg画曲线，第一个先了解<code>path</code> ,我们可以用<code>path</code>画出复杂的图形，当然也包括曲线，它包含下面的命令</p>
+<h2 id="Path命令"><a href="#Path命令" class="headerlink" title="Path命令"></a>Path命令</h2><p>它这边的是曲线路径，当时简单切图，现在要能沿路径运动的话，需要改造一番，刚才直线很好画，参数也好理解，两点成线，现在用svg画曲线，第一个先了解<code>path</code> ,我们可以用<code>path</code>画出复杂的图形，当然也包括曲线，它包含下面的命令   </p>
 <ul>
 <li>M = moveto</li>
 <li>L = lineto</li>

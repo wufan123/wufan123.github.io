@@ -2414,8 +2414,10 @@ module.exports = class Creator extends EventEmitter &#123;
     <url>/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/</url>
     <content><![CDATA[<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>在日常工作中遇到这样的任务</p>
  <img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/1.jpg" class="" width="500"> 
-<p>  通过svp可以相对比较方便的把路径画出来，参考代码</p>
-<pre><code class="SVG">//通过viewBox做适配
+<p>  通过svg可以相对比较方便的把路径画出来，参考代码</p>
+  <span id="more"></span>
+
+<pre><code class="SVG">&lt;!-- 通过viewBox做适配 --&gt;
 &lt;svg version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; width=&quot;7.5rem&quot;
            height=&quot;6.35rem&quot; id=&quot;map&quot; viewBox=&quot;0,0,750,635&quot;&gt;
            &lt;line x1=&quot;318&quot; y1=&quot;148&quot; x2=&quot;478&quot; y2=&quot;178&quot; style=&quot;stroke:#ffffff;stroke-width:3&quot;&gt;&lt;/line&gt;
@@ -2439,7 +2441,7 @@ module.exports = class Creator extends EventEmitter &#123;
            &lt;circle cx=&quot;94&quot; cy=&quot;429&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
            &lt;circle cx=&quot;63&quot; cy=&quot;313&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
            &lt;circle cx=&quot;127&quot; cy=&quot;197&quot; r=&quot;10&quot; fill=&quot;#ffffff&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1&quot;&gt;&lt;/circle&gt;
-       &lt;/svg&gt;
+&lt;/svg&gt;
 </code></pre>
 <p> 因为只讲svg相关的，精简一些其他元素</p>
   <img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/2.png" class=""> 
@@ -2490,10 +2492,10 @@ module.exports = class Creator extends EventEmitter &#123;
 <p>得到的效果如图</p>
   <img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/3.gif" class=""> 
 
-<p>做到这边就想到之前做过的路径图</p>
+<p>做到这边就想到之前做过的另一个路径图</p>
   <img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/4.jpg" class="" width="500"> 
 
-<h2 id="Path命令"><a href="#Path命令" class="headerlink" title="Path命令"></a>Path命令</h2><p>它这边的是曲线路径，当时简单切图，现在如果要能沿路径运动的话，要改造一番，所以是画曲线，刚才直线很好画，参数也好理解，两点成线，现在用svg画曲线，第一个先了解<code>path</code> ,我们可以用<code>path</code>画出复杂的图形，当然也包括曲线，它包含下面的命令</p>
+<h2 id="Path命令"><a href="#Path命令" class="headerlink" title="Path命令"></a>Path命令</h2><p>它这边的是曲线路径，当时简单切图，现在要能沿路径运动的话，需要改造一番，刚才直线很好画，参数也好理解，两点成线，现在用svg画曲线，第一个先了解<code>path</code> ,我们可以用<code>path</code>画出复杂的图形，当然也包括曲线，它包含下面的命令</p>
 <ul>
 <li>M = moveto</li>
 <li>L = lineto</li>
@@ -2519,7 +2521,7 @@ module.exports = class Creator extends EventEmitter &#123;
 <li>C = curveto</li>
 <li>S = smooth curveto</li>
 <li>Q = quadratic Bézier curve</li>
-<li>T = smooth quadratic Bézier curveto<br>这几个命令，C是三阶贝塞尔曲线，Q是二阶贝塞尔曲线，所以如果贝塞尔曲线不了解的话，这边简单介绍一下</li>
+<li>T = smooth quadratic Bézier curveto<br>这几个命令，C是三阶贝塞尔曲线，Q是二阶贝塞尔曲线，如果贝塞尔曲线不了解的话，这边介绍一下</li>
 </ul>
 <h2 id="贝塞尔曲线（Bezier-curve）"><a href="#贝塞尔曲线（Bezier-curve）" class="headerlink" title="贝塞尔曲线（Bézier curve）"></a>贝塞尔曲线（Bézier curve）</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>组成：由起点、终点、控制点组成。</p>
 <p>说明：其中控制点的个数可以是0-n, 0个控制点的时候为一阶贝塞尔曲线（一条直线），1个控制点的时候为二阶贝塞尔曲线，以此类推。</p>
@@ -2559,10 +2561,10 @@ module.exports = class Creator extends EventEmitter &#123;
 <li>高阶贝塞尔曲线<img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/14.gif" class="" width="300"> </li>
 </ul>
 <p>如果只是用<code>path</code>画曲线的话，那我们了解到这边就可以了</p>
-<h2 id="path画曲线"><a href="#path画曲线" class="headerlink" title="path画曲线"></a>path画曲线</h2><p>通过前面知识我们知道，<code>path</code>中的<code>C</code>命令是三阶需要4个坐标，即开始和结束坐标以及两个控制坐标，<code>Q</code>命令是二阶需要3个坐标，开始结束一个坐标点，<br><code>S</code>命令：当一个点某一侧的控制点是它另外一侧的控制点的对称（以保持斜率不变），可使用<code>S</code>命令。简写的贝塞尔曲线命令。如下图</p>
-<img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/15.jpg" class="" width="300"> 
-<p><code>T</code>命令：是Q命令的简写命令。<br>与S命令类似，T也会经过前一个控制点，推断出一个新的控制点。<br>（T命令前面必须是一个Q命令，或者是另外一个T命令，才能达到这种效果。若是T单独使用，那么控制点就会被认为和终点是同一个点，因此画出来的将是一条直线。）如下图</p>
-<img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/16.png" class="" width="300">
+<h2 id="path画曲线"><a href="#path画曲线" class="headerlink" title="path画曲线"></a>path画曲线</h2><p>通过前面知识我们知道，<code>path</code>中的<code>C</code>命令是三阶需要4个坐标，即开始和结束坐标以及两个控制坐标，<code>Q</code>命令是二阶需要3个坐标，开始结束一个控制坐标点，<br><code>S</code>命令：当一个点某一侧的控制点是它另外一侧的控制点的对称（以保持斜率不变），可使用<code>S</code>命令。简写的贝塞尔曲线命令。如下图</p>
+<img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/15.jpg" class="" width="200"> 
+<p><code>T</code>命令：是Q命令的简写命令。与S命令类似，T也会经过前一个控制点，推断出一个新的控制点。（T命令前面必须是一个Q命令，或者是另外一个T命令，才能达到这种效果。若是T单独使用，那么控制点就会被认为和终点是同一个点，因此画出来的将是一条直线。）如下图</p>
+<img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/16.png" class="" width="200">
 <p>学习完基础知识，我们按照设计稿将曲线画出，大概是这样</p>
 <img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/17.jpg" class="">
 <p>参考代码</p>
@@ -2592,8 +2594,8 @@ module.exports = class Creator extends EventEmitter &#123;
 <p>运动小车是绝对定位和svg中点坐标一致</p>
 <h2 id="曲线运动"><a href="#曲线运动" class="headerlink" title="曲线运动"></a>曲线运动</h2><p>接下来要让小车动起来，原先的js写法是不行了，我们要用到svg的DOM接口，主要有</p>
 <ul>
-<li>getTotalLength() 获取path的总长度</li>
-<li>getPointAtLength() 根据长度获取线上的点<br>这样我们就可以递增长度获取运动点，让元素沿曲线运动起来,参考代码<pre><code class="javascript">function moveNext(selector, paths) &#123;
+<li><code>getTotalLength()</code> 获取path的总长度</li>
+<li><code>getPointAtLength()</code> 根据长度获取线上的点<br>这样我们就可以递增长度获取运动点，让元素沿曲线运动起来,参考代码<pre><code class="javascript">function moveNext(selector, paths) &#123;
 var el = $(selector);
 if (!el.length) &#123;
   throw new Error(&quot;selector: &#39;&quot; + selector + &quot;&#39; no find!&quot;);
@@ -2628,8 +2630,8 @@ requestAnimationFrame(move);
 &#125;
 </code></pre>
 上面用<code>requestAnimationFrame</code>优化了<code>setTimeout</code>,<code>requestAnimationFrame</code>相比<code>setTimeout</code>、<code>setInterval</code>优势有</li>
-<li>requestAnimationFrame 会把每一帧中的所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。</li>
-<li>在隐藏或不可见的元素中，requestAnimationFrame将不会进行重绘或回流，这当然就意味着更少的的cpu，gpu和内存使用量</li>
+<li><code>requestAnimationFrame</code> 会把每一帧中的所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。</li>
+<li>在隐藏或不可见的元素中，<code>requestAnimationFrame</code>将不会进行重绘或回流，这当然就意味着更少的的cpu，gpu和内存使用量</li>
 </ul>
 <h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><img src="/2022/04/12/svg%E8%B7%AF%E5%BE%84%E5%8A%A8%E7%94%BB/18.gif" class="">
 ]]></content>

@@ -10,10 +10,12 @@ tags: [svg]
 
  {% asset_img 1.jpg  500 %} 
  
-  通过svp可以相对比较方便的把路径画出来，参考代码
+  通过svg可以相对比较方便的把路径画出来，参考代码
+
+  <!-- more -->
 
  ``` SVG
- //通过viewBox做适配
+ <!-- 通过viewBox做适配 -->
  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7.5rem"
             height="6.35rem" id="map" viewBox="0,0,750,635">
             <line x1="318" y1="148" x2="478" y2="178" style="stroke:#ffffff;stroke-width:3"></line>
@@ -37,7 +39,7 @@ tags: [svg]
             <circle cx="94" cy="429" r="10" fill="#ffffff" stroke="#fff" stroke-width="1"></circle>
             <circle cx="63" cy="313" r="10" fill="#ffffff" stroke="#fff" stroke-width="1"></circle>
             <circle cx="127" cy="197" r="10" fill="#ffffff" stroke="#fff" stroke-width="1"></circle>
-        </svg>
+</svg>
  ``` 
  因为只讲svg相关的，精简一些其他元素
  
@@ -93,12 +95,12 @@ tags: [svg]
 
   {% asset_img  3.gif  %} 
 
-做到这边就想到之前做过的路径图
+做到这边就想到之前做过的另一个路径图
 
   {% asset_img  4.jpg  500 %} 
 
 ## Path命令
-它这边的是曲线路径，当时简单切图，现在如果要能沿路径运动的话，要改造一番，所以是画曲线，刚才直线很好画，参数也好理解，两点成线，现在用svg画曲线，第一个先了解`path` ,我们可以用`path`画出复杂的图形，当然也包括曲线，它包含下面的命令
+它这边的是曲线路径，当时简单切图，现在要能沿路径运动的话，需要改造一番，刚才直线很好画，参数也好理解，两点成线，现在用svg画曲线，第一个先了解`path` ,我们可以用`path`画出复杂的图形，当然也包括曲线，它包含下面的命令
 - M = moveto
 - L = lineto
 - H = horizontal lineto
@@ -125,7 +127,7 @@ tags: [svg]
 - S = smooth curveto
 - Q = quadratic Bézier curve
 - T = smooth quadratic Bézier curveto
-这几个命令，C是三阶贝塞尔曲线，Q是二阶贝塞尔曲线，所以如果贝塞尔曲线不了解的话，这边简单介绍一下
+这几个命令，C是三阶贝塞尔曲线，Q是二阶贝塞尔曲线，如果贝塞尔曲线不了解的话，这边介绍一下
 
 ## 贝塞尔曲线（Bézier curve）
 ### 介绍
@@ -171,13 +173,11 @@ tags: [svg]
 如果只是用`path`画曲线的话，那我们了解到这边就可以了
 
 ## path画曲线
-通过前面知识我们知道，`path`中的`C`命令是三阶需要4个坐标，即开始和结束坐标以及两个控制坐标，`Q`命令是二阶需要3个坐标，开始结束一个坐标点，
+通过前面知识我们知道，`path`中的`C`命令是三阶需要4个坐标，即开始和结束坐标以及两个控制坐标，`Q`命令是二阶需要3个坐标，开始结束一个控制坐标点，
 `S`命令：当一个点某一侧的控制点是它另外一侧的控制点的对称（以保持斜率不变），可使用`S`命令。简写的贝塞尔曲线命令。如下图
-{% asset_img  15.jpg 300 %} 
-`T`命令：是Q命令的简写命令。
-与S命令类似，T也会经过前一个控制点，推断出一个新的控制点。
-（T命令前面必须是一个Q命令，或者是另外一个T命令，才能达到这种效果。若是T单独使用，那么控制点就会被认为和终点是同一个点，因此画出来的将是一条直线。）如下图
-{% asset_img  16.png 300 %}
+{% asset_img  15.jpg 200 %} 
+`T`命令：是Q命令的简写命令。与S命令类似，T也会经过前一个控制点，推断出一个新的控制点。（T命令前面必须是一个Q命令，或者是另外一个T命令，才能达到这种效果。若是T单独使用，那么控制点就会被认为和终点是同一个点，因此画出来的将是一条直线。）如下图
+{% asset_img  16.png 200 %}
 学习完基础知识，我们按照设计稿将曲线画出，大概是这样
 {% asset_img  17.jpg  %}
 参考代码
@@ -209,8 +209,8 @@ tags: [svg]
 
 ## 曲线运动
 接下来要让小车动起来，原先的js写法是不行了，我们要用到svg的DOM接口，主要有
-- getTotalLength() 获取path的总长度
-- getPointAtLength() 根据长度获取线上的点
+- `getTotalLength()` 获取path的总长度
+- `getPointAtLength()` 根据长度获取线上的点
 这样我们就可以递增长度获取运动点，让元素沿曲线运动起来,参考代码
 ``` javascript
 function moveNext(selector, paths) {
@@ -248,8 +248,8 @@ function moveNext(selector, paths) {
 }
 ```
 上面用`requestAnimationFrame`优化了`setTimeout`,`requestAnimationFrame`相比`setTimeout`、`setInterval`优势有
-- requestAnimationFrame 会把每一帧中的所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
-- 在隐藏或不可见的元素中，requestAnimationFrame将不会进行重绘或回流，这当然就意味着更少的的cpu，gpu和内存使用量
+- `requestAnimationFrame` 会把每一帧中的所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+- 在隐藏或不可见的元素中，`requestAnimationFrame`将不会进行重绘或回流，这当然就意味着更少的的cpu，gpu和内存使用量
 
 ## 最终效果
 
